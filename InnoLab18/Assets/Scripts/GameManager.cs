@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,12 +32,15 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this);
+
         Player = GameObject.FindWithTag("Player");
         PlayerGarbageCollector = Player.GetComponent<GarbageCollector>();
+        UMLPanel = GameObject.FindWithTag("UMLPanel");
     }
 
     public GameObject Player { get; private set; }
     public GarbageCollector PlayerGarbageCollector { get; private set; }
+    public GameObject UMLPanel { get; private set; } 
 
 
     // Start is called before the first frame update

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Garbage
+  - UMLPanel
   layers:
   - Default
   - TransparentFX
