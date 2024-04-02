@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public int distance = 1;
     public Transform movePoint;
     public LayerMask obstical;
     public LayerMask damagesource;
@@ -32,14 +33,27 @@ public class PlayerController : MonoBehaviour
     }
 
     void Move(Vector3 direction)
-    {   
-        if (!Physics2D.OverlapCircle(movePoint.position + direction, .2f, obstical))
+    {
+        for (int i = 1; i <= distance; i++)
         {
-            movePoint.position += direction;
+            if (Physics.OverlapSphere(movePoint.position + direction, .2f, obstical, QueryTriggerInteraction.Collide).Length > 0)
+            {
+                Debug.Log("Tree");
+                return;
+            }
+            else if (Physics.OverlapSphere(movePoint.position + direction, .2f, damagesource, QueryTriggerInteraction.Collide).Length > 0)
+            {
+                Debug.Log("Damage");
+                movePoint.position += direction;
+                return;
+            }
+            else
+            {
+                movePoint.position += direction;
+            }
         }
-        else if(!Physics2D.OverlapCircle(movePoint.position + direction, .2f, damagesource))
-        {
-           //Damage
-        }
+        /*
+        */
+        //movePoint.position += direction * distance;
     }
 }
