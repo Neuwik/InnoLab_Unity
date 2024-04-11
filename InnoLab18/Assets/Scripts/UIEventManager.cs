@@ -12,7 +12,7 @@ public class UIEventManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        btn_CollectGarbage.onClick.AddListener(GameManager.Instance.PlayerGarbageCollector.CollectGarbage);
+        btn_CollectGarbage?.onClick.AddListener(GameManager.Instance.PlayerGarbageCollector.CollectGarbage);
     }
 
     // Update is called once per frame

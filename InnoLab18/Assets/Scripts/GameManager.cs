@@ -40,18 +40,13 @@ public class GameManager : MonoBehaviour
 
     public GameObject Player { get; private set; }
     public GarbageCollector PlayerGarbageCollector { get; private set; }
-    public GameObject UMLPanel { get; private set; } 
+    public GameObject UMLPanel { get; private set; }
 
 
-    // Start is called before the first frame update
-    void Start()
+    //UML Testing
+    public UMLActor UMLActor;
+    public static void RunUML()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Instance.UMLActor?.StartUML();
     }
 }
