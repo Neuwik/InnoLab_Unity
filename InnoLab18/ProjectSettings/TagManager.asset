@@ -7,17 +7,20 @@ TagManager:
   - Ground
   - Garbage
   - UMLPanel
+  - SelectionPanel
+  - Canvas
+  - Arrow
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - UmlElements
   - Water
   - UI
+  - 
+  - 
   - Player
   - Obstical
-  - 
-  - 
   - 
   - 
   - 
@@ -43,4 +46,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer 1
+    uniqueID: 829412477
     locked: 0

@@ -6,44 +6,59 @@ using UnityEngine.EventSystems;
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    private RectTransform rectTransform;
-    private GameObject umlField;
+    private RectTransform canvasRectT;
+
+    private RectTransform rectT;
+    private GameObject umlPanel;
+    private RectTransform umlRectT;
+    private GameObject selectionPanel;
 
     private void Start()
     {
-        umlField = GameObject.FindGameObjectWithTag("UMLPanel");
+        canvasRectT = GameObject.FindGameObjectWithTag("Canvas").GetComponent<RectTransform>();
+        selectionPanel = GameObject.FindGameObjectWithTag("SelectionPanel"); 
+        umlPanel = GameObject.FindGameObjectWithTag("UMLPanel");
+        umlRectT = umlPanel.GetComponent<RectTransform>();
+        rectT = GetComponent<RectTransform>();
     }
+
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Place new Object
-        GameObject selectionPanel = GameObject.Find("SelectionPanel");
-        GridLayout grid = selectionPanel.GetComponent<GridLayout>();
-        /*GameObject newElement = gameObject;
-
-        newElement.transform.position = grid.WorldToCell(gameObject.transform.position);*/
-        //grid.GetComponent<GridLayout>().Instantiate(newElement);
-        var newElement = Instantiate(gameObject, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        newElement.transform.parent = gameObject.transform;
-
-        //remove old Object from GridLayout
-        gameObject.transform.parent = umlField.transform;
+        if (gameObject.transform.parent.CompareTag("SelectionPanel"))
+        {
+            var newUMLElement = Instantiate(
+                gameObject,
+                new Vector3(
+                    transform.position.x,
+                    transform.position.y,
+                    transform.position.z),
+                Quaternion.identity
+            );
+            // Set new Parents
+            newUMLElement.transform.SetParent(selectionPanel.transform);
+            gameObject.transform.SetParent(umlPanel.transform);
+        }
         //Debug.Log("OnBeginDrag");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         //Debug.Log("OnDrag");
-        rectTransform.anchoredPosition += eventData.delta;
+        rectT.anchoredPosition += eventData.delta;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (umlField.GetComponent<RectTransform>().rect.Contains(rectTransform.anchoredPosition))
+        if (gameObject.transform.position.y <= (canvasRectT.rect.height - umlRectT.rect.height) || // bottom bordercheck
+            gameObject.transform.position.x <= (canvasRectT.rect.width - umlRectT.rect.width)  || // left bordercheck
+            canvasRectT.rect.height <= (gameObject.transform.position.y + rectT.rect.height)  || // top bordercheck
+            canvasRectT.rect.width <= (gameObject.transform.position.x + rectT.rect.width    )) // right bordercheck
         {
             Destroy(gameObject);
         }
