@@ -5,20 +5,45 @@ using UnityEngine;
 public class UMLActor : MonoBehaviour
 {
     public UMLTree Tree;
+    public bool UMLRunning { get; private set; }
+    private Vector3 startPosition;
+
+    private void Start()
+    {
+        startPosition = transform.position;
+    }
 
     public bool StartUML()
     {
+        UMLRunning = true;
         Debug.Log("Started " + name);
         if (Tree?.Run(this) ?? false)
         {
+            UMLRunning = false;
             Debug.Log(name + " is done");
             return true;
         }
         else
         {
+            UMLRunning = false;
             Debug.Log(name + " is crashed");
             return false;
         }
+    }
+
+    public bool StopUML()
+    {
+        Debug.Log("UML is Stopping");
+        UMLRunning = false;
+        ResetActor();
+        Debug.Log("UML has Stopped");
+        return true;
+    }
+
+    public void ResetActor()
+    {
+        Debug.Log("UML Actor is Resetting");
+        transform.position = startPosition;
     }
 
     public void DoNothing()

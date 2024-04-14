@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,8 +44,32 @@ public class GameManager : MonoBehaviour
 
     //UML Testing
     public UMLActor UMLActor;
-    public static void RunUML()
+    public Button UMLStart;
+    public Button UMLStop;
+    public void RunUML()
     {
-        Instance.UMLActor?.StartUML();
+        UMLActor?.StartUML();
+        StartCoroutine(AllBotsDone());
+    }
+
+    public void StopUML()
+    {
+        StopCoroutine(AllBotsDone());
+        UMLActor?.StopUML();
+    }
+
+    public IEnumerator AllBotsDone()
+    {
+        yield return new WaitUntil(() => (!UMLActor?.UMLRunning) ?? true);
+        ShowWinLoose();
+        UMLActor?.ResetActor();
+        UMLStop.gameObject.SetActive(false);
+        UMLStart.gameObject.SetActive(true);
+        yield break;
+    }
+
+    public void ShowWinLoose()
+    {
+        Debug.Log("Game Won/Lost");
     }
 }
