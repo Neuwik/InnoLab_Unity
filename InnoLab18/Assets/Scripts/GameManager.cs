@@ -61,14 +61,14 @@ public class GameManager : MonoBehaviour
     public IEnumerator AllBotsDone()
     {
         yield return new WaitUntil(() => (!UMLActor?.UMLRunning) ?? true);
-        ShowWinLoose();
+        ShowWinLose();
         UMLActor?.ResetActor();
         UMLStop.gameObject.SetActive(false);
         UMLStart.gameObject.SetActive(true);
         yield break;
     }
 
-    public void ShowWinLoose()
+    public void ShowWinLose()
     {
         Debug.Log("Game Won/Lost");
     }

@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
             Move(Vector3.right);
     }
 
-    void Move(Vector3 direction)
+    public void Move(Vector3 direction)
     {
         for (int i = 1; i <= distance; i++)
         {

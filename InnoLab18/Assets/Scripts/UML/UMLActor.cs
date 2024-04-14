@@ -8,13 +8,9 @@ public class UMLActor : MonoBehaviour
     public bool UMLRunning { get; private set; }
     private Vector3 startPosition;
 
-    private void Start()
-    {
-        startPosition = transform.position;
-    }
-
     public bool StartUML()
     {
+        startPosition = transform.position;
         UMLRunning = true;
         Debug.Log("Started " + name);
         if (Tree?.Run(this) ?? false)
@@ -59,5 +55,10 @@ public class UMLActor : MonoBehaviour
     public void DoSomethingElse()
     {
         Debug.Log(name + " is doing something else");
+    }
+
+    public void MoveUp()
+    {
+        GetComponent<PlayerController>()?.Move(Vector3.forward);
     }
 }
