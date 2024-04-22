@@ -6,20 +6,20 @@ using UnityEngine.EventSystems;
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    private RectTransform canvasRectT;
+    private RectTransform _canvasRectT;
+    private RectTransform _rectT;
 
-    private RectTransform rectT;
-    private GameObject umlPanel;
-    private RectTransform umlRectT;
-    private GameObject selectionPanel;
+    private GameObject _umlPanel;
+    private RectTransform _umlRectT;
+    private GameObject _selectionPanel;
 
     private void Start()
     {
-        canvasRectT = GameObject.FindGameObjectWithTag("Canvas").GetComponent<RectTransform>();
-        selectionPanel = GameObject.FindGameObjectWithTag("SelectionPanel"); 
-        umlPanel = GameObject.FindGameObjectWithTag("UMLPanel");
-        umlRectT = umlPanel.GetComponent<RectTransform>();
-        rectT = GetComponent<RectTransform>();
+        _canvasRectT = GameObject.FindGameObjectWithTag("Canvas").GetComponent<RectTransform>();
+        _selectionPanel = GameObject.FindGameObjectWithTag("SelectionPanel"); 
+        _umlPanel = GameObject.FindGameObjectWithTag("UMLPanel");
+        _umlRectT = _umlPanel.GetComponent<RectTransform>();
+        _rectT = GetComponent<RectTransform>();
     }
 
     private void Awake()
@@ -41,8 +41,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                 Quaternion.identity
             );
             // Set new Parents
-            newUMLElement.transform.SetParent(selectionPanel.transform);
-            gameObject.transform.SetParent(umlPanel.transform);
+            newUMLElement.transform.SetParent(_selectionPanel.transform);
+            gameObject.transform.SetParent(_umlPanel.transform);
         }
         //Debug.Log("OnBeginDrag");
     }
@@ -50,15 +50,15 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void OnDrag(PointerEventData eventData)
     {
         //Debug.Log("OnDrag");
-        rectT.anchoredPosition += eventData.delta;
+        _rectT.anchoredPosition += eventData.delta;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (gameObject.transform.position.y <= (canvasRectT.rect.height - umlRectT.rect.height) || // bottom bordercheck
-            gameObject.transform.position.x <= (canvasRectT.rect.width - umlRectT.rect.width)  || // left bordercheck
-            canvasRectT.rect.height <= (gameObject.transform.position.y + rectT.rect.height)  || // top bordercheck
-            canvasRectT.rect.width <= (gameObject.transform.position.x + rectT.rect.width    )) // right bordercheck
+        if (gameObject.transform.position.y <= (_canvasRectT.rect.height - _umlRectT.rect.height) || // bottom bordercheck
+            gameObject.transform.position.x <= (_canvasRectT.rect.width - _umlRectT.rect.width)  || // left bordercheck
+            _canvasRectT.rect.height <= (gameObject.transform.position.y + _rectT.rect.height)  || // top bordercheck
+            _canvasRectT.rect.width <= (gameObject.transform.position.x + _rectT.rect.width    )) // right bordercheck
         {
             Destroy(gameObject);
         }

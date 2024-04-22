@@ -5,20 +5,11 @@ using UnityEngine.EventSystems;
 
 public class CreateArrow : MonoBehaviour, IPointerClickHandler
 {
-    public GameObject Arrow;
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
+    public DrawArrow Arrow;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameObject.Instantiate(Arrow, gameObject.transform);
+        var newArrow = GameObject.Instantiate(Arrow, gameObject.transform);
+        newArrow.Startpos = gameObject.transform.position;
     }
 }
