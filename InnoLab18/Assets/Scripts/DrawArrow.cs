@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 public class DrawArrow : MonoBehaviour//, IPointerClickHandler
-{ 
+{
     private bool _targetFound;
 
     private RectTransform _upperVerticleShaftRectT;
@@ -45,17 +46,20 @@ public class DrawArrow : MonoBehaviour//, IPointerClickHandler
     {
         float arrowGirth = 10;
         Vector2 mousePos =  Input.mousePosition;
-        Vector2 verticleLength = new Vector2(arrowGirth, (Math.Abs(mousePos.y - Startpos.y)) / 2);
-        Vector2 horizontalLength = new Vector2(Math.Abs(mousePos.x - Startpos.x), arrowGirth);
-        //float verticleLength = (mousePos.y - Startpos.y) / 2;
-        _upperVerticleShaftRectT.sizeDelta = verticleLength;
-        _upperVerticleShaftRectT.position = new Vector2(Startpos.x, verticleLength.y/2);
+        float verticleLength = (mousePos.y - Startpos.y)/ 2;
+        float horizontalLength = mousePos.x - Startpos.x;
 
-        _horizontalVerticleShaftRectT.position = new Vector2 (Startpos.x, Startpos.y + verticleLength.y);
-        _horizontalVerticleShaftRectT.sizeDelta = horizontalLength;
+        gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(horizontalLength));
+        gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength * 2));
 
-        _lowerVerticleShaftRectT.position = new Vector2 (mousePos.x, _horizontalVerticleShaftRectT.position.y);
-        _lowerVerticleShaftRectT.sizeDelta = verticleLength;
+        _upperVerticleShaftRectT.position = new Vector2(Startpos.x, Startpos.y - Math.Abs(verticleLength) / 2);
+        _upperVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength));
+
+        _horizontalVerticleShaftRectT.position = new Vector2 (Startpos.x + horizontalLength / 2, Startpos.y + verticleLength);
+        _horizontalVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(horizontalLength));
+
+        _lowerVerticleShaftRectT.position = new Vector2 (mousePos.x, mousePos.y + Math.Abs(verticleLength) / 2);
+        _lowerVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength));
 
         _arrowHeadRectT.position = mousePos;
 
