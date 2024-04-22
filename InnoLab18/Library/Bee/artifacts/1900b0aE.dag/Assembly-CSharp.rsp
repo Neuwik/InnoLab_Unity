@@ -361,6 +361,7 @@
 -analyzer:"D:/Unity Hub/Editor/2022.3.13f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/DragDrop.cs"
 "Assets/Scripts/GameManager.cs"
+"Assets/Scripts/Garbage.cs"
 "Assets/Scripts/GarbageCollector.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/UIEventManager.cs"

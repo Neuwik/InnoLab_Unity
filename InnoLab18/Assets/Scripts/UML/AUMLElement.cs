@@ -28,11 +28,11 @@ public abstract class AUMLElement : MonoBehaviour
         return true;
     }
 
-    public bool Run(UMLActor actor)
+    public IEnumerator Run(UMLActor actor)
     {
         if (!actor.UMLRunning)
         {
-            return false;
+            yield break;
         }
 
         Highlight();
@@ -41,17 +41,19 @@ public abstract class AUMLElement : MonoBehaviour
         if (!Execute(actor))
         {
             StopHighlight();
-            return false;
+            yield break;
         }
+
+        yield return actor.WaitForTick();
 
         StopHighlight();
         //return false; // To test StopHighlight
 
         if (NextElement is UMLTree)
         {
-            return true;
+            yield break;
         }
-        return NextElement?.Run(actor) ?? false;
+        yield return NextElement?.Run(actor);
     }
 
     protected virtual bool Execute(UMLActor actor)

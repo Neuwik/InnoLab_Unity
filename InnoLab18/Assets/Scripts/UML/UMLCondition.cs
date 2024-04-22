@@ -14,13 +14,13 @@ public class UMLCondition : AUMLElement
     private AUMLElement falseNextAction;
 
     public EUMLConditionType ConditionType;
-    private Predicate<UMLActor> condition;
+    private Func<bool> condition;
 
     protected override bool Execute(UMLActor actor)
     {
         Debug.Log("Some Condition: " + name);
-        SetConditionPredicateByEnum();
-        if (condition.Invoke(actor))
+        SetConditionByEnum(actor);
+        if (condition.Invoke())
         {
             NextElement = trueNextAction;
         }
@@ -44,18 +44,18 @@ public class UMLCondition : AUMLElement
         return true;
     }
 
-    private void SetConditionPredicateByEnum()
+    private void SetConditionByEnum(UMLActor actor)
     {
         switch (ConditionType)
         {
             case EUMLConditionType.SomeCondition:
-                condition = UMLElementFunctionManager.Instance.SomeCondition;
+                condition = actor.SomeCondition;
                 break;
             case EUMLConditionType.RandomCondition:
-                condition = UMLElementFunctionManager.Instance.RandomCondition;
+                condition = actor.RandomCondition;
                 break;
             default:
-                condition = actor => { return true; };
+                condition = () => { return true; };
                 break;
         }
     }

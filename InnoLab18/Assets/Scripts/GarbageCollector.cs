@@ -40,7 +40,7 @@ public class GarbageCollector : MonoBehaviour
         }
         else
         {
-            Destroy(garbage);
+            garbage.SetActive(false);
             GarbageCount++;
         }
     }

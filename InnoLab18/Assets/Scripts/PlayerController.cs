@@ -20,7 +20,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+        if (transform.position != movePoint.position)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+        }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
             Move(Vector3.forward);
@@ -55,5 +58,10 @@ public class PlayerController : MonoBehaviour
         /*
         */
         //movePoint.position += direction * distance;
+    }
+
+    public void Reset()
+    {
+        movePoint.position = transform.position;
     }
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UMLActor : MonoBehaviour
 {
@@ -8,22 +10,25 @@ public class UMLActor : MonoBehaviour
     public bool UMLRunning { get; private set; }
     private Vector3 startPosition;
 
-    public bool StartUML()
+    public float tickRate = 2; //Actions per second
+
+    public IEnumerator StartUML()
     {
         startPosition = transform.position;
         UMLRunning = true;
         Debug.Log("Started " + name);
-        if (Tree?.Run(this) ?? false)
+
+        yield return Tree?.Run(this);
+        
+        if (true) //If UML success
         {
             UMLRunning = false;
             Debug.Log(name + " is done");
-            return true;
         }
-        else
+        else // If UML crash
         {
             UMLRunning = false;
             Debug.Log(name + " is crashed");
-            return false;
         }
     }
 
@@ -31,15 +36,29 @@ public class UMLActor : MonoBehaviour
     {
         Debug.Log("UML is Stopping");
         UMLRunning = false;
-        ResetActor();
+        Reset();
         Debug.Log("UML has Stopped");
         return true;
     }
 
-    public void ResetActor()
+    public void Reset()
     {
         Debug.Log("UML Actor is Resetting");
         transform.position = startPosition;
+        GetComponent<PlayerController>()?.Reset();
+    }
+
+    public IEnumerator WaitForTick()
+    {
+        if (tickRate <= 0)
+        {
+            yield return new WaitForSeconds(1);
+        }
+        else
+        {
+
+            yield return new WaitForSeconds(1/tickRate);
+        }
     }
 
     public void DoNothing()
@@ -60,5 +79,15 @@ public class UMLActor : MonoBehaviour
     public void MoveUp()
     {
         GetComponent<PlayerController>()?.Move(Vector3.forward);
+    }
+
+    public bool SomeCondition()
+    {
+        return true;
+    }
+
+    public bool RandomCondition()
+    {
+        return Random.value > 0.5;
     }
 }

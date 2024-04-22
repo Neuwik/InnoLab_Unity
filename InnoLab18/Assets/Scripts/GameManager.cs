@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,37 +36,49 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
         PlayerGarbageCollector = Player.GetComponent<GarbageCollector>();
         UMLPanel = GameObject.FindWithTag("UMLPanel");
+
+
+        UMLActors = FindObjectsByType<UMLActor>(FindObjectsSortMode.InstanceID).ToList();
+        Garbages = FindObjectsByType<Garbage>(FindObjectsSortMode.InstanceID).ToList();
     }
 
     public GameObject Player { get; private set; }
     public GarbageCollector PlayerGarbageCollector { get; private set; }
     public GameObject UMLPanel { get; private set; }
 
+    //For Reset
+    public List<Garbage> Garbages;
 
     //UML Testing
-    public UMLActor UMLActor;
+    public List<UMLActor> UMLActors;
     public Button UMLStart;
     public Button UMLStop;
+
     public void RunUML()
     {
-        UMLActor?.StartUML();
+        UMLActors.ForEach(a => StartCoroutine(a.StartUML()));
         StartCoroutine(AllBotsDone());
     }
 
-    public void StopUML()
+    private void StopUML()
     {
-        StopCoroutine(AllBotsDone());
-        UMLActor?.StopUML();
+        UMLActors.ForEach(a => a.StopUML());
     }
 
     public IEnumerator AllBotsDone()
     {
-        yield return new WaitUntil(() => (!UMLActor?.UMLRunning) ?? true);
+        yield return new WaitUntil(() => (UMLActors.Find(a => a.UMLRunning) == null)); //Not Performant?
         ShowWinLose();
-        UMLActor?.ResetActor();
+        ResetLevel();
         UMLStop.gameObject.SetActive(false);
         UMLStart.gameObject.SetActive(true);
         yield break;
+    }
+
+    private void ResetLevel()
+    {
+        UMLActors.ForEach(a => a.Reset());
+        Garbages?.ForEach(g => g.Reset());
     }
 
     public void ShowWinLose()
