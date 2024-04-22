@@ -41,6 +41,7 @@ public abstract class AUMLElement : MonoBehaviour
         if (!Execute(actor))
         {
             StopHighlight();
+            actor.SetActorState(EUMLActorState.Crashed);
             yield break;
         }
 
@@ -53,6 +54,13 @@ public abstract class AUMLElement : MonoBehaviour
         {
             yield break;
         }
+
+        if (NextElement == null)
+        {
+            actor.SetActorState(EUMLActorState.Crashed);
+            yield break;
+        }
+
         yield return NextElement?.Run(actor);
     }
 
