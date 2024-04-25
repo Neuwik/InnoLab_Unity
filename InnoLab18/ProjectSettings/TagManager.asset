@@ -48,6 +48,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: New Layer 1
+  - name: Arrows
     uniqueID: 829412477
+    locked: 0
+  - name: UMLElements
+    uniqueID: 995434801
     locked: 0

@@ -40,13 +40,15 @@ public class GameManager : MonoBehaviour
 
     public GameObject Player { get; private set; }
     public GarbageCollector PlayerGarbageCollector { get; private set; }
-    public GameObject UMLPanel { get; private set; } 
-
+    public GameObject UMLPanel { get; private set; }
+    
+    public GameObject ActiveArrow;
+    public bool ReDrawArrow;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ReDrawArrow = false;
     }
 
     // Update is called once per frame

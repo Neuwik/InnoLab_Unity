@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
@@ -12,6 +14,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private GameObject _umlPanel;
     private RectTransform _umlRectT;
     private GameObject _selectionPanel;
+
+    public UnityEvent OnPossitionChanged;
 
     private void Start()
     {
@@ -26,7 +30,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
 
     }
-
+    
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Place new Object
@@ -40,17 +44,16 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                     transform.position.z),
                 Quaternion.identity
             );
-            // Set new Parents
             newUMLElement.transform.SetParent(_selectionPanel.transform);
             gameObject.transform.SetParent(_umlPanel.transform);
         }
-        //Debug.Log("OnBeginDrag");
+        realignArrow();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnDrag");
         _rectT.anchoredPosition += eventData.delta;
+        OnPossitionChanged.Invoke();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -62,7 +65,18 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         {
             Destroy(gameObject);
         }
+
+        realignArrow();
         //Debug.Log("OnEndDrag");
+    }
+    private void realignArrow()
+    {
+        Transform attachedArrow;
+        if ((attachedArrow = gameObject.transform.Find("Arrow(Clone)")) != null)
+        {
+            GameManager.Instance.ReDrawArrow = !GameManager.Instance.ReDrawArrow;
+            attachedArrow.GetComponent<DrawArrow>().enabled = !attachedArrow.GetComponent<DrawArrow>().enabled;
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
