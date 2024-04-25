@@ -16,6 +16,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private GameObject _selectionPanel;
 
     public UnityEvent OnPossitionChanged;
+    public UnityEvent OnDelete;
 
     private void Start()
     {
@@ -47,7 +48,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             newUMLElement.transform.SetParent(_selectionPanel.transform);
             gameObject.transform.SetParent(_umlPanel.transform);
         }
-        realignArrow();
+        GameManager.Instance.ReDrawArrow = true;
+        //realignArrow();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -58,25 +60,17 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        GameManager.Instance.ReDrawArrow = false;
         if (gameObject.transform.position.y <= (_canvasRectT.rect.height - _umlRectT.rect.height) || // bottom bordercheck
             gameObject.transform.position.x <= (_canvasRectT.rect.width - _umlRectT.rect.width)  || // left bordercheck
             _canvasRectT.rect.height <= (gameObject.transform.position.y + _rectT.rect.height)  || // top bordercheck
             _canvasRectT.rect.width <= (gameObject.transform.position.x + _rectT.rect.width    )) // right bordercheck
         {
+            OnDelete.Invoke();
             Destroy(gameObject);
         }
 
-        realignArrow();
         //Debug.Log("OnEndDrag");
-    }
-    private void realignArrow()
-    {
-        Transform attachedArrow;
-        if ((attachedArrow = gameObject.transform.Find("Arrow(Clone)")) != null)
-        {
-            GameManager.Instance.ReDrawArrow = !GameManager.Instance.ReDrawArrow;
-            attachedArrow.GetComponent<DrawArrow>().enabled = !attachedArrow.GetComponent<DrawArrow>().enabled;
-        }
     }
 
     public void OnPointerDown(PointerEventData eventData)

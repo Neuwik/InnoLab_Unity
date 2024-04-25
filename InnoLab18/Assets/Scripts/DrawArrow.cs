@@ -35,10 +35,18 @@ public class DrawArrow : MonoBehaviour//, IPointerClickHandler
         set 
         { 
             _targetElem = value;
-            _targetElem.GetComponent<DragDrop>().OnPossitionChanged.AddListener(setEnabled);
+            gameObject.transform.parent.GetComponent<DragDrop>().OnPossitionChanged.AddListener(SetEnabled);
+            _targetElem.GetComponent<DragDrop>().OnPossitionChanged.AddListener(SetEnabled);
+            _targetElem.GetComponent<DragDrop>().OnDelete.AddListener(TargetDestroyed);
         }
     }
-    private void setEnabled()
+
+    private void TargetDestroyed()
+    {
+        Destroy(gameObject);
+    }
+
+    private void SetEnabled()
     {
         enabled = true;
     }
