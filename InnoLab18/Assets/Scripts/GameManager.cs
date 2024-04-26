@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         UMLActors = FindObjectsByType<UMLActor>(FindObjectsSortMode.InstanceID).ToList();
         Garbages = FindObjectsByType<Garbage>(FindObjectsSortMode.InstanceID).ToList();
+        ReDrawArrow = false;
     }
 
     public GameObject Player { get; private set; }
@@ -53,6 +54,10 @@ public class GameManager : MonoBehaviour
     public List<UMLActor> UMLActors;
     public Button UMLStart;
     public Button UMLStop;
+
+    //drawing arrows
+    public GameObject ActiveArrow;
+    public bool ReDrawArrow;
 
     public void RunUML()
     {

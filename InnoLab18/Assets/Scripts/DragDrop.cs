@@ -1,30 +1,75 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    private RectTransform rectTransform;
+    private RectTransform _canvasRectT;
+    private RectTransform _rectT;
+
+    private GameObject _umlPanel;
+    private RectTransform _umlRectT;
+    private GameObject _selectionPanel;
+
+    public UnityEvent OnPossitionChanged;
+    public UnityEvent OnDelete;
+
+    private void Start()
+    {
+        _canvasRectT = GameObject.FindGameObjectWithTag("Canvas").GetComponent<RectTransform>();
+        _selectionPanel = GameObject.FindGameObjectWithTag("SelectionPanel"); 
+        _umlPanel = GameObject.FindGameObjectWithTag("UMLPanel");
+        _umlRectT = _umlPanel.GetComponent<RectTransform>();
+        _rectT = GetComponent<RectTransform>();
+    }
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-    }
 
+    }
+    
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnBeginDrag");
+        //Place new Object
+        if (gameObject.transform.parent.CompareTag("SelectionPanel"))
+        {
+            var newUMLElement = Instantiate(
+                gameObject,
+                new Vector3(
+                    transform.position.x,
+                    transform.position.y,
+                    transform.position.z),
+                Quaternion.identity
+            );
+            newUMLElement.transform.SetParent(_selectionPanel.transform);
+            gameObject.transform.SetParent(_umlPanel.transform);
+        }
+        GameManager.Instance.ReDrawArrow = true;
+        //realignArrow();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnDrag");
-        rectTransform.anchoredPosition += eventData.delta;
+        _rectT.anchoredPosition += eventData.delta;
+        OnPossitionChanged.Invoke();
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        GameManager.Instance.ReDrawArrow = false;
+        if (gameObject.transform.position.y <= (_canvasRectT.rect.height - _umlRectT.rect.height) || // bottom bordercheck
+            gameObject.transform.position.x <= (_canvasRectT.rect.width - _umlRectT.rect.width)  || // left bordercheck
+            _canvasRectT.rect.height <= (gameObject.transform.position.y + _rectT.rect.height)  || // top bordercheck
+            _canvasRectT.rect.width <= (gameObject.transform.position.x + _rectT.rect.width    )) // right bordercheck
+        {
+            OnDelete.Invoke();
+            Destroy(gameObject);
+        }
+
         //Debug.Log("OnEndDrag");
     }
 
