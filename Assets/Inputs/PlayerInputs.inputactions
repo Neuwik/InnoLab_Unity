@@ -1,0 +1,54 @@
+{
+    "name": "PlayerInputs",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "0426fc20-cdab-4c12-a7fb-97f642af0554",
+            "actions": [
+                {
+                    "name": "AddComponent",
+                    "type": "Button",
+                    "id": "20cd616d-6b03-44a4-a922-607064f7940c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SelectComponent",
+                    "type": "Button",
+                    "id": "c8022528-5e4f-4f7a-be95-d43b768b9734",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7c610698-2d5b-419e-a0d3-a059187b9abb",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddComponent",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30592180-8389-4d20-9f93-4930a3bf00e8",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectComponent",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
