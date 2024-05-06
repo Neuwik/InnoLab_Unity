@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum EUMLConditionType { SomeCondition = 0, RandomCondition }
+public enum EUMLConditionType { SomeCondition = 0, RandomCondition, IsUpDanger, IsDownDanger, IsLeftDanger, IsRightDanger }
 public class UMLCondition : AUMLElement
 {
     [SerializeField]
@@ -53,6 +53,18 @@ public class UMLCondition : AUMLElement
                 break;
             case EUMLConditionType.RandomCondition:
                 condition = actor.RandomCondition;
+                break;
+            case EUMLConditionType.IsUpDanger:
+                condition = actor.IsUpDanger;
+                break;
+            case EUMLConditionType.IsDownDanger:
+                condition = actor.IsDownDanger;
+                break;
+            case EUMLConditionType.IsLeftDanger:
+                condition = actor.IsLeftDanger;
+                break;
+            case EUMLConditionType.IsRightDanger:
+                condition = actor.IsRightDanger;
                 break;
             default:
                 condition = () => { return true; };

@@ -239,7 +239,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tree: {fileID: 0}
-  TickRate: 2
+  TickRate: 1
+  DangerLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &7198170989828703948
 GameObject:
   m_ObjectHideFlags: 0

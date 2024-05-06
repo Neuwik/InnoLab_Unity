@@ -7,6 +7,12 @@ TagManager:
   - Ground
   - Garbage
   - UMLPanel
+  - Arrow
+  - UMLElement
+  - Fire
+  - Water
+  - UMLSelectionPanel
+  - UMLCanvas
   layers:
   - Default
   - TransparentFX
@@ -16,9 +22,9 @@ TagManager:
   - UI
   - Player
   - Obstical
-  - 
-  - 
-  - 
+  - Danger
+  - Garbage
+  - UMLElement
   - 
   - 
   - 

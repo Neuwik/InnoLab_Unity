@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
 
+        //Useless Vars?
         Player = GameObject.FindWithTag("Player");
         PlayerGarbageCollector = Player.GetComponent<GarbageCollector>();
         UMLPanel = GameObject.FindWithTag("UMLPanel");
@@ -43,20 +45,63 @@ public class GameManager : MonoBehaviour
         ReDrawArrow = false;
     }
 
+    //UselessVars?
     public GameObject Player { get; private set; }
     public GarbageCollector PlayerGarbageCollector { get; private set; }
     public GameObject UMLPanel { get; private set; }
 
     //For Reset
+    [HideInInspector]
     public List<Garbage> Garbages;
 
     //UML Testing
+    [HideInInspector]
     public List<UMLActor> UMLActors;
     public Button UMLStart;
     public Button UMLStop;
 
+    //UML Objects
+    private GameObject _uml_canvas;
+    public GameObject UML_Canvas
+    {
+        get
+        {
+            if (_uml_canvas == null)
+            {
+                _uml_canvas = GameObject.FindGameObjectWithTag("UMLCanvas");
+            }
+            return _uml_canvas;
+        }
+    }
+    private GameObject _uml_selectionPanel;
+    public GameObject UML_SelectionPanel
+    {
+        get
+        {
+            if (_uml_selectionPanel == null)
+            {
+                _uml_selectionPanel = GameObject.FindGameObjectWithTag("UMLSelectionPanel");
+            }
+            return _uml_selectionPanel;
+        }
+    }
+    private GameObject _uml_panel;
+    public GameObject UML_Panel
+    {
+        get
+        {
+            if (_uml_panel == null)
+            {
+                _uml_panel = GameObject.FindGameObjectWithTag("UMLPanel");
+            }
+            return _uml_panel;
+        }
+    }
+
     //drawing arrows
+    [HideInInspector]
     public GameObject ActiveArrow;
+    [HideInInspector]
     public bool ReDrawArrow;
 
     public void RunUML()

@@ -26,6 +26,7 @@ public class DrawArrow : MonoBehaviour//, IPointerClickHandler
     public GameObject ArrowHead;
 
     public Vector2 Startpos;
+    private Vector2 mouseOffset = new Vector2(-5, 5); //  3px does not work, it autosnaps the mouse click???
 
     // TODO: reddraw
     private GameObject _targetElem;
@@ -35,9 +36,13 @@ public class DrawArrow : MonoBehaviour//, IPointerClickHandler
         set 
         { 
             _targetElem = value;
-            gameObject.transform.parent.GetComponent<DragDrop>().OnPossitionChanged.AddListener(SetEnabled);
+            gameObject.transform.parent.GetComponent<DragDrop>()?.OnPossitionChanged.AddListener(SetEnabled);
             _targetElem.GetComponent<DragDrop>().OnPossitionChanged.AddListener(SetEnabled);
             _targetElem.GetComponent<DragDrop>().OnDelete.AddListener(TargetDestroyed);
+
+            AUMLElement prev = transform.parent.GetComponent<AUMLElement>();
+            bool conditional = false; //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
+            prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), conditional);
         }
     }
 
@@ -62,10 +67,10 @@ public class DrawArrow : MonoBehaviour//, IPointerClickHandler
 
     void Update()
     {
-        Debug.Log("UPDATE");
+        //Debug.Log("UPDATE");
         if (TargetElem == null)
         {
-            drawArrow(Input.mousePosition);
+            drawArrow((Vector2)Input.mousePosition + mouseOffset);
             return;
         }
         else

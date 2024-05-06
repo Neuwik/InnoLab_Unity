@@ -20,9 +20,9 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     private void Start()
     {
-        _canvasRectT = GameObject.FindGameObjectWithTag("Canvas").GetComponent<RectTransform>();
-        _selectionPanel = GameObject.FindGameObjectWithTag("SelectionPanel"); 
-        _umlPanel = GameObject.FindGameObjectWithTag("UMLPanel");
+        _canvasRectT = GameManager.Instance.UML_Canvas.GetComponent<RectTransform>();
+        _selectionPanel = GameManager.Instance.UML_SelectionPanel; 
+        _umlPanel = GameManager.Instance.UML_Panel;
         _umlRectT = _umlPanel.GetComponent<RectTransform>();
         _rectT = GetComponent<RectTransform>();
     }
@@ -35,7 +35,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Place new Object
-        if (gameObject.transform.parent.CompareTag("SelectionPanel"))
+        if (gameObject.transform.parent.CompareTag(_selectionPanel.tag))
         {
             var newUMLElement = Instantiate(
                 gameObject,

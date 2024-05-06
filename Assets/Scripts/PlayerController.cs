@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
 
     public void Move(Vector3 direction)
     {
+        movePoint.position = GetNextMovePointPosition(direction);
+        /*
         for (int i = 1; i <= distance; i++)
         {
             if (Physics.OverlapSphere(movePoint.position + direction, .2f, obstical, QueryTriggerInteraction.Collide).Length > 0)
@@ -54,10 +57,33 @@ public class PlayerController : MonoBehaviour
             {
                 movePoint.position += direction;
             }
-        }
+        }*/
         /*
         */
         //movePoint.position += direction * distance;
+    }
+
+    public Vector3 GetNextMovePointPosition(Vector3 direction)
+    {
+        Vector3 movePointPosition = movePoint.position;
+        for (int i = 1; i <= distance; i++)
+        {
+            if (Physics.OverlapSphere(movePointPosition + direction, .2f, obstical, QueryTriggerInteraction.Collide).Length > 0)
+            {
+                //Debug.Log("Tree");
+                return movePointPosition;
+            }
+            else if (Physics.OverlapSphere(movePointPosition + direction, .2f, damagesource, QueryTriggerInteraction.Collide).Length > 0)
+            {
+                //Debug.Log("Damage");
+                return movePointPosition + direction;
+            }
+            else
+            {
+                movePointPosition += direction;
+            }
+        }
+        return movePointPosition;
     }
 
     public void Reset()

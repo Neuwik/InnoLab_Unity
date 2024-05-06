@@ -4,14 +4,16 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.HID;
 
 public enum EUMLActorState { Ready = 0, Running, Stopped, Crashed, Done }
 
 public class UMLActor : MonoBehaviour
 {
     public UMLTree Tree;
-    public float TickRate = 2; //Actions per second
+    public float TickRate = 1; //Actions per second
     private Vector3 startPosition;
+    public LayerMask DangerLayer;
 
     public EUMLActorState State { get; private set; } = EUMLActorState.Ready;
     public bool UMLRunning
@@ -71,6 +73,7 @@ public class UMLActor : MonoBehaviour
         Debug.Log("UML Actor is Resetting");
         transform.position = startPosition;
         GetComponent<PlayerController>()?.Reset();
+        GetComponent<PlayerHealth>()?.Reset();
 
         SetActorState(EUMLActorState.Ready);
     }
@@ -94,6 +97,7 @@ public class UMLActor : MonoBehaviour
         State = newState;
     }
 
+    #region Actions
     public void DoNothing()
     {
         Debug.Log(name + " is doing nothing");
@@ -113,7 +117,26 @@ public class UMLActor : MonoBehaviour
     {
         GetComponent<PlayerController>()?.Move(Vector3.forward);
     }
+    public void MoveDown()
+    {
+        GetComponent<PlayerController>()?.Move(Vector3.back);
+    }
+    public void MoveLeft()
+    {
+        GetComponent<PlayerController>()?.Move(Vector3.left);
+    }
+    public void MoveRight()
+    {
+        GetComponent<PlayerController>()?.Move(Vector3.right);
+    }
 
+    public void CollectGarbage()
+    {
+        GetComponent<GarbageCollector>()?.CollectGarbage();
+    }
+    #endregion
+
+    #region Conditions
     public bool SomeCondition()
     {
         return true;
@@ -123,4 +146,46 @@ public class UMLActor : MonoBehaviour
     {
         return Random.value > 0.5;
     }
+
+    private bool IsDangerInDirection(Vector3 direction)
+    {
+        PlayerController pc = GetComponent<PlayerController>();
+        if (pc == null)
+        {
+            return false;
+        }
+        RaycastHit hit;
+        Vector3 pos = pc.GetNextMovePointPosition(direction) + Vector3.down;
+        float distance = Vector3.Distance(transform.position, pos);
+        Vector3 posDirection = pos - transform.position;
+        if (Physics.Raycast(transform.position, posDirection, out hit, distance, DangerLayer))
+        {
+            //Debug.DrawLine(transform.position, hit.point, Color.red, 10f);
+            //Debug.Log($"Is Danger {hit.transform.gameObject.name}");
+            return true;
+        }
+        //Debug.DrawLine(transform.position, pos, Color.green, 10f);
+        return false;
+    }
+
+    public bool IsUpDanger()
+    {
+        return IsDangerInDirection(Vector3.forward);
+    }
+
+    public bool IsDownDanger()
+    {
+        return IsDangerInDirection(Vector3.back);
+    }
+
+    public bool IsLeftDanger()
+    {
+        return IsDangerInDirection(Vector3.left);
+    }
+
+    public bool IsRightDanger()
+    {
+        return IsDangerInDirection(Vector3.right);
+    }
+    #endregion
 }

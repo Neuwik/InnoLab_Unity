@@ -18,7 +18,7 @@ public abstract class AUMLElement : MonoBehaviour
 
     private void Start()
     {
-        image = GetComponent<Image>();
+        image = GetComponentInChildren<Image>();
         baseColor = image.color;
     }
 

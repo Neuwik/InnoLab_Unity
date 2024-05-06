@@ -22,6 +22,13 @@ public class PlayerHealth : Health
         UpdateHealthUIBinary();
     }
 
+    public void Reset()
+    {
+        currentHealth = maxHealth;
+        maxHPBinaryLength = Convert.ToString(currentHealth, 2).Length;
+        UpdateHealthUIBinary();
+    }
+
     public override void TakeDamage(int amount)
     {
         if (tmpHealth > 0)
