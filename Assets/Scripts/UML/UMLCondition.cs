@@ -7,9 +7,9 @@ using UnityEngine.Events;
 
 public enum EUMLConditionType
 {
-    SomeCondition = 0, 
-    IsUpDanger, IsDownDanger, IsLeftDanger, IsRightDanger, IsThisDanger,
-    IsUpGarbage, IsDownGarbage, IsLeftGarbage, IsRightGarbage, IsThisGarbage
+    SomeCondition = 0,
+    IsUpDanger = 11, IsDownDanger = 12, IsLeftDanger = 13, IsRightDanger = 14, IsThisDanger = 15,
+    IsUpGarbage = 21, IsDownGarbage = 22, IsLeftGarbage = 23, IsRightGarbage = 24, IsThisGarbage = 25
 }
 
 public class UMLCondition : AUMLElement
@@ -27,6 +27,7 @@ public class UMLCondition : AUMLElement
         GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {ConditionType}");
         //Debug.Log("Some Condition: " + name);
         SetConditionByEnum(actor);
+        actor.GetComponent<Battery>()?.LooseEnergy(1);
         if (condition.Invoke())
         {
             NextElement = trueNextAction;

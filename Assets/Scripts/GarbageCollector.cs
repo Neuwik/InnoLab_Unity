@@ -36,10 +36,12 @@ public class GarbageCollector : MonoBehaviour
     {
         if (garbage == null)
         {
-            Debug.LogError("Player not on Garbage");
+            GameManager.Instance.Console.LogWarning("Collecting", name, $"Can not collect Garbage");
+            //Debug.LogError("Player not on Garbage");
         }
         else
         {
+            GameManager.Instance.Console.Log("Collecting", name, $"Has collected Garbage");
             garbage.SetActive(false);
             GarbageCount++;
         }

@@ -16,11 +16,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 849734909667003421, guid: e5e1e1dcc99e55343a92ca9697006d6f, type: 3}
       propertyPath: ConditionType
-      value: 10
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1074176485469265772, guid: e5e1e1dcc99e55343a92ca9697006d6f, type: 3}
       propertyPath: m_Name
-      value: IsThisGarbage Variant
+      value: IsThisGarbage
       objectReference: {fileID: 0}
     - target: {fileID: 5001968408005811877, guid: e5e1e1dcc99e55343a92ca9697006d6f, type: 3}
       propertyPath: m_AnchorMax.y

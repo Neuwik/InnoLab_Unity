@@ -5,7 +5,7 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : Health
+public class PlayerHealth : Health, ILooseCondition
 {
     [SerializeField]
     private Image[] health;
@@ -14,6 +14,8 @@ public class PlayerHealth : Health
 
     private int maxHPBinaryLength;
     public int tmpHealth;
+
+    public Action OnLoose { get; set; }
 
     private void Start()
     {
@@ -31,6 +33,7 @@ public class PlayerHealth : Health
 
     public override void TakeDamage(int amount)
     {
+        GameManager.Instance.Console.LogWarning("Damaging", name, $"Has taken {amount} Damage");
         if (tmpHealth > 0)
         {
             tmpHealth -= amount;
@@ -44,6 +47,11 @@ public class PlayerHealth : Health
         else
         {
             base.TakeDamage(amount);
+        }
+
+        if (currentHealth <= 0)
+        {
+            OnLoose?.Invoke();
         }
 
         UpdateHealthUIBinary();
@@ -69,7 +77,7 @@ public class PlayerHealth : Health
 
     private void OnTriggerEnter(Collider collision)
     {
-        UnityEngine.Debug.Log("Trigger detected with: " + collision.gameObject.name);
+        //UnityEngine.Debug.Log("Trigger detected with: " + collision.gameObject.name);
 
         DamageScript ds = collision.gameObject.GetComponent<DamageScript>();
 
@@ -85,7 +93,7 @@ public class PlayerHealth : Health
                 TakeDamage(ds.damage);
             }
 
-            UnityEngine.Debug.Log("Current Health: " + currentHealth);
+            //UnityEngine.Debug.Log("Current Health: " + currentHealth);
         }
     }
 

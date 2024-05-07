@@ -3822,11 +3822,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1995000438236304912, guid: a95ef3e0be149824a9a4d667c887bdda, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -588.2437
+      value: -588.2418
       objectReference: {fileID: 0}
     - target: {fileID: 1995000438236304912, guid: a95ef3e0be149824a9a4d667c887bdda, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -302.61
+      value: -352.305
       objectReference: {fileID: 0}
     - target: {fileID: 1995000438236304912, guid: a95ef3e0be149824a9a4d667c887bdda, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3858,11 +3858,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1995000438236304912, guid: a95ef3e0be149824a9a4d667c887bdda, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -294.12
+      value: -294.1209
       objectReference: {fileID: 0}
     - target: {fileID: 1995000438236304912, guid: a95ef3e0be149824a9a4d667c887bdda, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -399
+      value: -423.8475
       objectReference: {fileID: 0}
     - target: {fileID: 1995000438236304912, guid: a95ef3e0be149824a9a4d667c887bdda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8063,6 +8063,14 @@ PrefabInstance:
       propertyPath: Tree
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 164509076281286924, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 164509076281286924, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1341497111934833152, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
       propertyPath: Tree
       value: 
@@ -8135,6 +8143,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 413077ae31222ca4ba8db825a90e2d07, type: 3}
+    - target: {fileID: 5635111107376137299, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: MaxEnergy
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7737078644307609033, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
       propertyPath: m_Icon
       value: 

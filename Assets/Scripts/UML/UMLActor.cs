@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -37,6 +38,11 @@ public class UMLActor : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        GetComponents<ILooseCondition>().ToList().ForEach(c => c.OnLoose = Crash);
+    }
+
     public IEnumerator StartUML()
     {
         startPosition = transform.position;
@@ -64,20 +70,31 @@ public class UMLActor : MonoBehaviour
         }
     }
 
-    public void StopUML()
+    public void Stop()
+    {
+        SetActorState(EUMLActorState.Stopped);
+    }
+
+    public void Crash()
+    {
+        SetActorState(EUMLActorState.Crashed);
+    }
+
+    public void StopAndReset()
     {
         //Debug.Log("UML is Stopping");
-        SetActorState(EUMLActorState.Stopped);
+        Stop();
         Reset();
     }
 
     public void Reset()
     {
-        GameManager.Instance.Console.Log(State.ToString(), name, $"Is resetting");
+        GameManager.Instance.Console.Log(State.ToString(), name, "Is resetting");
         //Debug.Log("UML Actor is Resetting");
         transform.position = startPosition;
         GetComponent<PlayerController>()?.Reset();
         GetComponent<PlayerHealth>()?.Reset();
+        GetComponent<Battery>()?.Reset();
 
         SetActorState(EUMLActorState.Ready);
     }
@@ -95,9 +112,23 @@ public class UMLActor : MonoBehaviour
         }
     }
 
-    public void SetActorState(EUMLActorState newState)
+    private void SetActorState(EUMLActorState newState)
     {
-        GameManager.Instance.Console.Log(newState.ToString(), name, $"State changed from {State} to {newState}");
+        switch (newState)
+        {
+            case EUMLActorState.Stopped:
+                GameManager.Instance.Console.LogWarning(newState.ToString(), name, $"State changed from {State} to {newState}");
+                break;
+            case EUMLActorState.Crashed:
+                GameManager.Instance.Console.LogError(newState.ToString(), name, $"State changed from {State} to {newState}");
+                break;
+            case EUMLActorState.Ready:
+            case EUMLActorState.Running:
+            case EUMLActorState.Done:
+            default:
+                GameManager.Instance.Console.Log(newState.ToString(), name, $"State changed from {State} to {newState}");
+                break;
+        }
         //Debug.Log($"UML Actor ({name}) State changed from {State} to {newState}");
         State = newState;
     }

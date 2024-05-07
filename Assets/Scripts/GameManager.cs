@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
 
     private void StopUML()
     {
-        UMLActors.ForEach(a => a.StopUML());
+        UMLActors.ForEach(a => a.StopAndReset());
     }
 
     public IEnumerator AllBotsDone()
