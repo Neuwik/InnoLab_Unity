@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.InputSystem.LowLevel;
 using static UnityEditor.PlayerSettings;
 
 public enum EUMLActorState { Ready = 0, Running, Stopped, Crashed, Done }
@@ -65,14 +66,15 @@ public class UMLActor : MonoBehaviour
 
     public void StopUML()
     {
-        Debug.Log("UML is Stopping");
+        //Debug.Log("UML is Stopping");
         SetActorState(EUMLActorState.Stopped);
         Reset();
     }
 
     public void Reset()
     {
-        Debug.Log("UML Actor is Resetting");
+        GameManager.Instance.Console.Log(State.ToString(), name, $"Is resetting");
+        //Debug.Log("UML Actor is Resetting");
         transform.position = startPosition;
         GetComponent<PlayerController>()?.Reset();
         GetComponent<PlayerHealth>()?.Reset();
@@ -95,14 +97,15 @@ public class UMLActor : MonoBehaviour
 
     public void SetActorState(EUMLActorState newState)
     {
-        Debug.Log($"UML Actor ({name}) State changed from {State} to {newState}");
+        GameManager.Instance.Console.Log(newState.ToString(), name, $"State changed from {State} to {newState}");
+        //Debug.Log($"UML Actor ({name}) State changed from {State} to {newState}");
         State = newState;
     }
 
     #region Actions
     public void DoNothing()
     {
-        Debug.Log(name + " is doing nothing");
+        //Debug.Log(name + " is doing nothing");
     }
 
     #region Move

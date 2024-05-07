@@ -10,7 +10,8 @@ public class UMLTree : AUMLElement
 
     protected override bool Execute(UMLActor actor)
     {
-        Debug.Log("Some Tree: " + name);
+        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {name}");
+        //Debug.Log("Some Tree: " + name);
         NextElement = Start;
         return true;
     }

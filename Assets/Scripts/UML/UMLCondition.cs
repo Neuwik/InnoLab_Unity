@@ -24,7 +24,8 @@ public class UMLCondition : AUMLElement
 
     protected override bool Execute(UMLActor actor)
     {
-        Debug.Log("Some Condition: " + name);
+        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {ConditionType}");
+        //Debug.Log("Some Condition: " + name);
         SetConditionByEnum(actor);
         if (condition.Invoke())
         {

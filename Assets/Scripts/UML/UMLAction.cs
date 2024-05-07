@@ -13,7 +13,8 @@ public class UMLAction : AUMLElement
 
     protected override bool Execute(UMLActor actor)
     {
-        Debug.Log("Some Action: " + name);
+        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {ActionType}");
+        //Debug.Log("Some Action: " + name);
         SetActionByEnum(actor);
         if (action == null)
         {

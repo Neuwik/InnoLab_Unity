@@ -34,21 +34,17 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
 
-        //Useless Vars?
-        Player = GameObject.FindWithTag("Player");
-        PlayerGarbageCollector = Player.GetComponent<GarbageCollector>();
-        UMLPanel = GameObject.FindWithTag("UMLPanel");
-
-
         UMLActors = FindObjectsByType<UMLActor>(FindObjectsSortMode.InstanceID).ToList();
         Garbages = FindObjectsByType<Garbage>(FindObjectsSortMode.InstanceID).ToList();
         ReDrawArrow = false;
+
+        if (Console == null)
+        {
+            Console = FindObjectOfType<ConsoleManager>();
+        }
     }
 
-    //UselessVars?
-    public GameObject Player { get; private set; }
-    public GarbageCollector PlayerGarbageCollector { get; private set; }
-    public GameObject UMLPanel { get; private set; }
+    public ConsoleManager Console;
 
     //For Reset
     [HideInInspector]

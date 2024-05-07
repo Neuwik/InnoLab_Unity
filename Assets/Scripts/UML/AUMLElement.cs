@@ -36,7 +36,6 @@ public abstract class AUMLElement : MonoBehaviour
         }
 
         Highlight();
-        //return false; // To test Highlight
 
         if (!Execute(actor))
         {
@@ -48,7 +47,6 @@ public abstract class AUMLElement : MonoBehaviour
         yield return actor.WaitForTick();
 
         StopHighlight();
-        //return false; // To test StopHighlight
 
         if (NextElement is UMLTree)
         {
@@ -66,7 +64,8 @@ public abstract class AUMLElement : MonoBehaviour
 
     protected virtual bool Execute(UMLActor actor)
     {
-        Debug.Log("Some Element: " + name);
+        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {name}");
+        //Debug.Log("Some Element: " + name);
         return true;
     }
 
