@@ -5,7 +5,13 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum EUMLConditionType { SomeCondition = 0, RandomCondition, IsUpDanger, IsDownDanger, IsLeftDanger, IsRightDanger }
+public enum EUMLConditionType
+{
+    SomeCondition = 0, 
+    IsUpDanger, IsDownDanger, IsLeftDanger, IsRightDanger, IsThisDanger,
+    IsUpGarbage, IsDownGarbage, IsLeftGarbage, IsRightGarbage, IsThisGarbage
+}
+
 public class UMLCondition : AUMLElement
 {
     [SerializeField]
@@ -51,9 +57,6 @@ public class UMLCondition : AUMLElement
             case EUMLConditionType.SomeCondition:
                 condition = actor.SomeCondition;
                 break;
-            case EUMLConditionType.RandomCondition:
-                condition = actor.RandomCondition;
-                break;
             case EUMLConditionType.IsUpDanger:
                 condition = actor.IsUpDanger;
                 break;
@@ -65,6 +68,24 @@ public class UMLCondition : AUMLElement
                 break;
             case EUMLConditionType.IsRightDanger:
                 condition = actor.IsRightDanger;
+                break;
+            case EUMLConditionType.IsThisDanger:
+                condition = actor.IsThisDanger;
+                break;
+            case EUMLConditionType.IsUpGarbage:
+                condition = actor.IsUpGarbage;
+                break;
+            case EUMLConditionType.IsDownGarbage:
+                condition = actor.IsDownGarbage;
+                break;
+            case EUMLConditionType.IsLeftGarbage:
+                condition = actor.IsLeftGarbage;
+                break;
+            case EUMLConditionType.IsRightGarbage:
+                condition = actor.IsRightGarbage;
+                break;
+            case EUMLConditionType.IsThisGarbage:
+                condition = actor.IsThisGarbage;
                 break;
             default:
                 condition = () => { return true; };

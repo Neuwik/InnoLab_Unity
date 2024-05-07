@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum EUMLActionType { DoNothing = 0, DoSomething, DoSomethingElse, MoveUp, MoveDown, MoveLeft, MoveRight, CollectGarbage }
+public enum EUMLActionType { DoNothing = 0, MoveUp, MoveDown, MoveLeft, MoveRight, CollectGarbage }
 
 public class UMLAction : AUMLElement
 {
@@ -30,12 +30,6 @@ public class UMLAction : AUMLElement
         {
             case EUMLActionType.DoNothing:
                 action = actor.DoNothing;
-                break;
-            case EUMLActionType.DoSomething:
-                action = actor.DoSomething;
-                break;
-            case EUMLActionType.DoSomethingElse:
-                action = actor.DoSomethingElse;
                 break;
             case EUMLActionType.MoveUp:
                 action = actor.MoveUp;

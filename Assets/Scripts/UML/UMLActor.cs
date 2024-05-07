@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.HID;
+using static UnityEditor.PlayerSettings;
 
 public enum EUMLActorState { Ready = 0, Running, Stopped, Crashed, Done }
 
@@ -14,6 +15,7 @@ public class UMLActor : MonoBehaviour
     public float TickRate = 1; //Actions per second
     private Vector3 startPosition;
     public LayerMask DangerLayer;
+    public LayerMask GarbageLayer;
 
     public EUMLActorState State { get; private set; } = EUMLActorState.Ready;
     public bool UMLRunning
@@ -103,16 +105,7 @@ public class UMLActor : MonoBehaviour
         Debug.Log(name + " is doing nothing");
     }
 
-    public void DoSomething()
-    {
-        Debug.Log(name + " is doing something");
-    }
-
-    public void DoSomethingElse()
-    {
-        Debug.Log(name + " is doing something else");
-    }
-
+    #region Move
     public void MoveUp()
     {
         GetComponent<PlayerController>()?.Move(Vector3.forward);
@@ -129,6 +122,7 @@ public class UMLActor : MonoBehaviour
     {
         GetComponent<PlayerController>()?.Move(Vector3.right);
     }
+    #endregion
 
     public void CollectGarbage()
     {
@@ -142,23 +136,75 @@ public class UMLActor : MonoBehaviour
         return true;
     }
 
-    public bool RandomCondition()
+    #region IsDanger
+    public bool IsUpDanger()
     {
-        return Random.value > 0.5;
+        return RaycastInMoveDirection(Vector3.forward, DangerLayer);
     }
 
-    private bool IsDangerInDirection(Vector3 direction)
+    public bool IsDownDanger()
     {
+        return RaycastInMoveDirection(Vector3.back, DangerLayer);
+    }
+
+    public bool IsLeftDanger()
+    {
+        return RaycastInMoveDirection(Vector3.left, DangerLayer);
+    }
+
+    public bool IsRightDanger()
+    {
+        return RaycastInMoveDirection(Vector3.right, DangerLayer);
+    }
+
+    public bool IsThisDanger()
+    {
+        return RaycastOnPosition(transform.position + Vector3.down, DangerLayer);
+    }
+    #endregion
+
+    #region IsGarbage
+    public bool IsUpGarbage()
+    {
+        return RaycastOnMoveDirectionEndpoint(Vector3.forward, GarbageLayer);
+    }
+
+    public bool IsDownGarbage()
+    {
+        return RaycastOnMoveDirectionEndpoint(Vector3.back, GarbageLayer);
+    }
+
+    public bool IsLeftGarbage()
+    {
+        return RaycastOnMoveDirectionEndpoint(Vector3.left, GarbageLayer);
+    }
+
+    public bool IsRightGarbage()
+    {
+        return RaycastOnMoveDirectionEndpoint(Vector3.right, GarbageLayer);
+    }
+
+    public bool IsThisGarbage()
+    {
+        return RaycastOnPosition(transform.position + Vector3.down, GarbageLayer);
+    }
+    #endregion
+
+    #endregion
+
+    private bool RaycastInMoveDirection(Vector3 direction, LayerMask layer)
+    {
+        // Raycast auf dem "layer" von dem Actor zu dem Feld wo der Actor stehen wird, wenn er in die "direction" geht
         PlayerController pc = GetComponent<PlayerController>();
         if (pc == null)
         {
             return false;
         }
-        RaycastHit hit;
         Vector3 pos = pc.GetNextMovePointPosition(direction) + Vector3.down;
         float distance = Vector3.Distance(transform.position, pos);
         Vector3 posDirection = pos - transform.position;
-        if (Physics.Raycast(transform.position, posDirection, out hit, distance, DangerLayer))
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, posDirection, out hit, distance, layer))
         {
             //Debug.DrawLine(transform.position, hit.point, Color.red, 10f);
             //Debug.Log($"Is Danger {hit.transform.gameObject.name}");
@@ -168,24 +214,31 @@ public class UMLActor : MonoBehaviour
         return false;
     }
 
-    public bool IsUpDanger()
+    private bool RaycastOnMoveDirectionEndpoint(Vector3 direction, LayerMask layer)
     {
-        return IsDangerInDirection(Vector3.forward);
+        // Raycast auf dem "layer" auf das Feld wo der Actor stehen wird, wenn er in die "direction" geht
+        PlayerController pc = GetComponent<PlayerController>();
+        if (pc == null)
+        {
+            return false;
+        }
+        Vector3 pos = pc.GetNextMovePointPosition(direction) + Vector3.down;
+        return RaycastOnPosition(pos, layer);
     }
 
-    public bool IsDownDanger()
+    private bool RaycastOnPosition(Vector3 position, LayerMask layer)
     {
-        return IsDangerInDirection(Vector3.back);
+        // Raycast auf dem "layer" auf das Feld an der "position"
+        float hight = 10;
+        Vector3 abovePosition = position + Vector3.up * hight;
+        RaycastHit hit;
+        if (Physics.Raycast(abovePosition, Vector3.down, out hit, hight, layer))
+        {
+            //Debug.DrawLine(position, hit.point, Color.red, 10f);
+            //Debug.Log($"Is Danger {hit.transform.gameObject.name}");
+            return true;
+        }
+        //Debug.DrawLine(abovePosition, position, Color.green, 10f);
+        return false;
     }
-
-    public bool IsLeftDanger()
-    {
-        return IsDangerInDirection(Vector3.left);
-    }
-
-    public bool IsRightDanger()
-    {
-        return IsDangerInDirection(Vector3.right);
-    }
-    #endregion
 }
