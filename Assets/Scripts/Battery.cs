@@ -15,7 +15,7 @@ public class BatteryBackgroundBreakpoint
     public GameObject Background;
 }
 
-public class Battery : MonoBehaviour, ILooseCondition
+public class Battery : MonoBehaviour, ILooseCondition, IResetable
 {
     [SerializeField]
     private List<BatteryBackgroundBreakpoint> BackgroundBreakpoints;

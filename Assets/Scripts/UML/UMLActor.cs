@@ -11,7 +11,7 @@ using static UnityEditor.PlayerSettings;
 
 public enum EUMLActorState { Ready = 0, Running, Stopped, Crashed, Done }
 
-public class UMLActor : MonoBehaviour
+public class UMLActor : MonoBehaviour, IResetable
 {
     public UMLTree Tree;
     public float TickRate = 1; //Actions per second
@@ -90,12 +90,7 @@ public class UMLActor : MonoBehaviour
     public void Reset()
     {
         GameManager.Instance.Console.Log(State.ToString(), name, "Is resetting");
-        //Debug.Log("UML Actor is Resetting");
         transform.position = startPosition;
-        GetComponent<PlayerController>()?.Reset();
-        GetComponent<PlayerHealth>()?.Reset();
-        GetComponent<Battery>()?.Reset();
-
         SetActorState(EUMLActorState.Ready);
     }
 

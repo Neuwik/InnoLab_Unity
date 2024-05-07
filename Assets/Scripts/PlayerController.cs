@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IResetable
 {
     public float moveSpeed = 5f;
     public int distance = 1;
@@ -12,13 +12,6 @@ public class PlayerController : MonoBehaviour
     public LayerMask obstical;
     public LayerMask damagesource;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        movePoint.parent = null;
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (transform.position != movePoint.position)
@@ -36,8 +29,15 @@ public class PlayerController : MonoBehaviour
             Move(Vector3.right);
     }
 
+    public void Reset()
+    {
+        movePoint.parent = transform;
+        movePoint.localPosition = Vector3.zero;
+    }
+
     public void Move(Vector3 direction)
     {
+        movePoint.parent = null;
         movePoint.position = GetNextMovePointPosition(direction);
         /*
         for (int i = 1; i <= distance; i++)
@@ -84,10 +84,5 @@ public class PlayerController : MonoBehaviour
             }
         }
         return movePointPosition;
-    }
-
-    public void Reset()
-    {
-        movePoint.position = transform.position;
     }
 }

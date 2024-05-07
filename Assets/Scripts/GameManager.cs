@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         UMLActors = FindObjectsByType<UMLActor>(FindObjectsSortMode.InstanceID).ToList();
-        Garbages = FindObjectsByType<Garbage>(FindObjectsSortMode.InstanceID).ToList();
+        ResetableComponents = new List<IResetable>();
         ReDrawArrow = false;
 
         if (Console == null)
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     //For Reset
     [HideInInspector]
-    public List<Garbage> Garbages;
+    public List<IResetable> ResetableComponents;
 
     //UML Testing
     [HideInInspector]
@@ -123,8 +124,33 @@ public class GameManager : MonoBehaviour
 
     private void ResetLevel()
     {
-        UMLActors.ForEach(a => a.Reset());
-        Garbages?.ForEach(g => g.Reset());
+        //UMLActors.ForEach(a => a.Reset());
+        SearchForResetableComponents();
+        ResetableComponents?.ForEach(r => r.Reset());
+    }
+
+    private void SearchForResetableComponents()
+    {
+        // Not performant
+        if (ResetableComponents == null)
+        {
+            ResetableComponents = new List<IResetable>();
+        }
+        else
+        {
+            ResetableComponents.Clear();
+        }
+
+        GameObject[] rootGameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+
+        foreach (var rootGameObject in rootGameObjects)
+        {
+            IResetable[] childrenInterfaces = rootGameObject.GetComponentsInChildren<IResetable>(includeInactive: true);
+            foreach (var childInterface in childrenInterfaces)
+            {
+                ResetableComponents.Add(childInterface);
+            }
+        }
     }
 
     public void ShowWinLose()

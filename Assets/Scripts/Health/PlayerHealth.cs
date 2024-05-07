@@ -5,7 +5,7 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : Health, ILooseCondition
+public class PlayerHealth : Health, ILooseCondition, IResetable
 {
     [SerializeField]
     private Image[] health;

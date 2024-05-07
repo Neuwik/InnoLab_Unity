@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GarbageCollector : MonoBehaviour
+public class GarbageCollector : MonoBehaviour, IResetable
 {
     public int GarbageCount = 0;
     private GameObject garbage;
@@ -12,7 +12,8 @@ public class GarbageCollector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GarbageCount = 0;
+        cooldownTimer = 0;
     }
 
     // Update is called once per frame
@@ -30,6 +31,12 @@ public class GarbageCollector : MonoBehaviour
                 cooldownTimer = cooldown;
             }
         }
+    }
+
+    public void Reset()
+    {
+        GarbageCount = 0;
+        cooldownTimer = 0;
     }
 
     public void CollectGarbage()
