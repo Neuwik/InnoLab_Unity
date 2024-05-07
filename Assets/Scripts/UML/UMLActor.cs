@@ -105,6 +105,7 @@ public class UMLActor : MonoBehaviour, IResetable
 
             yield return new WaitForSeconds(1/TickRate);
         }
+        yield return GetComponent<PlayerController>()?.WaitForMovementFinished();
     }
 
     private void SetActorState(EUMLActorState newState)

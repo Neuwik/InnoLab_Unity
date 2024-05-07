@@ -7,10 +7,10 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour, IResetable
 {
     public float moveSpeed = 5f;
-    public int distance = 1;
+    public int moveDistance = 3;
     public Transform movePoint;
-    public LayerMask obstical;
-    public LayerMask damagesource;
+    public LayerMask StopBefor;
+    public LayerMask StopOn;
 
     void Update()
     {
@@ -65,15 +65,20 @@ public class PlayerController : MonoBehaviour, IResetable
 
     public Vector3 GetNextMovePointPosition(Vector3 direction)
     {
+        return GetNextMovePointPosition(direction, moveDistance);
+    }
+
+    private Vector3 GetNextMovePointPosition(Vector3 direction, int distance)
+    {
         Vector3 movePointPosition = movePoint.position;
         for (int i = 1; i <= distance; i++)
         {
-            if (Physics.OverlapSphere(movePointPosition + direction, .2f, obstical, QueryTriggerInteraction.Collide).Length > 0)
+            if (Physics.OverlapSphere(movePointPosition + direction, .2f, StopBefor, QueryTriggerInteraction.Collide).Length > 0)
             {
                 //Debug.Log("Tree");
                 return movePointPosition;
             }
-            else if (Physics.OverlapSphere(movePointPosition + direction, .2f, damagesource, QueryTriggerInteraction.Collide).Length > 0)
+            else if (Physics.OverlapSphere(movePointPosition + direction, .2f, StopOn, QueryTriggerInteraction.Collide).Length > 0)
             {
                 //Debug.Log("Damage");
                 return movePointPosition + direction;
@@ -84,5 +89,16 @@ public class PlayerController : MonoBehaviour, IResetable
             }
         }
         return movePointPosition;
+    }
+
+    public IEnumerator PushInDirection(Vector3 direction, int distance)
+    {
+        yield return WaitForMovementFinished();
+        movePoint.parent = null;
+        movePoint.position = GetNextMovePointPosition(direction, distance);
+    }
+    public IEnumerator WaitForMovementFinished()
+    {
+        yield return new WaitUntil(() => transform.position == movePoint.position);
     }
 }

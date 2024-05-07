@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 3062873216839077386}
   - component: {fileID: 6375394919386662294}
   - component: {fileID: 499887779788643200}
-  - component: {fileID: 703059134821376302}
-  m_Layer: 9
-  m_Name: Garbage
-  m_TagString: Garbage
+  - component: {fileID: -923380225362302266}
+  m_Layer: 11
+  m_Name: PushField
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1561312557567986463}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &6375394919386662294
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -105,10 +105,10 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 6
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &703059134821376302
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-923380225362302266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,6 +117,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1561312557567986463}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3278a2c19615784da9f7f11510ef419, type: 3}
+  m_Script: {fileID: 11500000, guid: ddc3ce3398f93784face9c9dba58f22d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Direction: 0
+  Power: 1
