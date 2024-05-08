@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IResetable
     public Transform movePoint;
     public LayerMask StopBefor;
     public LayerMask StopOn;
+    private bool pushesAllowed;
 
     void Update()
     {
@@ -31,36 +32,15 @@ public class PlayerController : MonoBehaviour, IResetable
 
     public void Reset()
     {
+        pushesAllowed = false;
         movePoint.parent = transform;
         movePoint.localPosition = Vector3.zero;
     }
 
     public void Move(Vector3 direction)
     {
-        movePoint.parent = null;
+        pushesAllowed = true;
         movePoint.position = GetNextMovePointPosition(direction);
-        /*
-        for (int i = 1; i <= distance; i++)
-        {
-            if (Physics.OverlapSphere(movePoint.position + direction, .2f, obstical, QueryTriggerInteraction.Collide).Length > 0)
-            {
-                Debug.Log("Tree");
-                return;
-            }
-            else if (Physics.OverlapSphere(movePoint.position + direction, .2f, damagesource, QueryTriggerInteraction.Collide).Length > 0)
-            {
-                Debug.Log("Damage");
-                movePoint.position += direction;
-                return;
-            }
-            else
-            {
-                movePoint.position += direction;
-            }
-        }*/
-        /*
-        */
-        //movePoint.position += direction * distance;
     }
 
     public Vector3 GetNextMovePointPosition(Vector3 direction)
@@ -70,6 +50,7 @@ public class PlayerController : MonoBehaviour, IResetable
 
     private Vector3 GetNextMovePointPosition(Vector3 direction, int distance)
     {
+        movePoint.parent = null;
         Vector3 movePointPosition = movePoint.position;
         for (int i = 1; i <= distance; i++)
         {
@@ -94,11 +75,17 @@ public class PlayerController : MonoBehaviour, IResetable
     public IEnumerator PushInDirection(Vector3 direction, int distance)
     {
         yield return WaitForMovementFinished();
-        movePoint.parent = null;
-        movePoint.position = GetNextMovePointPosition(direction, distance);
+        if (pushesAllowed)
+        {
+            movePoint.position = GetNextMovePointPosition(direction, distance);
+        }
     }
     public IEnumerator WaitForMovementFinished()
     {
         yield return new WaitUntil(() => transform.position == movePoint.position);
+    }
+    public void StopPushes()
+    {
+        pushesAllowed = false;
     }
 }

@@ -55,8 +55,6 @@ public abstract class AUMLElement : MonoBehaviour
 
         if (NextElement == null)
         {
-            //actor.SetActorState(EUMLActorState.Crashed);
-            actor.Stop();
             yield break;
         }
 

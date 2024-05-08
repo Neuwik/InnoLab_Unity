@@ -109,12 +109,12 @@ public class GameManager : MonoBehaviour
 
     private void StopUML()
     {
-        UMLActors.ForEach(a => a.StopAndReset());
+        UMLActors.ForEach(a => a.Stop());
     }
 
     public IEnumerator AllBotsDone()
     {
-        yield return new WaitUntil(() => (UMLActors.Find(a => a.UMLRunning) == null)); //Not Performant?
+        yield return new WaitUntil(() => (UMLActors.Find(a => !a.UMLFinished) == null)); //Not Performant?
         ShowWinLose();
         ResetLevel();
         UMLStop.gameObject.SetActive(false);

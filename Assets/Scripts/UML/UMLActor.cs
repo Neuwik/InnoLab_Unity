@@ -7,9 +7,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.InputSystem.LowLevel;
-using static UnityEditor.PlayerSettings;
 
-public enum EUMLActorState { Ready = 0, Running, Stopped, Crashed, Done }
+public enum EUMLActorState
+{ 
+    Ready = 0, 
+    Running = 11, Stopping = 12, 
+    Stopped = 21, Crashed = 22, Done = 23
+}
 
 public class UMLActor : MonoBehaviour, IResetable
 {
@@ -29,12 +33,20 @@ public class UMLActor : MonoBehaviour, IResetable
                 case EUMLActorState.Running:
                     return true;
                 case EUMLActorState.Ready:
+                case EUMLActorState.Stopping:
                 case EUMLActorState.Stopped:
                 case EUMLActorState.Crashed:
                 case EUMLActorState.Done:
                 default:
                     return false;
             }
+        }
+    }
+    public bool UMLFinished
+    {
+        get
+        {
+            return (int)State >= 20;
         }
     }
 
@@ -57,9 +69,12 @@ public class UMLActor : MonoBehaviour, IResetable
                 Debug.Log(name + " is done");
                 SetActorState(EUMLActorState.Done);
                 break;
+            case EUMLActorState.Stopping:
+                Debug.Log(name + " is stopping");
+                SetActorState(EUMLActorState.Stopped);
+                break;
             case EUMLActorState.Crashed:
                 Debug.Log(name + " has crashed");
-                SetActorState(EUMLActorState.Stopped);
                 break;
             case EUMLActorState.Stopped:
             case EUMLActorState.Ready:
@@ -70,21 +85,18 @@ public class UMLActor : MonoBehaviour, IResetable
         }
     }
 
-    public void Stop()
-    {
-        SetActorState(EUMLActorState.Stopped);
-    }
-
     public void Crash()
     {
         SetActorState(EUMLActorState.Crashed);
     }
 
-    public void StopAndReset()
+    public void Stop()
     {
-        //Debug.Log("UML is Stopping");
-        Stop();
-        Reset();
+        if (UMLRunning)
+        {
+            SetActorState(EUMLActorState.Stopping);
+        }
+        GetComponent<PlayerController>()?.StopPushes();
     }
 
     public void Reset()
@@ -105,7 +117,10 @@ public class UMLActor : MonoBehaviour, IResetable
 
             yield return new WaitForSeconds(1/TickRate);
         }
-        yield return GetComponent<PlayerController>()?.WaitForMovementFinished();
+        if (UMLRunning)
+        {
+            yield return GetComponent<PlayerController>()?.WaitForMovementFinished();
+        }
     }
 
     private void SetActorState(EUMLActorState newState)
@@ -120,6 +135,7 @@ public class UMLActor : MonoBehaviour, IResetable
                 break;
             case EUMLActorState.Ready:
             case EUMLActorState.Running:
+            case EUMLActorState.Stopping:
             case EUMLActorState.Done:
             default:
                 GameManager.Instance.Console.Log(newState.ToString(), name, $"State changed from {State} to {newState}");
