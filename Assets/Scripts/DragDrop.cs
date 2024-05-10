@@ -49,7 +49,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             gameObject.transform.SetParent(_umlPanel.transform);
         }
         GameManager.Instance.ReDrawArrow = true;
-        //realignArrow();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -66,11 +65,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             _canvasRectT.rect.height <= (gameObject.transform.position.y + _rectT.rect.height)  || // top bordercheck
             _canvasRectT.rect.width <= (gameObject.transform.position.x + _rectT.rect.width    )) // right bordercheck
         {
+            gameObject.GetComponent<CreateArrow>().ReduceTargetAmount();
             OnDelete.Invoke();
             Destroy(gameObject);
         }
-
-        //Debug.Log("OnEndDrag");
+        Debug.Log("OnEndDrag");
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -9,10 +9,8 @@ using UnityEngine.Animations;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
-public class DrawArrow : MonoBehaviour//, IPointerClickHandler
+public class ArrowPainter : MonoBehaviour, IPointerClickHandler
 {
-    public bool TargetFound;
-
     private RectTransform _upperVerticleShaftRectT;
     public GameObject UpperVerticleShaft;
 
@@ -28,7 +26,6 @@ public class DrawArrow : MonoBehaviour//, IPointerClickHandler
     public Vector2 Startpos;
     private Vector2 mouseOffset = new Vector2(-5, 5); //  3px does not work, it autosnaps the mouse click???
 
-    // TODO: reddraw
     private GameObject _targetElem;
     public GameObject TargetElem 
     { 
@@ -55,7 +52,6 @@ public class DrawArrow : MonoBehaviour//, IPointerClickHandler
     {
         enabled = true;
     }
-    // TODO: reddraw
 
     void Start()
     {
@@ -70,21 +66,30 @@ public class DrawArrow : MonoBehaviour//, IPointerClickHandler
         //Debug.Log("UPDATE");
         if (TargetElem == null)
         {
-            drawArrow((Vector2)Input.mousePosition + mouseOffset);
+            DrawArrow((Vector2)Input.mousePosition + mouseOffset);
             return;
         }
         else
         {
             var _ = TargetElem.GetComponent<RectTransform>().rect;
-            Startpos = (Vector2)gameObject.transform.position - new Vector2(0, _.height/2);
-            drawArrow((Vector2) TargetElem.transform.position + new Vector2(_.width / 2, _.height));
+            Startpos = (Vector2) gameObject.transform.position - new Vector2(0, gameObject.transform.parent.GetComponent<RectTransform>().rect.height/2);
+            DrawArrow((Vector2) TargetElem.transform.position + new Vector2(_.width / 2, _.height));
         }
         if(!GameManager.Instance.ReDrawArrow)
             enabled = false;
     }
-
-    private void drawArrow(Vector2 targetPoint)
+    // TODO:
+    //       if mouse howers above object set bool isHowering to 1 and position to target pos 
+    //       change to 2 horizontal- and 1 vertical arrows if mousePos above startPos.
+    //  done limit to one arrow per element execept if-blocks -> 2 
+    //       startPos's for if-blocks -> 2 sider arrows, 1 side arrow and 1 bottom arrow
+    private void DrawArrow(Vector2 targetPoint)
     {
+        
+        /*if ()
+        {
+
+        }*/
         float verticleLength = (targetPoint.y - Startpos.y) / 2;
         float horizontalLength = targetPoint.x - Startpos.x;
 
@@ -99,24 +104,23 @@ public class DrawArrow : MonoBehaviour//, IPointerClickHandler
 
         _arrowHeadRectT.position = targetPoint;
     }
-    
-
-    /*public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        var results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        Debug.Log("Ray-Targets:");
-        foreach (var ray in results)
+        switch (eventData.button)
         {
-            Debug.Log("\t" + ray.gameObject.name);
-        }
+            case PointerEventData.InputButton.Left: // change true or false if arrow starts in conditionblock
 
-        if ((TargetElem = results.FindLast(r => r.gameObject.layer == gameObject.layer).gameObject) != null)
-        {
-            TargetFound = true;
-            drawArrow((Vector2) TargetElem.transform.position);
-            Debug.Log("\t" + TargetElem.gameObject.name);
+                return;
+
+            case PointerEventData.InputButton.Right: // reattach Arrow
+
+                return;
+
+            case PointerEventData.InputButton.Middle: // destroy Arrow
+                //ReduceTargetAmount();
+                Destroy(GameManager.Instance.ActiveArrow);
+                return;
         }
-    }*/
+        
+    }
 }
