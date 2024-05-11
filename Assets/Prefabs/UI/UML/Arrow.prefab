@@ -52,13 +52,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59c35e9dd7d001b40aeacfd6f95f198c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetFound: 0
   UpperVerticleShaft: {fileID: 5215513846119357467}
   LowerVerticleShaft: {fileID: 8864595968498777439}
-  HorizontalShaft: {fileID: 2902425621404089636}
+  LowerHorizontalShaft: {fileID: 2902425621404089636}
+  UpperHorizontalVerticleShaftRectT: {fileID: 0}
   ArrowHead: {fileID: 4238099971640653798}
   Startpos: {x: 0, y: 0}
-  TargetElem: {fileID: 0}
 --- !u!1 &2902425621404089636
 GameObject:
   m_ObjectHideFlags: 0

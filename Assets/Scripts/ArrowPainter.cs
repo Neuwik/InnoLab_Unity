@@ -9,7 +9,7 @@ using UnityEngine.Animations;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
-public class ArrowPainter : MonoBehaviour, IPointerClickHandler
+public class ArrowPainter : MonoBehaviour
 {
     private RectTransform _upperVerticleShaftRectT;
     public GameObject UpperVerticleShaft;
@@ -17,8 +17,11 @@ public class ArrowPainter : MonoBehaviour, IPointerClickHandler
     private RectTransform _lowerVerticleShaftRectT;
     public GameObject LowerVerticleShaft;
 
-    private RectTransform _horizontalVerticleShaftRectT;
-    public GameObject HorizontalShaft;
+    private RectTransform _lowerHorizontalShaftRectT;
+    public GameObject LowerHorizontalShaft;
+
+    private RectTransform _upperHorizontalShaftRectT;
+    public GameObject UpperHorizontalVerticleShaftRectT;
 
     private RectTransform _arrowHeadRectT;
     public GameObject ArrowHead;
@@ -57,7 +60,7 @@ public class ArrowPainter : MonoBehaviour, IPointerClickHandler
     {
         _upperVerticleShaftRectT = UpperVerticleShaft.GetComponent<RectTransform>();
         _lowerVerticleShaftRectT = LowerVerticleShaft.GetComponent<RectTransform>();
-        _horizontalVerticleShaftRectT = HorizontalShaft.GetComponent<RectTransform>();
+        _lowerHorizontalShaftRectT = LowerHorizontalShaft.GetComponent<RectTransform>();
         _arrowHeadRectT = ArrowHead.GetComponent<RectTransform>();
     }
 
@@ -79,10 +82,10 @@ public class ArrowPainter : MonoBehaviour, IPointerClickHandler
             enabled = false;
     }
     // TODO:
-    //       if mouse howers above object set bool isHowering to 1 and position to target pos 
-    //       change to 2 horizontal- and 1 vertical arrows if mousePos above startPos.
-    //  done limit to one arrow per element execept if-blocks -> 2 
-    //       startPos's for if-blocks -> 2 sider arrows, 1 side arrow and 1 bottom arrow
+    //           if mouse howers above object set bool isHowering to 1 and position to target pos 
+    //           change to 2 horizontal- and 1 vertical arrows if mousePos above startPos.
+    // 1.5h done limit to one arrow per element execept if-blocks -> 2 
+    //           startPos's for if-blocks -> 2 sider arrows, 1 side arrow and 1 bottom arrow
     private void DrawArrow(Vector2 targetPoint)
     {
         
@@ -96,31 +99,12 @@ public class ArrowPainter : MonoBehaviour, IPointerClickHandler
         _upperVerticleShaftRectT.position = new Vector2(Startpos.x, Startpos.y + verticleLength / 2);
         _upperVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength));
 
-        _horizontalVerticleShaftRectT.position = new Vector2(Startpos.x + horizontalLength / 2, Startpos.y + verticleLength);
-        _horizontalVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(horizontalLength) + _upperVerticleShaftRectT.rect.width);
+        _lowerHorizontalShaftRectT.position = new Vector2(Startpos.x + horizontalLength / 2, Startpos.y + verticleLength);
+        _lowerHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(horizontalLength) + _upperVerticleShaftRectT.rect.width);
 
         _lowerVerticleShaftRectT.position = targetPoint + new Vector2(0, - verticleLength / 2);
         _lowerVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength));
 
         _arrowHeadRectT.position = targetPoint;
-    }
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        switch (eventData.button)
-        {
-            case PointerEventData.InputButton.Left: // change true or false if arrow starts in conditionblock
-
-                return;
-
-            case PointerEventData.InputButton.Right: // reattach Arrow
-
-                return;
-
-            case PointerEventData.InputButton.Middle: // destroy Arrow
-                //ReduceTargetAmount();
-                Destroy(GameManager.Instance.ActiveArrow);
-                return;
-        }
-        
     }
 }

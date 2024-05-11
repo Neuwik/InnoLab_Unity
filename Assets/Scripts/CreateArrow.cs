@@ -30,42 +30,73 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("hallllo");
         if (Actionbox.transform.parent.name == "UMLPanel")
+        {
+            return;
+        }
+        if (TargetAmount == 2)
         {
             switch (eventData.button)
             {
-                case PointerEventData.InputButton.Left: // Attach Arrow happens on TargetObject
-                    if (GameManager.Instance.ActiveArrow != null &&
-                        gameObject.CompareTag("UMLElement"))
-                    {
-                        //++GameManager.Instance.ActiveArrow.transform.parent.GetComponent<CreateArrow>().TargetAmount;
-                        GameManager.Instance.ActiveArrow.GetComponent<ArrowPainter>().TargetElem = gameObject;
-                        GameManager.Instance.ActiveArrow = null;
-                        
-                    }
+                case PointerEventData.InputButton.Left: // change true or false if arrow starts in conditionblock
+
                     return;
 
-                case PointerEventData.InputButton.Right: // Create Arrow happens on Parent Object
-                    Debug.Log($"_targetAmount = {TargetAmount} / _targetMaxAmount = {_targetMaxAmount}");
-                    if (GameManager.Instance.ActiveArrow == null &&
-                        TargetAmount < _targetMaxAmount
-                       )
-                    {
-                        ++TargetAmount;
-                        var newArrow = GameObject.Instantiate(Arrow, gameObject.transform);
-                        newArrow.transform.SetAsFirstSibling();
-                        var _ = gameObject.GetComponent<RectTransform>().rect;
-                        newArrow.GetComponent<ArrowPainter>().Startpos = (Vector2)gameObject.transform.position + new Vector2(_.width / 2, _.height / 2);
-                        GameManager.Instance.ActiveArrow = newArrow;
-                    }
+                case PointerEventData.InputButton.Right: // reattach Arrow
+                    
+                    GameManager.Instance.ActiveArrow = gameObject;
+                    GameManager.Instance.ReDrawArrow = true;
+                    enabled = true;
                     return;
 
-                case PointerEventData.InputButton.Middle: // Delete Arrow
-                    ReduceTargetAmount();
-                    Destroy(GameManager.Instance.ActiveArrow);
+                case PointerEventData.InputButton.Middle: // destroy Arrow
+                    gameObject.transform.parent.GetComponent<CreateArrow>().ReduceTargetAmount();
+                    Destroy(gameObject);
                     return;
             }
-        } 
+            //return;
+        }
+        switch (eventData.button)
+        {
+            case PointerEventData.InputButton.Left: // Attach Arrow happens on TargetObject
+                if (GameManager.Instance.ActiveArrow != null &&
+                    gameObject.CompareTag("UMLElement"))
+                {
+                    GameManager.Instance.ActiveArrow.GetComponent<ArrowPainter>().TargetElem = gameObject;
+                    GameManager.Instance.ActiveArrow = null;
+                }
+                return;
+
+            case PointerEventData.InputButton.Right: // Create Arrow happens on Parent Object
+                if (GameManager.Instance.ActiveArrow == null &&
+                    TargetAmount < _targetMaxAmount
+                    )
+                {
+                    ++TargetAmount;
+                    var newArrow = GameObject.Instantiate(Arrow, gameObject.transform);
+                    newArrow.transform.SetAsFirstSibling();
+                    var _ = gameObject.GetComponent<RectTransform>().rect;
+                    newArrow.GetComponent<ArrowPainter>().Startpos = (Vector2)gameObject.transform.position + new Vector2(_.width / 2, _.height / 2);
+                    GameManager.Instance.ActiveArrow = newArrow;
+                }
+                return;
+
+            case PointerEventData.InputButton.Middle: // Delete Arrow
+                GameObject child = gameObject.transform.GetChild(0).gameObject;
+                if (child.name.Contains("Arrow"))
+                {
+                    ReduceTargetAmount();
+                    Destroy(child);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+                        
+                return;
+        }
+        
             
     }
     public void ReduceTargetAmount()
