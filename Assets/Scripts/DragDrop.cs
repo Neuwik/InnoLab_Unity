@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private RectTransform _canvasRectT;
     private RectTransform _rectT;
@@ -70,10 +70,5 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             Destroy(gameObject);
         }
         Debug.Log("OnEndDrag");
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        //Debug.Log("OnPointerDown");
     }
 }

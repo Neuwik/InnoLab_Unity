@@ -16,8 +16,11 @@ public class UMLCondition : AUMLElement
 {
     [SerializeField]
     private AUMLElement trueNextAction;
+    
+
     [SerializeField]
     private AUMLElement falseNextAction;
+    
 
     public EUMLConditionType ConditionType;
     private Func<bool> condition;
@@ -39,7 +42,7 @@ public class UMLCondition : AUMLElement
         return true;
     }
 
-    public override bool ChangeNextAction(AUMLElement NewNextAction, bool conditional = false)
+    public override bool ChangeNextAction(AUMLElement NewNextAction, bool conditional)
     {
         if (conditional)
         {
@@ -50,6 +53,10 @@ public class UMLCondition : AUMLElement
             trueNextAction = NewNextAction;
         }
         return true;
+    }
+    public void SwitchNextActions()
+    {
+        (trueNextAction, falseNextAction) = (falseNextAction, trueNextAction);
     }
 
     private void SetConditionByEnum(UMLActor actor)
