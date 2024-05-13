@@ -48,11 +48,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5806073071483324989, guid: e5e1e1dcc99e55343a92ca9697006d6f, type: 3}
       propertyPath: m_Pivot.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5806073071483324989, guid: e5e1e1dcc99e55343a92ca9697006d6f, type: 3}
       propertyPath: m_Pivot.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5806073071483324989, guid: e5e1e1dcc99e55343a92ca9697006d6f, type: 3}
       propertyPath: m_AnchorMax.x
