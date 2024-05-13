@@ -170,9 +170,9 @@ RectTransform:
   - {fileID: 8200409213482487454}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -467, y: -335}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1146, y: -679}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2504500833422502208
@@ -248,6 +248,9 @@ MonoBehaviour:
   TargetAmount: 0
   Actionbox: {fileID: 1074176485469265772}
   Arrow: {fileID: 133962267425589854, guid: 65b20e40ebd36a848bb7c0c66dfe7128, type: 3}
+  OnDelete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5183954074379829192
 MonoBehaviour:
   m_ObjectHideFlags: 0

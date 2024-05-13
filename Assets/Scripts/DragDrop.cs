@@ -60,10 +60,10 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         GameManager.Instance.ReDrawArrow = false;
-        if (gameObject.transform.position.y <= (_canvasRectT.rect.height - _umlRectT.rect.height) || // bottom bordercheck
-            gameObject.transform.position.x <= (_canvasRectT.rect.width - _umlRectT.rect.width)  || // left bordercheck
-            _canvasRectT.rect.height <= (gameObject.transform.position.y + _rectT.rect.height)  || // top bordercheck
-            _canvasRectT.rect.width <= (gameObject.transform.position.x + _rectT.rect.width    )) // right bordercheck
+        if (gameObject.transform.position.y + _rectT.rect.height / 2 <= (_canvasRectT.rect.height - _umlRectT.rect.height) || // bottom bordercheck
+            gameObject.transform.position.x - _rectT.rect.width / 2 <= (_canvasRectT.rect.width - _umlRectT.rect.width)  || // left bordercheck
+            _umlPanel.transform.position.y <= (gameObject.transform.position.y - _rectT.rect.height / 2) || // top bordercheck
+            _umlPanel.transform.position.x <= (gameObject.transform.position.x - _rectT.rect.width / 2 ))                      // right bordercheck
         {
             gameObject.GetComponent<CreateArrow>().ReduceTargetAmount();
             OnDelete.Invoke();
