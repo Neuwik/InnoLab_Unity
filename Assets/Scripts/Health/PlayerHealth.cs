@@ -86,11 +86,13 @@ public class PlayerHealth : Health, ILooseCondition, IResetable
             if (ds.instantDeath)
             {
                 TakeDamage(currentHealth);
+                AudioManager.instance.PlayWaterSplashSound();
             }
 
             else
             {
                 TakeDamage(ds.damage);
+                AudioManager.instance.PlayFireDamageSound();
             }
 
             //UnityEngine.Debug.Log("Current Health: " + currentHealth);

@@ -49,6 +49,7 @@ public class GarbageCollector : MonoBehaviour, IResetable
         else
         {
             GameManager.Instance.Console.Log("Collecting", name, $"Has collected Garbage");
+            AudioManager.instance.PlayerGarbageCollectSound();
             garbage.SetActive(false);
             GarbageCount++;
         }
