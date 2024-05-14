@@ -44,3 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c10bc3f94539a79498fbe91c4daf85a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Console: {fileID: 0}
+  Garbages: []
+  UMLActors: []
+  UMLStart: {fileID: 0}
+  UMLStop: {fileID: 0}
+  ActiveArrow: {fileID: 0}
+  ReDrawArrow: 0
