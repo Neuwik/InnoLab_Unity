@@ -71,12 +71,14 @@ public class LevelOutcome : MonoBehaviour
                 ShowLevelOutcome(false);
             }
 
-
+            //Implement these counters
+            /*
             if(gameManager.steps > forStar_maxSteps)
                 condition2_IsTrue = false;
 
             if(gameManager.UMLElements.Count > forStar_maxUMLElements)
                 condition3_IsTrue = false;
+            */
         }
     }
 

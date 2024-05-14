@@ -48,7 +48,7 @@ public class Battery : MonoBehaviour, ILooseCondition, IResetable
     private void ResetEnergy()
     {
         CurrentEnergy = MaxEnergy;
-        Text.text = $"{CurrentEnergy} ({PercentEnergy * 100}%)";
+        UpdateUIText();
         foreach (BatteryBackgroundBreakpoint entry in BackgroundBreakpoints)
         {
             entry.Background.SetActive(false);
@@ -69,10 +69,7 @@ public class Battery : MonoBehaviour, ILooseCondition, IResetable
         }
         GameManager.Instance.Console.Log("Discharging", name, $"Has lost {amount} Energy");
 
-        Text.text = $"{CurrentEnergy} ({PercentEnergy * 100}%)";
-        CurrentBackground.Background?.SetActive(false);
-        CurrentBackground = BackgroundBreakpoints.Where(b => b.Percent <= PercentEnergy).OrderByDescending(b => b.Percent).FirstOrDefault();
-        CurrentBackground.Background?.SetActive(true);
+        UpdateUI();
 
         if (CurrentEnergy <= 0)
         {
@@ -89,9 +86,19 @@ public class Battery : MonoBehaviour, ILooseCondition, IResetable
         }
         GameManager.Instance.Console.Log("Charging", name, $"Has gained {amount} Energy");
 
-        Text.text = $"{CurrentEnergy} ({PercentEnergy * 100}%)";
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        UpdateUIText();
         CurrentBackground.Background?.SetActive(false);
         CurrentBackground = BackgroundBreakpoints.Where(b => b.Percent <= PercentEnergy).OrderByDescending(b => b.Percent).FirstOrDefault();
         CurrentBackground.Background?.SetActive(true);
+    }
+    private void UpdateUIText()
+    {
+        Text.text = $"{CurrentEnergy}";
+        //Text.text = $"{CurrentEnergy} ({PercentEnergy * 100}%)";
     }
 }

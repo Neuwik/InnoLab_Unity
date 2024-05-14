@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2029065250190518197}
   - component: {fileID: 6000577186695175364}
+  - component: {fileID: 8869367730917948408}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,9 +46,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Console: {fileID: 0}
-  Garbages: []
   UMLActors: []
   UMLStart: {fileID: 0}
   UMLStop: {fileID: 0}
   ActiveArrow: {fileID: 0}
   ReDrawArrow: 0
+--- !u!114 &8869367730917948408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3362296990000297337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6457efffa4110e748a2da01ff6ca747b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEffectAudioSource: {fileID: 0}
+  fireDamageSound: {fileID: 8300000, guid: eefbe48eed1e750499a3670f0daa054c, type: 3}
+  waterSplashSound: {fileID: 8300000, guid: 9a1e8d04c6d73b74f8f677b59c2912dd, type: 3}
+  garbageCollectSound: {fileID: 8300000, guid: 146210d4130465d419ba3b7387b7705e, type: 3}
