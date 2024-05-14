@@ -7,6 +7,7 @@ using UnityEditor.UI;
 using UnityEngine.UI;
 using TMPro.EditorUtilities;
 using TMPro;
+using Unity.VisualScripting;
 
 public class LevelOutcome : MonoBehaviour
 {
@@ -15,11 +16,22 @@ public class LevelOutcome : MonoBehaviour
     public bool playerDied = false;
     public bool garbageCollected = false;
 
+    public bool condition1_IsTrue = true;
+    public bool condition2_IsTrue = true;
+    public bool condition3_IsTrue = true;
+
     #endregion
+
+    public int forStar_maxSteps;
+    public int forStar_maxUMLElements;
 
     public GameManager gameManager;
 
     public GameObject LevelOutcomeGO;
+    public GameObject Stars;
+    public GameObject Star1;
+    public GameObject Star2;
+    public GameObject Star3;
 
     public TMP_Text LevelIndexText;
     public TMP_Text OutcomeText;
@@ -58,6 +70,13 @@ public class LevelOutcome : MonoBehaviour
             {
                 ShowLevelOutcome(false);
             }
+
+
+            if(gameManager.steps > forStar_maxSteps)
+                condition2_IsTrue = false;
+
+            if(gameManager.UMLElements.Count > forStar_maxUMLElements)
+                condition3_IsTrue = false;
         }
     }
 
@@ -80,6 +99,17 @@ public class LevelOutcome : MonoBehaviour
     private void ShowLevelSuccessUI()
     {
         OutcomeText.text = "Level complete";
+
+        int starsAmount = 0;
+
+        if (condition1_IsTrue)
+            starsAmount++;
+        if (condition2_IsTrue)
+            starsAmount++;
+        if (condition3_IsTrue)
+            starsAmount++;
+
+        ShowStars(starsAmount);
     }
 
     private void ShowLevelFailedUI()
@@ -91,5 +121,22 @@ public class LevelOutcome : MonoBehaviour
 
         // Reset Button Position = right side
         ResetBtn.transform.position = _posNextLevelBtn;
+    }
+
+    private void ShowStars(int amount)
+    {
+        Stars.gameObject.SetActive(true);
+
+        // One Star
+        if (amount >= 1)
+            Star1.gameObject.SetActive(true);
+
+        // Two Stars
+        if (amount >= 2)
+            Star2.gameObject.SetActive(true);
+
+        // Three Stars
+        if (amount >= 3)
+            Star3.gameObject.SetActive(true);
     }
 }
