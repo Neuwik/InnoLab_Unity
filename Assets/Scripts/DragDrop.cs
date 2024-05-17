@@ -34,6 +34,8 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     
     public void OnBeginDrag(PointerEventData eventData)
     {
+        //Debug.Log("OnBeginDrag");
+
         //Place new Object
         if (gameObject.transform.parent.CompareTag(_selectionPanel.tag))
         {
@@ -60,15 +62,13 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         GameManager.Instance.ReDrawArrow = false;
-        if (Mathf.Abs(gameObject.transform.localPosition.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // bottom bordercheck
-            Mathf.Abs(gameObject.transform.localPosition.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2   // left bordercheck
-            /*_umlPanel.transform.position.y <= gameObject.transform.position.y + (_rectT.rect.height / 2 )             || // top bordercheck
-            _umlPanel.transform.position.x <= gameObject.transform.position.x + (_rectT.rect.width / 2 ))               // right bordercheck*/)
+        if (Mathf.Abs(gameObject.transform.localPosition.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
+            Mathf.Abs(gameObject.transform.localPosition.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2 )  // right, left bordercheck
         {
             gameObject.GetComponent<CreateArrow>().ReduceTargetAmount();
             OnDelete.Invoke();
             Destroy(gameObject);
         }
-        Debug.Log("OnEndDrag");
+        //Debug.Log("OnEndDrag");
     }
 }

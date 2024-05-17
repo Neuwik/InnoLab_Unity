@@ -97,7 +97,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     var newArrow = GameObject.Instantiate(Arrow, gameObject.transform);
                     newArrow.transform.SetAsFirstSibling();
                     Rect _ = gameObject.GetComponent<RectTransform>().rect;
-                    newArrow.GetComponent<ArrowPainter>().Startpos = (Vector2)gameObject.transform.position + new Vector2(_.width / 2, _.height / 2);
+                    newArrow.GetComponent<ArrowPainter>().StartPos = (Vector2)gameObject.transform.position + new Vector2(_.width / 2, _.height / 2);
                     IncreaseTargetAmount();
                     if (_targetMaxAmount == 2) // => only Condition blocks
                     {

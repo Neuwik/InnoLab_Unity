@@ -32,6 +32,7 @@ RectTransform:
   - {fileID: 4764989513403254674}
   - {fileID: 3182187255420813513}
   - {fileID: 2317478404409252978}
+  - {fileID: 7677601236308793855}
   - {fileID: 6586177614861656035}
   - {fileID: 3670876694011887240}
   m_Father: {fileID: 0}
@@ -56,10 +57,85 @@ MonoBehaviour:
   UpperVerticleShaft: {fileID: 5215513846119357467}
   LowerVerticleShaft: {fileID: 8864595968498777439}
   LowerHorizontalShaft: {fileID: 2902425621404089636}
-  UpperHorizontalVerticleShaftRectT: {fileID: 0}
+  UpperHorizontalShaft: {fileID: 2047797054703446293}
   ArrowHead: {fileID: 4238099971640653798}
   ConditionText: {fileID: 3138043229459554470}
   Startpos: {x: 0, y: 0}
+--- !u!1 &2047797054703446293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7677601236308793855}
+  - component: {fileID: 6089756098044087148}
+  - component: {fileID: 587354324036339135}
+  m_Layer: 3
+  m_Name: UpperHorizontalShaft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7677601236308793855
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047797054703446293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1379909003356406304}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 4}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6089756098044087148
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047797054703446293}
+  m_CullTransparentMesh: 1
+--- !u!114 &587354324036339135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047797054703446293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2902425621404089636
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +148,7 @@ GameObject:
   - component: {fileID: 2180546863713133664}
   - component: {fileID: 2434143595973052594}
   m_Layer: 3
-  m_Name: HorizontalShaft
+  m_Name: LowerHorizontalShaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
