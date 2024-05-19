@@ -60,7 +60,7 @@ MonoBehaviour:
   UpperHorizontalShaft: {fileID: 2047797054703446293}
   ArrowHead: {fileID: 4238099971640653798}
   ConditionText: {fileID: 3138043229459554470}
-  Startpos: {x: 0, y: 0}
+  StartPos: {x: 0, y: 0}
 --- !u!1 &2047797054703446293
 GameObject:
   m_ObjectHideFlags: 0
