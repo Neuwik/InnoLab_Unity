@@ -968,6 +968,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4756665206308030606}
+  - component: {fileID: 6062169890166923399}
   m_Layer: 5
   m_Name: LevelOutcome
   m_TagString: Untagged
@@ -1001,6 +1002,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6062169890166923399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3536488394372529238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed92b494dd7d8a4487ed91e7ce5fdfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDied: 0
+  garbageCollected: 0
+  condition1_IsTrue: 1
+  condition2_IsTrue: 1
+  condition3_IsTrue: 1
+  forStar_maxSteps: 0
+  forStar_maxUMLElements: 0
+  gameManager: {fileID: 0}
+  LevelOutcomePrefab: {fileID: 0}
+  Stars: {fileID: 8940292814555011999}
+  Star1: {fileID: 2739283701969373891}
+  Star2: {fileID: 301300087269145756}
+  Star3: {fileID: 1496277769135903862}
+  LevelIndexText: {fileID: 0}
+  OutcomeText: {fileID: 0}
+  NextBtn: {fileID: 0}
+  ResetBtn: {fileID: 0}
 --- !u!1 &3601976302737620793
 GameObject:
   m_ObjectHideFlags: 0

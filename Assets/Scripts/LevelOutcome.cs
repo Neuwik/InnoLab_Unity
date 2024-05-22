@@ -50,7 +50,12 @@ public class LevelOutcome : MonoBehaviour
     void Start()
     {
         if (gameManager == null)
-            Debug.LogError("GameManager is empty");
+            gameManager = GameManager.Instance;
+
+        if (LevelOutcomePrefab == null)
+        {
+            LevelOutcomePrefab = gameObject;
+        }
 
         LevelOutcomePrefab.SetActive(false);
 

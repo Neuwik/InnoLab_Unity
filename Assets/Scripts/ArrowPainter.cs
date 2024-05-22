@@ -61,7 +61,7 @@ public class ArrowPainter : MonoBehaviour
 
             //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
             CreateArrow prevCA = _prev.GetComponent<CreateArrow>();
-            bool conditional = prevCA.TargetMaxAmount > 1 && prevCA.TargetAmount == 1;
+            bool conditional = prevCA.TargetMaxAmount > 1 && prevCA.TargetAmount > 1;
 
             _prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), conditional);
         }

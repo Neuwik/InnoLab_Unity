@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class LevelManager : MonoBehaviour
 {
-    public string sceneName;
+    private string sceneName;
     public SceneAsset sceneAsset;
 
     void OnValidate()
@@ -25,9 +25,15 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex + 1);
     }
 
-    public void LoadLevelbyName()
+    public void LoadLevelByName()
     {
         if(!string.IsNullOrEmpty(sceneName))
             SceneManager.LoadScene(sceneName);
+    }
+
+    public void LoadLevelByIndex(int index)
+    {
+        if (index >= 0)
+            SceneManager.LoadScene(index);
     }
 }
