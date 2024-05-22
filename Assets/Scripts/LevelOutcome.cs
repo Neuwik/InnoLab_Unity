@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using TMPro.EditorUtilities;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class LevelOutcome : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class LevelOutcome : MonoBehaviour
 
     public GameManager gameManager;
 
-    public GameObject LevelOutcomeGO;
+    public GameObject LevelOutcomePrefab;
     public GameObject Stars;
     public GameObject Star1;
     public GameObject Star2;
@@ -39,6 +40,8 @@ public class LevelOutcome : MonoBehaviour
     public Button NextBtn;
     public Button ResetBtn;
 
+    private int starsEarnedAmount = 0;
+
     private bool _isLevelActive = true;
     private Vector2 _posNextLevelBtn;
 
@@ -49,7 +52,7 @@ public class LevelOutcome : MonoBehaviour
         if (gameManager == null)
             Debug.LogError("GameManager is empty");
 
-        LevelOutcomeGO.SetActive(false);
+        LevelOutcomePrefab.SetActive(false);
 
         _posNextLevelBtn = NextBtn.transform.position;
     }
@@ -63,12 +66,12 @@ public class LevelOutcome : MonoBehaviour
             if(!playerDied)
             {
                 if (garbageCollected)
-                    ShowLevelOutcome(true);
+                    EndLevel(true);
             }
             // Level failed
             else
             {
-                ShowLevelOutcome(false);
+                EndLevel(false);
             }
 
             //Implement these counters
@@ -82,15 +85,23 @@ public class LevelOutcome : MonoBehaviour
         }
     }
 
-    private void ShowLevelOutcome(bool isSuccess)
+    private void EndLevel(bool isSuccess)
     {
         _isLevelActive = false;
-        LevelOutcomeGO.SetActive(true);
+        LevelOutcomePrefab.SetActive(true);
 
         // Level success
         if (isSuccess)
         {
+            if (condition1_IsTrue)
+                starsEarnedAmount++;
+            if (condition2_IsTrue)
+                starsEarnedAmount++;
+            if (condition3_IsTrue)
+                starsEarnedAmount++;
+
             ShowLevelSuccessUI();
+            SaveLevelOutcome();
             return;
         }
 
@@ -101,17 +112,7 @@ public class LevelOutcome : MonoBehaviour
     private void ShowLevelSuccessUI()
     {
         OutcomeText.text = "Level complete";
-
-        int starsAmount = 0;
-
-        if (condition1_IsTrue)
-            starsAmount++;
-        if (condition2_IsTrue)
-            starsAmount++;
-        if (condition3_IsTrue)
-            starsAmount++;
-
-        ShowStars(starsAmount);
+        ShowStars();
     }
 
     private void ShowLevelFailedUI()
@@ -125,20 +126,31 @@ public class LevelOutcome : MonoBehaviour
         ResetBtn.transform.position = _posNextLevelBtn;
     }
 
-    private void ShowStars(int amount)
+    private void ShowStars()
     {
         Stars.gameObject.SetActive(true);
 
         // One Star
-        if (amount >= 1)
-            Star1.gameObject.SetActive(true);
+        if (starsEarnedAmount >= 1)
+            Star1.SetActive(true);
 
         // Two Stars
-        if (amount >= 2)
-            Star2.gameObject.SetActive(true);
+        if (starsEarnedAmount >= 2)
+            Star2.SetActive(true);
 
         // Three Stars
-        if (amount >= 3)
-            Star3.gameObject.SetActive(true);
+        if (starsEarnedAmount >= 3)
+            Star3.SetActive(true);
+    }
+
+    private void SaveLevelOutcome()
+    {
+        LevelSaveData levelSaveData = new LevelSaveData();
+        levelSaveData.levelNumber = SceneManager.GetActiveScene().buildIndex;
+        levelSaveData.starsEarned = starsEarnedAmount;
+        levelSaveData.stepsTaken = 0;
+        levelSaveData.umlElementsUsed = 0;
+
+        SaveManager.Instance.SaveLevel(levelSaveData);
     }
 }
