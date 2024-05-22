@@ -10,7 +10,7 @@ using UnityEngine.InputSystem.HID;
 
 public class CreateArrow : MonoBehaviour, IPointerClickHandler
 {
-    private int _targetMaxAmount;
+    public int TargetMaxAmount;
     public int TargetAmount;
 
     public GameObject Actionbox;
@@ -24,11 +24,11 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         Debug.Log(gameObject.name);
         if(gameObject.name.Contains("Is"))
         {
-            _targetMaxAmount = 2;
+            TargetMaxAmount = 2;
         }
         else
         {
-            _targetMaxAmount = 1;
+            TargetMaxAmount = 1;
         }
         TargetAmount = 0;
     }
@@ -70,21 +70,35 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 // change true or false if arrows starts in conditionblock
                 if (TargetAmount == 2)
                 {
-                    for (int i = 0; i < 2; i++)
+                    foreach (ArrowPainter arrow in gameObject.GetComponentsInChildren<ArrowPainter>())
                     {
-                        childHelper = gameObject.transform.GetChild(i).gameObject.transform.GetChild(4).gameObject;
-                        TMPro.TextMeshProUGUI ConditionText = childHelper.GetComponent<TMPro.TextMeshProUGUI>();
+                        TMPro.TextMeshProUGUI conditionText = arrow.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
-                        if (ConditionText.text.Contains("true"))
+                        if (conditionText.text.Contains("true"))
                         {
-                            ConditionText.text = "false";
+                            conditionText.text = "false";
                         }
                         else
                         {
-                            ConditionText.text = "true";
+                            conditionText.text = "true";
+                        }
+                    }
+                    /*for (int i = 0; i < 2; i++)
+                    {
+                        childHelper = gameObject.transform.GetChild(i).gameObject.transform.GetChild(5).gameObject;
+
+                        TMPro.TextMeshProUGUI conditionText = childHelper.GetComponent<TMPro.TextMeshProUGUI>();
+
+                        if (conditionText.text.Contains("true"))
+                        {
+                            conditionText.text = "false";
+                        }
+                        else
+                        {
+                            conditionText.text = "true";
                         }
 
-                    }
+                    }*/
                     gameObject.GetComponent<UMLCondition>().SwitchNextActions();
 
                     return;
@@ -92,16 +106,16 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
                 // Create Arrow happens on Parent Object
                 if (GameManager.Instance.ActiveArrow == null &&
-                    TargetAmount < _targetMaxAmount )
+                    TargetAmount < TargetMaxAmount )
                 {
                     var newArrow = GameObject.Instantiate(Arrow, gameObject.transform);
                     newArrow.transform.SetAsFirstSibling();
                     Rect _ = gameObject.GetComponent<RectTransform>().rect;
                     newArrow.GetComponent<ArrowPainter>().StartPos = (Vector2)gameObject.transform.position + new Vector2(_.width / 2, _.height / 2);
                     IncreaseTargetAmount();
-                    if (_targetMaxAmount == 2) // => only Condition blocks
+                    if (TargetMaxAmount == 2) // => only Condition blocks
                     {
-                        childHelper = newArrow.transform.GetChild(4).gameObject;
+                        childHelper = newArrow.transform.GetChild(5).gameObject;
                         Debug.Log(childHelper.name);
                         childHelper.SetActive(true);
                         if (TargetAmount == 2)
@@ -140,7 +154,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
     }
     public void IncreaseTargetAmount()
     {
-        if (TargetAmount < _targetMaxAmount)
+        if (TargetAmount < TargetMaxAmount)
         {
             ++TargetAmount;
         }

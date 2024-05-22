@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
@@ -37,8 +38,12 @@ public class ArrowPainter : MonoBehaviour
 
     private bool _conditionOutcome;
     public bool ConditionOutcome { get { return _conditionOutcome; } set { _conditionOutcome = value; } }
+
     private GameObject _targetElem;
     private Rect _targetRect;
+
+    private AUMLElement _prev;
+
     public GameObject TargetElem 
     { 
         get { return _targetElem; } 
@@ -50,19 +55,20 @@ public class ArrowPainter : MonoBehaviour
             _targetElem.GetComponent<DragDrop>().OnPossitionChanged.AddListener(SetEnabled);
             _targetElem.GetComponent<DragDrop>().OnDelete.AddListener(TargetDestroyed);
 
-            AUMLElement prev = transform.parent.GetComponent<AUMLElement>();
+            _prev = transform.parent.GetComponent<AUMLElement>();
             CreateArrow CA = _targetElem.GetComponent<CreateArrow>();
             CA.OnDelete.AddListener(TargetDestroyed);
 
-            bool conditional = false;
+            //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
+            CreateArrow prevCA = _prev.GetComponent<CreateArrow>();
+            bool conditional = prevCA.TargetMaxAmount > 1 && prevCA.TargetAmount == 1;
 
-            Debug.Log(CA.TargetAmount);
-            if (CA.TargetAmount == 1)
-            {
-                conditional = true; //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
-            }
-            prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), conditional);
+            _prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), conditional);
         }
+    }
+    private void ConditionalChanged()
+    {
+
     }
     private void TargetDestroyed()
     {
@@ -202,31 +208,51 @@ public class ArrowPainter : MonoBehaviour
             }
 
             shaftOffset = _lowerVerticleShaftRectT.rect.width;
-            verticleLength = targetPoint.y - StartPos.y;
-            horizontalLength = (targetPoint.x - StartPos.x) / 2;
+            verticleLength = _parentRect.height / 2 + targetPoint.y - StartPos.y;
 
-            if (StartPos.x - _parentRect.width / 2 <= targetPoint.x /*||
-                targetPoint.x <= StartPos.x + _parentRect.x / 2 */)
+            float directionHelper = 1;
+            float upperLength;
+            float targetHalfWidth = TargetElem != null ? TargetElem.GetComponent<RectTransform>().rect.width / 2 : 0;
+
+            if (StartPos.x - _parentRect.width / 2 <= targetPoint.x &&
+                targetPoint.x <= StartPos.x ||
+                targetPoint.x - targetHalfWidth >= StartPos.x - _parentRect.width / 2)
             {
-                StartPos.x -= _parentRect.width / 2;
-                targetPoint.x -= _parentRect.width / 2;            
+                StartPos -= new Vector2((_parentRect.width / 2) - 5, _parentRect.height / 2);
+                _arrowHeadRectT.rotation = Quaternion.Euler(0f, 0f, 90f);
+                horizontalLength = (targetPoint.x - StartPos.x) / 2;
+                if (TargetElem != null)
+                {
+                    targetPoint.x -= targetHalfWidth;
+                }
+                upperLength = _lowerVerticleShaftRectT.position.x - targetPoint.x;
+                directionHelper = -1;
             } 
             else
             {
-                StartPos.x += _parentRect.x / 2;
-                targetPoint.x += _parentRect.width / 2;
+                StartPos += new Vector2((_parentRect.width / 2) - 5, -_parentRect.height / 2);
+                _arrowHeadRectT.rotation = Quaternion.Euler(0f, 0f, -90f);
+                horizontalLength = (StartPos.x - targetPoint.x) / 2;
+
+                if (TargetElem != null)
+                {
+                    targetPoint.x += targetHalfWidth;
+                }
+                upperLength = _lowerVerticleShaftRectT.position.x - targetPoint.x;
             }
 
-            _lowerHorizontalShaftRectT.position = StartPos + new Vector2(horizontalLength / 6, 0);
-            _lowerHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(horizontalLength / 3 + shaftOffset));
+            _lowerHorizontalShaftRectT.position = StartPos + new Vector2(horizontalLength / 3 * directionHelper, 0);
+            _lowerHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(horizontalLength / 1.5f + shaftOffset));
 
             _conditionTextRectT.position = _upperHorizontalShaftRectT.position + _lhsOffset;
 
-            _lowerVerticleShaftRectT.position = StartPos + new Vector2(horizontalLength / 6, verticleLength / 2);
+            _lowerVerticleShaftRectT.position = StartPos + new Vector2(horizontalLength / 1.5f * directionHelper, verticleLength / 2);
             _lowerVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength));
 
-            _upperHorizontalShaftRectT.position = targetPoint - new Vector2(3.5f * horizontalLength / 6 + shaftOffset, 0);
-            _upperHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(7 * horizontalLength / 6));
+            _upperHorizontalShaftRectT.position = targetPoint + new Vector2(upperLength / 2, 0);
+            _upperHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(upperLength) + shaftOffset);
+
+            _arrowHeadRectT.position = targetPoint;
         }
 
 
