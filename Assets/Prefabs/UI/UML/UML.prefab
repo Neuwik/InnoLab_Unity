@@ -604,14 +604,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5339821700723278854, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5339821700723278854, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5511574979108409576, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -774,30 +766,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6737860628458572991, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6909371726159188126, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6909371726159188126, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6909371726159188126, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6909371726159188126, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6909371726159188126, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6909371726159188126, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7280856999108176605, guid: dba0f86a7871b8c41a458d80e80ef8c4, type: 3}

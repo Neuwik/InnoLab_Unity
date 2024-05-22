@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private RectTransform _canvasRectT;
     private RectTransform _rectT;
@@ -34,6 +34,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     
     public void OnBeginDrag(PointerEventData eventData)
     {
+        //Debug.Log("OnBeginDrag");
+
         //Place new Object
         if (gameObject.transform.parent.CompareTag(_selectionPanel.tag))
         {
@@ -49,7 +51,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             gameObject.transform.SetParent(_umlPanel.transform);
         }
         GameManager.Instance.ReDrawArrow = true;
-        //realignArrow();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -61,20 +62,13 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void OnEndDrag(PointerEventData eventData)
     {
         GameManager.Instance.ReDrawArrow = false;
-        if (gameObject.transform.position.y <= (_canvasRectT.rect.height - _umlRectT.rect.height) || // bottom bordercheck
-            gameObject.transform.position.x <= (_canvasRectT.rect.width - _umlRectT.rect.width)  || // left bordercheck
-            _canvasRectT.rect.height <= (gameObject.transform.position.y + _rectT.rect.height)  || // top bordercheck
-            _canvasRectT.rect.width <= (gameObject.transform.position.x + _rectT.rect.width    )) // right bordercheck
+        if (Mathf.Abs(gameObject.transform.localPosition.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
+            Mathf.Abs(gameObject.transform.localPosition.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2 )  // right, left bordercheck
         {
+            gameObject.GetComponent<CreateArrow>().ReduceTargetAmount();
             OnDelete.Invoke();
             Destroy(gameObject);
         }
-
         //Debug.Log("OnEndDrag");
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        //Debug.Log("OnPointerDown");
     }
 }
