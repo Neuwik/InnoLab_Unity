@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class ArrowPainter : MonoBehaviour
     private RectTransform _lowerVerticleShaftRectT;
     public GameObject LowerVerticleShaft;
 
-    private readonly Vector3 _lhsOffset = new Vector3(0, 7, 0);
+    private Vector3 _ConditionalOffset;
     private RectTransform _lowerHorizontalShaftRectT;
     public GameObject LowerHorizontalShaft;
 
@@ -115,6 +116,7 @@ public class ArrowPainter : MonoBehaviour
         float shaftOffset;
         float verticleLength;
         float horizontalLength;
+        float targetHalfWidth = TargetElem != null ? TargetElem.GetComponent<RectTransform>().rect.width / 2 : 0;
 
         StartPos = (Vector2) gameObject.transform.position;
         if (targetPoint.y < StartPos.y - _parentRect.height / 2)
@@ -133,6 +135,7 @@ public class ArrowPainter : MonoBehaviour
             verticleLength = (targetPoint.y - StartPos.y) / 2;
             horizontalLength = targetPoint.x - StartPos.x;
             shaftOffset = _upperVerticleShaftRectT.rect.width;
+            _ConditionalOffset = new Vector3(0, 7, 0);
 
             _upperVerticleShaftRectT.position = new Vector2(StartPos.x, StartPos.y + verticleLength / 2);
             _upperVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength));
@@ -140,7 +143,7 @@ public class ArrowPainter : MonoBehaviour
             _lowerHorizontalShaftRectT.position = new Vector2(StartPos.x + horizontalLength / 2, StartPos.y + verticleLength);
             _lowerHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(horizontalLength) + shaftOffset);
 
-            _conditionTextRectT.position = _lowerHorizontalShaftRectT.position + _lhsOffset;
+            _conditionTextRectT.position = _lowerHorizontalShaftRectT.position + _ConditionalOffset;
 
             _lowerVerticleShaftRectT.position = targetPoint - new Vector2(0, verticleLength / 2);
             _lowerVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength));
@@ -148,8 +151,10 @@ public class ArrowPainter : MonoBehaviour
             _arrowHeadRectT.position = targetPoint;
             _arrowHeadRectT.rotation = new Quaternion(0, 0, 0, 0);
         }
-        else if(StartPos.x + _parentRect.width / 2 <= targetPoint.x - 5 || // upwards arrow where elements have a large distance in between them
-                StartPos.x - _parentRect.width / 2 >= targetPoint.x + 5 )
+        else if(StartPos.x + _parentRect.width / 2 >= targetPoint.x - (TargetElem != null ? targetHalfWidth : 50) &&
+                StartPos.x - _parentRect.width / 2 <= targetPoint.x + (TargetElem != null ? targetHalfWidth : 50) ||
+                StartPos.x + _parentRect.width / 2 >= targetPoint.x + (TargetElem != null ? targetHalfWidth : 50) &&
+                StartPos.x - _parentRect.width / 2 <= targetPoint.x - (TargetElem != null ? targetHalfWidth : 50) )
         {
             if (UpperVerticleShaft.activeSelf)
             {
@@ -157,6 +162,63 @@ public class ArrowPainter : MonoBehaviour
                 UpperHorizontalShaft.SetActive(true);
             }
 
+            _ConditionalOffset = new Vector3(15, 0, 0);
+            shaftOffset = _lowerVerticleShaftRectT.rect.width;
+            verticleLength = _parentRect.height / 2 + targetPoint.y - StartPos.y;
+
+            float directionHelper = 1;
+            float upperLength;
+
+            if (StartPos.x - _parentRect.width / 2 <= targetPoint.x &&
+                targetPoint.x <= StartPos.x ||
+                targetPoint.x - targetHalfWidth >= StartPos.x - _parentRect.width / 2)
+            {
+                StartPos -= new Vector2((_parentRect.width / 2) - 5, _parentRect.height / 2);
+                _arrowHeadRectT.rotation = Quaternion.Euler(0f, 0f, 90f);
+                horizontalLength = (targetPoint.x - StartPos.x) / 2;
+                if (TargetElem != null)
+                {
+                    targetPoint.x -= targetHalfWidth;
+                }
+                upperLength = _lowerVerticleShaftRectT.position.x - targetPoint.x;
+                directionHelper = -1;
+            }
+            else
+            {
+                StartPos += new Vector2((_parentRect.width / 2) - 5, -_parentRect.height / 2);
+                _arrowHeadRectT.rotation = Quaternion.Euler(0f, 0f, -90f);
+                horizontalLength = (StartPos.x - targetPoint.x) / 2;
+
+                if (TargetElem != null)
+                {
+                    targetPoint.x += targetHalfWidth;
+                }
+                upperLength = _lowerVerticleShaftRectT.position.x - targetPoint.x;
+            }
+
+            _lowerHorizontalShaftRectT.position = StartPos + new Vector2(horizontalLength / 3 * directionHelper, 0);
+            _lowerHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(horizontalLength / 1.5f + shaftOffset));
+
+            _conditionTextRectT.position = _lowerVerticleShaftRectT.position + _ConditionalOffset * directionHelper * -1; // don't judge :D
+            
+            
+            _lowerVerticleShaftRectT.position = StartPos + new Vector2(horizontalLength / 1.5f * directionHelper, verticleLength / 2);
+            _lowerVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength));
+
+            _upperHorizontalShaftRectT.position = targetPoint + new Vector2(upperLength / 2, 0);
+            _upperHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(upperLength) + shaftOffset);
+
+            _arrowHeadRectT.position = targetPoint;
+        }
+        else // upwards arrow where elements have a large distance in between them
+        {
+            if (UpperVerticleShaft.activeSelf)
+            {
+                UpperVerticleShaft.SetActive(false);
+                UpperHorizontalShaft.SetActive(true);
+            }
+
+            _ConditionalOffset = new Vector3(15, 0, 0);
             shaftOffset = _lowerVerticleShaftRectT.rect.width;
 
             if ((targetPoint.x + (_targetRect != null? _targetRect.width / 2 : 0)) <= StartPos.x)
@@ -175,7 +237,7 @@ public class ArrowPainter : MonoBehaviour
             {
                 StartPos += new Vector2((_parentRect.width / 2) - 5, -_parentRect.height / 2);
                 _arrowHeadRectT.rotation = Quaternion.Euler(0f, 0f, 90f);
-
+                _ConditionalOffset *= -1;
                 if (TargetElem != null)
                 {
                     targetPoint -= new Vector2(TargetElem.GetComponent<RectTransform>().rect.width / 2, 0);
@@ -189,7 +251,7 @@ public class ArrowPainter : MonoBehaviour
             _lowerHorizontalShaftRectT.position = StartPos + new Vector2(horizontalLength / 2, 0);
             _lowerHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(horizontalLength + shaftOffset));
 
-            _conditionTextRectT.position = _lowerHorizontalShaftRectT.position + _lhsOffset;
+            _conditionTextRectT.position = _lowerVerticleShaftRectT.position + _ConditionalOffset;
 
             _lowerVerticleShaftRectT.position = StartPos + new Vector2(horizontalLength, verticleLength / 2);
             _lowerVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength));
@@ -199,62 +261,5 @@ public class ArrowPainter : MonoBehaviour
 
             _arrowHeadRectT.position = targetPoint;
         }
-        else
-        {
-            if (UpperVerticleShaft.activeSelf)
-            {
-                UpperVerticleShaft.SetActive(false);
-                UpperHorizontalShaft.SetActive(true);
-            }
-
-            shaftOffset = _lowerVerticleShaftRectT.rect.width;
-            verticleLength = _parentRect.height / 2 + targetPoint.y - StartPos.y;
-
-            float directionHelper = 1;
-            float upperLength;
-            float targetHalfWidth = TargetElem != null ? TargetElem.GetComponent<RectTransform>().rect.width / 2 : 0;
-
-            if (StartPos.x - _parentRect.width / 2 <= targetPoint.x &&
-                targetPoint.x <= StartPos.x ||
-                targetPoint.x - targetHalfWidth >= StartPos.x - _parentRect.width / 2)
-            {
-                StartPos -= new Vector2((_parentRect.width / 2) - 5, _parentRect.height / 2);
-                _arrowHeadRectT.rotation = Quaternion.Euler(0f, 0f, 90f);
-                horizontalLength = (targetPoint.x - StartPos.x) / 2;
-                if (TargetElem != null)
-                {
-                    targetPoint.x -= targetHalfWidth;
-                }
-                upperLength = _lowerVerticleShaftRectT.position.x - targetPoint.x;
-                directionHelper = -1;
-            } 
-            else
-            {
-                StartPos += new Vector2((_parentRect.width / 2) - 5, -_parentRect.height / 2);
-                _arrowHeadRectT.rotation = Quaternion.Euler(0f, 0f, -90f);
-                horizontalLength = (StartPos.x - targetPoint.x) / 2;
-
-                if (TargetElem != null)
-                {
-                    targetPoint.x += targetHalfWidth;
-                }
-                upperLength = _lowerVerticleShaftRectT.position.x - targetPoint.x;
-            }
-
-            _lowerHorizontalShaftRectT.position = StartPos + new Vector2(horizontalLength / 3 * directionHelper, 0);
-            _lowerHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(horizontalLength / 1.5f + shaftOffset));
-
-            _conditionTextRectT.position = _upperHorizontalShaftRectT.position + _lhsOffset;
-
-            _lowerVerticleShaftRectT.position = StartPos + new Vector2(horizontalLength / 1.5f * directionHelper, verticleLength / 2);
-            _lowerVerticleShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Math.Abs(verticleLength));
-
-            _upperHorizontalShaftRectT.position = targetPoint + new Vector2(upperLength / 2, 0);
-            _upperHorizontalShaftRectT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Math.Abs(upperLength) + shaftOffset);
-
-            _arrowHeadRectT.position = targetPoint;
-        }
-
-
     }
 }
