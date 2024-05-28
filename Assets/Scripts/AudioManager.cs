@@ -39,4 +39,10 @@ public class AudioManager : MonoBehaviour
         //GarbageCollecter.cs line 45
         soundEffectAudioSource.PlayOneShot(garbageCollectSound);
     }
+
+    public void PlayerBatteryCollectSound()
+    {
+        //Battery.cs line 117
+        //soundEffectAudioSource.PlayOneShot(garbageCollectSound);
+    }
 }

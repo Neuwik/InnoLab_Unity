@@ -39,14 +39,14 @@ public abstract class AUMLElement : MonoBehaviour
 
         Highlight();
 
+        actor.Battery?.LooseEnergy(EnergyNeeded);
+
         if (!Execute(actor))
         {
             StopHighlight();
             actor.Crash();
             yield break;
         }
-
-        actor.Battery?.LooseEnergy(EnergyNeeded);
 
         yield return actor.WaitForTick();
 

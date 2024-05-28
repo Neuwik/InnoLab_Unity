@@ -53,6 +53,7 @@ public class GarbageCollector : MonoBehaviour, IResetable
             AudioManager.instance.PlayerGarbageCollectSound();
             GarbageCount++;
             garbage.gameObject.SetActive(false);
+            garbage = null;
         }
     }
 

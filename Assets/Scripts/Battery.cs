@@ -114,9 +114,10 @@ public class Battery : MonoBehaviour, ILooseCondition, IResetable
         else
         {
             GameManager.Instance.Console.Log("Collecting", name, $"Has collected Battery");
-            AudioManager.instance.PlayerGarbageCollectSound();
+            AudioManager.instance.PlayerBatteryCollectSound();
             GainEnergy(collectable.Power);
             collectable.gameObject.SetActive(false);
+            collectable = null;
         }
     }
 
