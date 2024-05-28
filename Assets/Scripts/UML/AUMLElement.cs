@@ -16,6 +16,8 @@ public abstract class AUMLElement : MonoBehaviour
     private Color32 baseColor;
     private Image image;
 
+    public int EnergyNeeded = 0;
+
     protected void Start()
     {
         image = GetComponentInChildren<Image>();
@@ -43,6 +45,8 @@ public abstract class AUMLElement : MonoBehaviour
             actor.Crash();
             yield break;
         }
+
+        actor.Battery?.LooseEnergy(EnergyNeeded);
 
         yield return actor.WaitForTick();
 

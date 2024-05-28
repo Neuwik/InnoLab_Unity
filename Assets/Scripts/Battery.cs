@@ -29,6 +29,8 @@ public class Battery : MonoBehaviour, ILooseCondition, IResetable
     public int CurrentEnergy { get; private set; }
     public float PercentEnergy { get { return Mathf.Round((float)CurrentEnergy / MaxEnergy * 100.0f) / 100.0f; } }
 
+    private BatteryCollectable collectable;
+
     public Action OnLoose { get; set; }
 
     private void Awake()
@@ -42,6 +44,7 @@ public class Battery : MonoBehaviour, ILooseCondition, IResetable
 
     public void Reset()
     {
+        collectable = null;
         ResetEnergy();
     }
 
@@ -100,5 +103,39 @@ public class Battery : MonoBehaviour, ILooseCondition, IResetable
     {
         Text.text = $"{CurrentEnergy}";
         //Text.text = $"{CurrentEnergy} ({PercentEnergy * 100}%)";
+    }
+
+    public void CollectBattery()
+    {
+        if (collectable == null)
+        {
+            GameManager.Instance.Console.LogWarning("Collecting", name, $"Can not collect Battery");
+        }
+        else
+        {
+            GameManager.Instance.Console.Log("Collecting", name, $"Has collected Battery");
+            AudioManager.instance.PlayerGarbageCollectSound();
+            GainEnergy(collectable.Power);
+            collectable.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.TryGetComponent<BatteryCollectable>(out BatteryCollectable c))
+        {
+            collectable = c;
+        }
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+        if (collision.gameObject.TryGetComponent<BatteryCollectable>(out BatteryCollectable c))
+        {
+            if (collectable == c)
+            {
+                collectable = null;
+            }
+        }
     }
 }

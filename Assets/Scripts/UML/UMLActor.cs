@@ -23,6 +23,8 @@ public class UMLActor : MonoBehaviour, IResetable
     public LayerMask DangerLayer;
     public LayerMask GarbageLayer;
 
+    public Battery Battery;
+
     public EUMLActorState State { get; private set; } = EUMLActorState.Ready;
     public bool UMLRunning
     {
@@ -53,6 +55,7 @@ public class UMLActor : MonoBehaviour, IResetable
     private void Awake()
     {
         GetComponents<ILooseCondition>().ToList().ForEach(c => c.OnLoose = Crash);
+        Battery = GetComponent<Battery>();
     }
 
     public IEnumerator StartUML()
@@ -173,6 +176,11 @@ public class UMLActor : MonoBehaviour, IResetable
     public void CollectGarbage()
     {
         GetComponent<GarbageCollector>()?.CollectGarbage();
+    }
+
+    public void CollectBattery()
+    {
+        Battery?.CollectBattery();
     }
     #endregion
 

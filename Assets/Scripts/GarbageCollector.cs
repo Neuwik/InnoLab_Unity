@@ -5,7 +5,7 @@ using UnityEngine;
 public class GarbageCollector : MonoBehaviour, IResetable
 {
     public int GarbageCount = 0;
-    private GameObject garbage;
+    private Garbage garbage;
     private float cooldown = 1;
     private float cooldownTimer = 0;
 
@@ -37,6 +37,7 @@ public class GarbageCollector : MonoBehaviour, IResetable
     {
         GarbageCount = 0;
         cooldownTimer = 0;
+        garbage = null;
     }
 
     public void CollectGarbage()
@@ -50,26 +51,27 @@ public class GarbageCollector : MonoBehaviour, IResetable
         {
             GameManager.Instance.Console.Log("Collecting", name, $"Has collected Garbage");
             AudioManager.instance.PlayerGarbageCollectSound();
-            garbage.SetActive(false);
             GarbageCount++;
+            garbage.gameObject.SetActive(false);
         }
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        //Debug.Log("Trigger detected with: " + collision.gameObject.name);
-
-        if (collision.gameObject.tag == "Garbage")
+        if (collision.gameObject.TryGetComponent<Garbage>(out Garbage g))
         {
-            garbage = collision.gameObject;
+            garbage = g;
         }
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.gameObject.tag == "Garbage")
+        if (collision.gameObject.TryGetComponent<Garbage>(out Garbage g))
         {
-            garbage = null;
+            if (garbage == g)
+            {
+                garbage = null;
+            }
         }
     }
 }

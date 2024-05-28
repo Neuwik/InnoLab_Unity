@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum EUMLActionType { DoNothing = 0, MoveUp = 11, MoveDown = 12, MoveLeft = 13, MoveRight = 14, CollectGarbage = 1 }
+public enum EUMLActionType { DoNothing = 0, MoveUp = 11, MoveDown = 12, MoveLeft = 13, MoveRight = 14, CollectGarbage = 1, CollectBattery = 2 }
 
 public class UMLAction : AUMLElement
 {
@@ -20,7 +20,6 @@ public class UMLAction : AUMLElement
         {
             return false;
         }
-        actor.GetComponent<Battery>()?.LooseEnergy(2);
         action.Invoke();
         return true;
     }
@@ -46,6 +45,9 @@ public class UMLAction : AUMLElement
                 break;
             case EUMLActionType.CollectGarbage:
                 action = actor.CollectGarbage;
+                break;
+            case EUMLActionType.CollectBattery:
+                action = actor.CollectBattery;
                 break;
             default:
                 action = () => {  };
