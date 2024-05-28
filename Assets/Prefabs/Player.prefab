@@ -195,12 +195,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2650753885127210626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f572004d28c2d304ebfd911dfc3ab9e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a90bca7979854547bc69e44805df7a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movePoint: {fileID: 4811353269305691008}
   moveSpeed: 5
   moveDistance: 3
-  movePoint: {fileID: 4811353269305691008}
   StopBefor:
     serializedVersion: 2
     m_Bits: 128
@@ -263,13 +263,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tree: {fileID: 0}
-  TickRate: 1
   DangerLayer:
     serializedVersion: 2
     m_Bits: 256
   GarbageLayer:
     serializedVersion: 2
     m_Bits: 512
+  Battery: {fileID: 0}
+  PlayerController: {fileID: 0}
 --- !u!1 &7198170989828703948
 GameObject:
   m_ObjectHideFlags: 0

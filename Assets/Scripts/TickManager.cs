@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.iOS;
+
+public enum ETickManagerStatus { None = 0, Started = 1, Stopped = 2, Player = 11, Enemy = 12 }
 
 public class TickManager : MonoBehaviour, IResetable
 {
     public float TickRate = 1; //Actions per second
     private List<UMLActor> Actors;
-    private List<Enemy_Movement> Enemies;
+    private List<EnemyMovementController> Enemies;
 
-    private bool PlayerTurn = false;
-    private IEnumerator ManageTicksEnumerator;
+    private ETickManagerStatus Status = ETickManagerStatus.None;
 
     private void Start()
     {
@@ -21,30 +23,43 @@ public class TickManager : MonoBehaviour, IResetable
 
     public void Reset()
     {
-        StopCoroutine(ManageTicksEnumerator);
-        PlayerTurn = false;
+        Status = ETickManagerStatus.Stopped;
+        //Debug.LogWarning("END TICK");
+        StopAllCoroutines();
+        Status = ETickManagerStatus.Stopped;
     }
 
     public void StartTicks()
     {
-        PlayerTurn = true;
-        StartCoroutine(ManageTicksEnumerator = ManageTicks());
+        //Debug.LogWarning("START TICK");
+        Status = ETickManagerStatus.Started;
+        StartCoroutine(ManageTicks());
     }
 
     private IEnumerator ManageTicks()
-    { 
+    {
+        Status = ETickManagerStatus.Started;
+        //Debug.LogWarning("START TICK (WHILE)");
+
+        //Delay to ensure everything started and is listening to the TickManager
+        yield return WaitForTick();
+
         while (GameManager.Instance.UMLIsRunning)
         {
+            //Debug.LogWarning("NEXT TICK");
             //Debug.LogWarning("PLAYER TURN");
-            PlayerTurn = true;
+            Status = ETickManagerStatus.Player;
             yield return WaitForTick();
             yield return WaitForPlayerMovement();
 
             //Debug.LogWarning("ENEMY TURN");
-            PlayerTurn = false;
+            Status = ETickManagerStatus.Enemy;
             yield return WaitForTick();
             yield return WaitForEnemyMovement();
         }
+
+        //Debug.LogWarning("END TICK (WHILE)");
+        Status = ETickManagerStatus.Stopped;
     }
 
     private IEnumerator WaitForTick()
@@ -69,7 +84,7 @@ public class TickManager : MonoBehaviour, IResetable
 
     private IEnumerator WaitForEnemyMovement()
     {
-        foreach (Enemy_Movement enemy in Enemies)
+        foreach (EnemyMovementController enemy in Enemies)
         {
             yield return enemy.WaitForMovementFinished();
         }
@@ -77,11 +92,21 @@ public class TickManager : MonoBehaviour, IResetable
 
     public IEnumerator WaitForPlayerTickStart()
     {
-        yield return new WaitUntil(() => PlayerTurn);
+        yield return new WaitUntil(() => Status == ETickManagerStatus.Player || Status == ETickManagerStatus.Stopped);
     }
 
     public IEnumerator WaitForPlayerTickEnd()
     {
-        yield return new WaitUntil(() => !PlayerTurn);
+        yield return new WaitUntil(() => Status != ETickManagerStatus.Player);
+    }
+
+    public IEnumerator WaitForEnemyTickStart()
+    {
+        yield return new WaitUntil(() => Status == ETickManagerStatus.Enemy || Status == ETickManagerStatus.Stopped);
+    }
+
+    public IEnumerator WaitForEnemyTickEnd()
+    {
+        yield return new WaitUntil(() => Status != ETickManagerStatus.Enemy);
     }
 }

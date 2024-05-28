@@ -18,12 +18,11 @@ public enum EUMLActorState
 public class UMLActor : MonoBehaviour, IResetable
 {
     public UMLTree Tree;
-    private Vector3 startPosition;
     public LayerMask DangerLayer;
     public LayerMask GarbageLayer;
 
     public Battery Battery;
-    public PlayerController PlayerController;
+    public PlayerMovementController PlayerController;
 
     public EUMLActorState State { get; private set; } = EUMLActorState.Ready;
     public bool UMLRunning
@@ -56,12 +55,11 @@ public class UMLActor : MonoBehaviour, IResetable
     {
         GetComponents<ILooseCondition>().ToList().ForEach(c => c.OnLoose = Crash);
         Battery = GetComponent<Battery>();
-        PlayerController = GetComponent<PlayerController>();
+        PlayerController = GetComponent<PlayerMovementController>();
     }
 
     public IEnumerator StartUML()
     {
-        startPosition = transform.position;
         SetActorState(EUMLActorState.Running);
         Debug.Log("Started " + name);
 
@@ -106,7 +104,6 @@ public class UMLActor : MonoBehaviour, IResetable
     public void Reset()
     {
         GameManager.Instance.Console.Log(State.ToString(), name, "Is resetting");
-        transform.position = startPosition;
         SetActorState(EUMLActorState.Ready);
     }
 

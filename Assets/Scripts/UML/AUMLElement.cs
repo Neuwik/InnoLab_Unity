@@ -35,6 +35,8 @@ public abstract class AUMLElement : MonoBehaviour
 
     public IEnumerator Run(UMLActor actor)
     {
+        yield return TickManager.WaitForPlayerTickStart();
+
         if (!GameManager.Instance.UMLIsRunning)
         {
             yield break;
@@ -45,11 +47,12 @@ public abstract class AUMLElement : MonoBehaviour
             yield break;
         }
 
-        yield return TickManager.WaitForPlayerTickStart();
-
         Highlight();
 
-        actor.Battery?.LooseEnergy(EnergyNeeded);
+        if (EnergyNeeded > 0)
+        {
+            actor.Battery?.LooseEnergy(EnergyNeeded);
+        }
 
         if (!Execute(actor))
         {
@@ -58,7 +61,10 @@ public abstract class AUMLElement : MonoBehaviour
             yield break;
         }
 
-        yield return TickManager.WaitForPlayerTickEnd();
+        if (EnergyNeeded > 0)
+        {
+            yield return TickManager.WaitForPlayerTickEnd();
+        }
 
         StopHighlight();
 
