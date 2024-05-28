@@ -37,12 +37,18 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         UMLActors = FindObjectsByType<UMLActor>(FindObjectsSortMode.InstanceID).ToList();
+        Enemies = FindObjectsByType<Enemy_Movement>(FindObjectsSortMode.InstanceID).ToList();
         ResetableComponents = new List<IResetable>();
         ReDrawArrow = false;
 
         if (Console == null)
         {
             Console = FindObjectOfType<ConsoleManager>();
+        }
+
+        if (TickManager == null)
+        {
+            TickManager = GetComponent<TickManager>();
         }
     }
 
@@ -55,8 +61,12 @@ public class GameManager : MonoBehaviour
     //UML Testing
     [HideInInspector]
     public List<UMLActor> UMLActors;
+    [HideInInspector]
+    public List<Enemy_Movement> Enemies;
     public Button UMLStart;
     public Button UMLStop;
+    public TickManager TickManager;
+    public bool UMLIsRunning = false;
 
     //UML Objects
     private GameObject _uml_canvas;
@@ -104,12 +114,16 @@ public class GameManager : MonoBehaviour
 
     public void RunUML()
     {
+        UMLIsRunning = true;
+        TickManager.StartTicks();
+        Enemies.ForEach(e => e.StartMovement());
         UMLActors.ForEach(a => StartCoroutine(a.StartUML()));
         StartCoroutine(AllBotsDone());
     }
 
     public void StopUML()
     {
+        UMLIsRunning = false;
         UMLActors.ForEach(a => a.Stop());
     }
 
@@ -126,6 +140,7 @@ public class GameManager : MonoBehaviour
     private void ResetLevel()
     {
         //UMLActors.ForEach(a => a.Reset());
+        UMLIsRunning = false;
         SearchForResetableComponents();
         ResetableComponents?.ForEach(r => r.Reset());
     }

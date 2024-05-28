@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6000577186695175364}
   - component: {fileID: 8869367730917948408}
   - component: {fileID: 1911805671515551026}
+  - component: {fileID: 4969564606312557577}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -50,6 +51,8 @@ MonoBehaviour:
   UMLActors: []
   UMLStart: {fileID: 0}
   UMLStop: {fileID: 0}
+  TickManager: {fileID: 0}
+  UMLIsRunning: 0
   ActiveArrow: {fileID: 0}
   ReDrawArrow: 0
 --- !u!114 &8869367730917948408
@@ -80,3 +83,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a01590d6c845bc4ba34c016f32e1ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4969564606312557577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3362296990000297337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1763441854e11b43850565d9984f8f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TickRate: 1
+  PlayerTurn: 0

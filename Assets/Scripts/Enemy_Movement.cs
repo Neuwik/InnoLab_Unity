@@ -2,34 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Movement : MonoBehaviour
+public class Enemy_Movement : MonoBehaviour, IResetable
 {
     public float moveSpeed = 1f;
-    private float nextMoveTime = 0f; 
-    private Vector3[] directions = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right }; 
+    private Vector3[] directions = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
+
+    private Vector3 startPosition;
+    private IEnumerator MovementEnumerator;
+    private TickManager TickManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        nextMoveTime = Time.time;
+        startPosition = transform.position;
+        TickManager = GameManager.Instance.TickManager;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Reset()
     {
-        if (Time.time >= nextMoveTime)
+        StopCoroutine(MovementEnumerator);
+        transform.position = startPosition;
+    }
+
+    public void StartMovement()
+    {
+        StartCoroutine(MovementEnumerator = Movement());
+    }
+
+    private IEnumerator Movement()
+    {
+        while (GameManager.Instance.UMLIsRunning)
         {
+            yield return TickManager.WaitForPlayerTickEnd();
             int randomIndex = Random.Range(0, directions.Length);
             Vector3 randomDirection = directions[randomIndex];
-
             Move(randomDirection);
-
-            nextMoveTime = Time.time + 2f;
+            yield return TickManager.WaitForPlayerTickStart();
         }
     }
 
     public void Move(Vector3 direction)
     {
         transform.position += direction * moveSpeed;
+    }
+
+    public IEnumerator WaitForMovementFinished()
+    {
+        // yield return wait until Enemy done moveing
+        yield return new WaitForSeconds(0.1f);
     }
 }

@@ -18,12 +18,12 @@ public enum EUMLActorState
 public class UMLActor : MonoBehaviour, IResetable
 {
     public UMLTree Tree;
-    public float TickRate = 1; //Actions per second
     private Vector3 startPosition;
     public LayerMask DangerLayer;
     public LayerMask GarbageLayer;
 
     public Battery Battery;
+    public PlayerController PlayerController;
 
     public EUMLActorState State { get; private set; } = EUMLActorState.Ready;
     public bool UMLRunning
@@ -56,6 +56,7 @@ public class UMLActor : MonoBehaviour, IResetable
     {
         GetComponents<ILooseCondition>().ToList().ForEach(c => c.OnLoose = Crash);
         Battery = GetComponent<Battery>();
+        PlayerController = GetComponent<PlayerController>();
     }
 
     public IEnumerator StartUML()
@@ -99,7 +100,7 @@ public class UMLActor : MonoBehaviour, IResetable
         {
             SetActorState(EUMLActorState.Stopping);
         }
-        GetComponent<PlayerController>()?.StopPushes();
+        PlayerController?.StopPushes();
     }
 
     public void Reset()
@@ -107,23 +108,6 @@ public class UMLActor : MonoBehaviour, IResetable
         GameManager.Instance.Console.Log(State.ToString(), name, "Is resetting");
         transform.position = startPosition;
         SetActorState(EUMLActorState.Ready);
-    }
-
-    public IEnumerator WaitForTick()
-    {
-        if (TickRate <= 0)
-        {
-            yield return new WaitForSeconds(1);
-        }
-        else
-        {
-
-            yield return new WaitForSeconds(1/TickRate);
-        }
-        if (UMLRunning)
-        {
-            yield return GetComponent<PlayerController>()?.WaitForMovementFinished();
-        }
     }
 
     private void SetActorState(EUMLActorState newState)
@@ -157,19 +141,19 @@ public class UMLActor : MonoBehaviour, IResetable
     #region Move
     public void MoveUp()
     {
-        GetComponent<PlayerController>()?.Move(Vector3.forward);
+        PlayerController?.Move(Vector3.forward);
     }
     public void MoveDown()
     {
-        GetComponent<PlayerController>()?.Move(Vector3.back);
+        PlayerController?.Move(Vector3.back);
     }
     public void MoveLeft()
     {
-        GetComponent<PlayerController>()?.Move(Vector3.left);
+        PlayerController?.Move(Vector3.left);
     }
     public void MoveRight()
     {
-        GetComponent<PlayerController>()?.Move(Vector3.right);
+        PlayerController?.Move(Vector3.right);
     }
     #endregion
 
@@ -249,12 +233,11 @@ public class UMLActor : MonoBehaviour, IResetable
     private bool RaycastInMoveDirection(Vector3 direction, LayerMask layer)
     {
         // Raycast auf dem "layer" von dem Actor zu dem Feld wo der Actor stehen wird, wenn er in die "direction" geht
-        PlayerController pc = GetComponent<PlayerController>();
-        if (pc == null)
+        if (PlayerController == null)
         {
             return false;
         }
-        Vector3 pos = pc.GetNextMovePointPosition(direction) + Vector3.down;
+        Vector3 pos = PlayerController.GetNextMovePointPosition(direction) + Vector3.down;
         float distance = Vector3.Distance(transform.position, pos);
         Vector3 posDirection = pos - transform.position;
         RaycastHit hit;
@@ -271,12 +254,11 @@ public class UMLActor : MonoBehaviour, IResetable
     private bool RaycastOnMoveDirectionEndpoint(Vector3 direction, LayerMask layer)
     {
         // Raycast auf dem "layer" auf das Feld wo der Actor stehen wird, wenn er in die "direction" geht
-        PlayerController pc = GetComponent<PlayerController>();
-        if (pc == null)
+        if (PlayerController == null)
         {
             return false;
         }
-        Vector3 pos = pc.GetNextMovePointPosition(direction) + Vector3.down;
+        Vector3 pos = PlayerController.GetNextMovePointPosition(direction) + Vector3.down;
         return RaycastOnPosition(pos, layer);
     }
 
