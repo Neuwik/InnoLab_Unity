@@ -56,6 +56,11 @@ public class UMLActor : MonoBehaviour, IResetable
         GetComponents<ILooseCondition>().ToList().ForEach(c => c.OnLoose = Crash);
         Battery = GetComponent<Battery>();
         PlayerController = GetComponent<PlayerMovementController>();
+
+        if (Tree == null)
+        {
+            Tree = GameManager.Instance.CurrentTree;
+        }
     }
 
     public IEnumerator StartUML()

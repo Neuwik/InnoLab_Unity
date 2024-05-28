@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3362296990000297337}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.182703, y: -4.2742763, z: 2.9099479}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49,9 +49,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Console: {fileID: 0}
   UMLActors: []
+  Enemies: []
   UMLStart: {fileID: 0}
   UMLStop: {fileID: 0}
-  TickManager: {fileID: 0}
+  TickManager: {fileID: 4969564606312557577}
   UMLIsRunning: 0
   ActiveArrow: {fileID: 0}
   ReDrawArrow: 0
@@ -96,4 +97,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TickRate: 1
-  PlayerTurn: 0

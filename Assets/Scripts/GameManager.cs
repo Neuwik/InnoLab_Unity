@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
     public Button UMLStop;
     public TickManager TickManager;
     public bool UMLIsRunning = false;
+    public UMLTree CurrentTree;
 
     //UML Objects
     private GameObject _uml_canvas;

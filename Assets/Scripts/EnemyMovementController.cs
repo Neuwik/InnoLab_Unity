@@ -9,6 +9,10 @@ public class EnemyMovementController : MovementController
     private Coroutine MovementCoroutine;
     private TickManager TickManager;
 
+    [SerializeField]
+    private SpriteRenderer sprite;
+    private Vector3 spriteForward = Vector3.left;
+
     // Start is called before the first frame update
     protected new void Start()
     {
@@ -33,11 +37,19 @@ public class EnemyMovementController : MovementController
         {
             yield return TickManager.WaitForEnemyTickStart();
 
+            Vector3 randomDirection = Vector3.zero;
+
             while (movePoint.position == transform.position && GameManager.Instance.UMLIsRunning)
             {
                 int randomIndex = Random.Range(0, directions.Length);
-                Vector3 randomDirection = directions[randomIndex];
+                randomDirection = directions[randomIndex];
+
                 Move(randomDirection);
+            }
+
+            if (randomDirection.x != 0)
+            {
+                sprite.flipX = randomDirection.x != spriteForward.x;
             }
 
             yield return TickManager.WaitForEnemyTickEnd();
