@@ -16,10 +16,15 @@ public abstract class AUMLElement : MonoBehaviour
     private Color32 baseColor;
     private Image image;
 
+    public int EnergyNeeded = 0;
+
+    private TickManager TickManager;
+
     protected void Start()
     {
         image = GetComponentInChildren<Image>();
         baseColor = image.color;
+        TickManager = GameManager.Instance.TickManager;
     }
 
     public virtual bool ChangeNextAction(AUMLElement NewNextAction, bool conditional = false)
@@ -30,12 +35,24 @@ public abstract class AUMLElement : MonoBehaviour
 
     public IEnumerator Run(UMLActor actor)
     {
+        yield return TickManager.WaitForPlayerTickStart();
+
+        if (!GameManager.Instance.UMLIsRunning)
+        {
+            yield break;
+        }
+
         if (!actor.UMLRunning)
         {
             yield break;
         }
 
         Highlight();
+
+        if (EnergyNeeded > 0)
+        {
+            actor.Battery?.LooseEnergy(EnergyNeeded);
+        }
 
         if (!Execute(actor))
         {
@@ -44,7 +61,10 @@ public abstract class AUMLElement : MonoBehaviour
             yield break;
         }
 
-        yield return actor.WaitForTick();
+        if (EnergyNeeded > 0)
+        {
+            yield return TickManager.WaitForPlayerTickEnd();
+        }
 
         StopHighlight();
 

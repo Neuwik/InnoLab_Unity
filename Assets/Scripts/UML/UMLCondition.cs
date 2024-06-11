@@ -30,7 +30,6 @@ public class UMLCondition : AUMLElement
         GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {ConditionType}");
         //Debug.Log("Some Condition: " + name);
         SetConditionByEnum(actor);
-        actor.GetComponent<Battery>()?.LooseEnergy(1);
         if (condition.Invoke())
         {
             NextElement = trueNextAction;

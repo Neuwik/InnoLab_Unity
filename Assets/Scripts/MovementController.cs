@@ -1,17 +1,21 @@
-﻿using UnityEngine;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
+using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IResetable
+public class MovementController : MonoBehaviour, IResetable
 {
+    public Transform movePoint;
     public float moveSpeed = 5f;
     public int moveDistance = 3;
-    public Transform movePoint;
+    private Vector3 startPosition;
+
     public LayerMask StopBefor;
     public LayerMask StopOn;
-    private bool pushesAllowed;
+
+    protected void Start()
+    {
+        startPosition = transform.position;
+    }
 
     void Update()
     {
@@ -19,27 +23,17 @@ public class PlayerController : MonoBehaviour, IResetable
         {
             transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
         }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-            Move(Vector3.forward);
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-            Move(-Vector3.forward);
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            Move(-Vector3.right);
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-            Move(Vector3.right);
     }
 
     public void Reset()
     {
-        pushesAllowed = false;
+        transform.position = startPosition;
         movePoint.parent = transform;
         movePoint.localPosition = Vector3.zero;
     }
 
     public void Move(Vector3 direction)
     {
-        pushesAllowed = true;
         movePoint.position = GetNextMovePointPosition(direction);
     }
 
@@ -48,7 +42,7 @@ public class PlayerController : MonoBehaviour, IResetable
         return GetNextMovePointPosition(direction, moveDistance);
     }
 
-    private Vector3 GetNextMovePointPosition(Vector3 direction, int distance)
+    protected Vector3 GetNextMovePointPosition(Vector3 direction, int distance)
     {
         movePoint.parent = null;
         Vector3 movePointPosition = movePoint.position;
@@ -72,20 +66,8 @@ public class PlayerController : MonoBehaviour, IResetable
         return movePointPosition;
     }
 
-    public IEnumerator PushInDirection(Vector3 direction, int distance)
-    {
-        yield return WaitForMovementFinished();
-        if (pushesAllowed)
-        {
-            movePoint.position = GetNextMovePointPosition(direction, distance);
-        }
-    }
     public IEnumerator WaitForMovementFinished()
     {
         yield return new WaitUntil(() => transform.position == movePoint.position);
-    }
-    public void StopPushes()
-    {
-        pushesAllowed = false;
     }
 }

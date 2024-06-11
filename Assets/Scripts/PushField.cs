@@ -34,7 +34,7 @@ public class PushField : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        PlayerController player = other.GetComponent<PlayerController>();
+        PlayerMovementController player = other.GetComponent<PlayerMovementController>();
         if (player != null)
         {
             StartCoroutine(player.PushInDirection(direction, Power));
