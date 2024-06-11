@@ -68,6 +68,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             case PointerEventData.InputButton.Right: 
 
                 // change true or false if arrows starts in conditionblock
+                
                 if (TargetAmount == 2)
                 {
                     foreach (ArrowPainter arrow in gameObject.GetComponentsInChildren<ArrowPainter>())
@@ -83,28 +84,12 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                             conditionText.text = "true";
                         }
                     }
-                    /*for (int i = 0; i < 2; i++)
-                    {
-                        childHelper = gameObject.transform.GetChild(i).gameObject.transform.GetChild(5).gameObject;
-
-                        TMPro.TextMeshProUGUI conditionText = childHelper.GetComponent<TMPro.TextMeshProUGUI>();
-
-                        if (conditionText.text.Contains("true"))
-                        {
-                            conditionText.text = "false";
-                        }
-                        else
-                        {
-                            conditionText.text = "true";
-                        }
-
-                    }*/
+                    
                     gameObject.GetComponent<UMLCondition>().SwitchNextActions();
 
                     return;
                 }
 
-                // Create Arrow happens on Parent Object
                 if (GameManager.Instance.ActiveArrow == null &&
                     TargetAmount < TargetMaxAmount )
                 {
@@ -115,7 +100,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     IncreaseTargetAmount();
                     if (TargetMaxAmount == 2) // => only Condition blocks
                     {
-                        childHelper = newArrow.transform.GetChild(5).gameObject;
+                        childHelper = newArrow.transform.Find("ConditionalValue").gameObject;
                         Debug.Log(childHelper.name);
                         childHelper.SetActive(true);
                         if (TargetAmount == 2)
@@ -139,6 +124,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 {
                     Destroy(gameObject);
                     OnDelete.Invoke();
+                    // needs to invoke onDelete on Arrow of previous action
                 } 
                 return;
         }

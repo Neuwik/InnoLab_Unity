@@ -67,10 +67,6 @@ public class ArrowPainter : MonoBehaviour
             _prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), conditional);
         }
     }
-    private void ConditionalChanged()
-    {
-
-    }
     private void TargetDestroyed()
     {
         Destroy(gameObject);
@@ -98,7 +94,7 @@ public class ArrowPainter : MonoBehaviour
         if (TargetElem == null)
         {
             // TODO:
-            //  +-> if mouse howers above object set bool isHowering to 1 and StartPos to target pos 
+            //  +-> if mouse howers above object set bool isHowering to 1 and StartPos to target pos of hovered elem
             DrawArrow((Vector2)Input.mousePosition + mouseOffset);
             return;
         }
