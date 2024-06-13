@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     private string sceneName;
     public SceneAsset sceneAsset;
+    public int LevelSelectionSceneIndex = 0;
 
     void OnValidate()
     {
@@ -35,5 +36,10 @@ public class LevelManager : MonoBehaviour
     {
         if (index >= 0)
             SceneManager.LoadScene(index);
+    }
+
+    public void LoadLevelSelectionScene()
+    {
+        LoadLevelByIndex(LevelSelectionSceneIndex);
     }
 }

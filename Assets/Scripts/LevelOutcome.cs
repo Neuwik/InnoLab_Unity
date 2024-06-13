@@ -37,12 +37,13 @@ public class LevelOutcome : MonoBehaviour
     public TMP_Text LevelIndexText;
     public TMP_Text OutcomeText;
 
-    public Button NextBtn;
+    public Button MenuBtn;
     public Button ResetBtn;
+    public Button NextBtn;
 
     private int starsEarnedAmount = 0;
 
-    private bool _isLevelActive = true;
+    //private bool _isLevelActive = true;
     private Vector2 _posNextLevelBtn;
 
 
@@ -60,9 +61,14 @@ public class LevelOutcome : MonoBehaviour
         LevelOutcomePrefab.SetActive(false);
 
         _posNextLevelBtn = NextBtn.transform.position;
+
+        MenuBtn.onClick.AddListener(OnClickMenu);
+        ResetBtn.onClick.AddListener(OnClickReset);
+        NextBtn.onClick.AddListener(OnClickNext);
     }
 
     // Update is called once per frame
+    /*
     void Update()
     {
         if (_isLevelActive)
@@ -80,19 +86,28 @@ public class LevelOutcome : MonoBehaviour
             }
 
             //Implement these counters
-            /*
             if(gameManager.steps > forStar_maxSteps)
                 condition2_IsTrue = false;
 
             if(gameManager.UMLElements.Count > forStar_maxUMLElements)
                 condition3_IsTrue = false;
-            */
         }
+    }
+    */
+
+    public void ShowLevelOutcome()
+    {
+        if (!playerDied)
+        {
+            if (garbageCollected)
+                EndLevel(true);
+        }
+        EndLevel(false);
     }
 
     private void EndLevel(bool isSuccess)
     {
-        _isLevelActive = false;
+        //_isLevelActive = false;
         LevelOutcomePrefab.SetActive(true);
 
         // Level success
@@ -157,5 +172,18 @@ public class LevelOutcome : MonoBehaviour
         levelSaveData.umlElementsUsed = 0;
 
         SaveManager.Instance.SaveLevel(levelSaveData);
+    }
+
+    private void OnClickMenu()
+    {
+        gameManager.LevelManager.LoadLevelSelectionScene();
+    }
+    private void OnClickReset()
+    {
+        gameObject.SetActive(false);
+    }
+    private void OnClickNext()
+    {
+        gameManager.LevelManager.LoadNextLevel();
     }
 }

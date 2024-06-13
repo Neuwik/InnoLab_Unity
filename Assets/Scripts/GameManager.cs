@@ -25,19 +25,33 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance)
+        if (_instance != null)
         {
+            //Debug.LogWarning("Game Manger exists " + _instance.name);
             Destroy(gameObject);
         }
         else
         {
             _instance = this;
+            transform.parent = null;
+            DontDestroyOnLoad(this);
+            //LoadReferences();
+            SceneManager.sceneLoaded += OnSceneLoad;
         }
+    }
 
-        DontDestroyOnLoad(this);
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        Debug.LogWarning("Game Manager: New Scene loaded");
+        LoadReferences();
+    }
 
+    private void LoadReferences()
+    {
         UMLActors = FindObjectsByType<UMLActor>(FindObjectsSortMode.InstanceID).ToList();
         Enemies = FindObjectsByType<EnemyMovementController>(FindObjectsSortMode.InstanceID).ToList();
+        Garbages = FindObjectsByType<Garbage>(FindObjectsSortMode.InstanceID).ToList();
+        GarbageCollectors = FindObjectsByType<GarbageCollector>(FindObjectsSortMode.InstanceID).ToList();
         ResetableComponents = new List<IResetable>();
         ReDrawArrow = false;
 
@@ -48,8 +62,32 @@ public class GameManager : MonoBehaviour
 
         if (TickManager == null)
         {
-            TickManager = GetComponent<TickManager>();
+            TickManager = FindObjectOfType<TickManager>();
         }
+
+        if (CurrentTree == null)
+        {
+            CurrentTree = FindObjectOfType<UMLTree>();
+        }
+
+        if (LevelOutcome == null)
+        {
+            LevelOutcome = FindObjectOfType<LevelOutcome>();
+        }
+
+        if (LevelManager == null)
+        {
+            LevelManager = FindObjectOfType<LevelManager>();
+        }
+
+        if(btn_UMLStart == null || btn_UMLStop == null)
+        {
+            UMLStartStop startstop = FindObjectOfType<UMLStartStop>();
+            btn_UMLStart = startstop?.btn_Start;
+            btn_UMLStop = startstop?.btn_Stop;
+        }
+        btn_UMLStart?.onClick.AddListener(RunUML);
+        btn_UMLStop?.onClick.AddListener(StopUML);
     }
 
     public ConsoleManager Console;
@@ -58,16 +96,21 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public List<IResetable> ResetableComponents;
 
-    //UML Testing
     [HideInInspector]
     public List<UMLActor> UMLActors;
     [HideInInspector]
     public List<EnemyMovementController> Enemies;
-    public Button UMLStart;
-    public Button UMLStop;
+    [HideInInspector]
+    public List<Garbage> Garbages;
+    [HideInInspector]
+    public List<GarbageCollector> GarbageCollectors;
+    public Button btn_UMLStart;
+    public Button btn_UMLStop;
     public TickManager TickManager;
     public bool UMLIsRunning = false;
     public UMLTree CurrentTree;
+    public LevelOutcome LevelOutcome;
+    public LevelManager LevelManager;
 
     //UML Objects
     private GameObject _uml_canvas;
@@ -117,7 +160,14 @@ public class GameManager : MonoBehaviour
     {
         UMLIsRunning = true;
         TickManager.StartTicks();
-        UMLActors.ForEach(a => StartCoroutine(a.StartUML()));
+        UMLActors.ForEach(a =>
+        {
+            if (a.Tree == null)
+            {
+                a.Tree = CurrentTree;
+            }
+            StartCoroutine(a.StartUML());
+        });
         Enemies.ForEach(e => e.StartMovement());
         StartCoroutine(AllBotsDone());
     }
@@ -132,10 +182,18 @@ public class GameManager : MonoBehaviour
     public IEnumerator AllBotsDone()
     {
         yield return new WaitUntil(() => (UMLActors.Find(a => !a.UMLFinished) == null)); //Not Performant?
-        ShowWinLose();
+        if (CheckIfWon())
+        {
+            Debug.Log("You have Won");
+        }
+        else
+        {
+            Debug.Log("Try Again");
+        }
+        LevelOutcome.ShowLevelOutcome();
         ResetLevel();
-        UMLStop.gameObject.SetActive(false);
-        UMLStart.gameObject.SetActive(true);
+        btn_UMLStop.gameObject.SetActive(false);
+        btn_UMLStart.gameObject.SetActive(true);
         yield break;
     }
 
@@ -172,9 +230,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ShowWinLose()
+    private bool CheckIfWon()
     {
-        Debug.Log("Game Won/Lost");
-    }
 
+        int count = 0;
+        GarbageCollectors.ForEach(gc => count += gc.GarbageCount);
+
+        LevelOutcome.garbageCollected = Garbages.Count <= count;
+        LevelOutcome.playerDied = UMLActors.Where(a => a.State != EUMLActorState.Done).ToList().Count > 0;
+
+        return LevelOutcome.garbageCollected && !LevelOutcome.playerDied;
+    }
 }

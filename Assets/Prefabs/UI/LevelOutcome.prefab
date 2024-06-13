@@ -1027,10 +1027,11 @@ MonoBehaviour:
   Star1: {fileID: 2739283701969373891}
   Star2: {fileID: 301300087269145756}
   Star3: {fileID: 1496277769135903862}
-  LevelIndexText: {fileID: 0}
-  OutcomeText: {fileID: 0}
-  NextBtn: {fileID: 0}
-  ResetBtn: {fileID: 0}
+  LevelIndexText: {fileID: 1590500643746189629}
+  OutcomeText: {fileID: 3802658206880453034}
+  MenuBtn: {fileID: 534738071856424454}
+  ResetBtn: {fileID: 4212245971371052597}
+  NextBtn: {fileID: 7213654546875695788}
 --- !u!1 &3601976302737620793
 GameObject:
   m_ObjectHideFlags: 0
