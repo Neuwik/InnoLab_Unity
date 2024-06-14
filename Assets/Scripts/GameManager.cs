@@ -191,15 +191,18 @@ public class GameManager : MonoBehaviour
             Debug.Log("Try Again");
         }
         LevelOutcome.ShowLevelOutcome();
-        ResetLevel();
-        btn_UMLStop.gameObject.SetActive(false);
-        btn_UMLStart.gameObject.SetActive(true);
+        btn_UMLStart.enabled = false;
+        btn_UMLStop.enabled = false;
         yield break;
     }
 
-    private void ResetLevel()
+    public void ResetLevel()
     {
         //UMLActors.ForEach(a => a.Reset());
+        btn_UMLStop.gameObject.SetActive(false);
+        btn_UMLStart.gameObject.SetActive(true);
+        btn_UMLStart.enabled = true;
+        btn_UMLStop.enabled = true;
         UMLIsRunning = false;
         SearchForResetableComponents();
         TickManager.Reset();
@@ -238,6 +241,18 @@ public class GameManager : MonoBehaviour
 
         LevelOutcome.garbageCollected = Garbages.Count <= count;
         LevelOutcome.playerDied = UMLActors.Where(a => a.State != EUMLActorState.Done).ToList().Count > 0;
+
+        float percentHealthSum = 0;
+        float percentEnergySum = 0;
+
+        UMLActors.ForEach(a =>
+        {
+            percentHealthSum += a.GetComponent<PlayerHealth>().PercentHealth;
+            percentEnergySum += a.Battery.PercentEnergy;
+        });
+
+        LevelOutcome.percentHealth = percentHealthSum / UMLActors.Count;
+        LevelOutcome.percentEnergy = percentEnergySum / UMLActors.Count;
 
         return LevelOutcome.garbageCollected && !LevelOutcome.playerDied;
     }

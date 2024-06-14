@@ -27,8 +27,8 @@ public class LevelSelectPrefab : MonoBehaviour
         if (saveData.starsEarned >= 1)
             Star1.SetActive(true);
         if (saveData.starsEarned >= 2)
-            Star1.SetActive(true);
+            Star2.SetActive(true);
         if (saveData.starsEarned >= 3)
-            Star1.SetActive(true);
+            Star3.SetActive(true);
     }
 }

@@ -10,18 +10,21 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
-public class LevelOutcome : MonoBehaviour
+public class LevelOutcome : MonoBehaviour, IResetable
 {
     #region DEBUG
-
-    public bool playerDied = false;
-    public bool garbageCollected = false;
 
     public bool condition1_IsTrue = true;
     public bool condition2_IsTrue = true;
     public bool condition3_IsTrue = true;
 
     #endregion
+
+    public bool playerDied = false;
+    public bool garbageCollected = false;
+    private float successQualityPercent = 0;
+    public float percentHealth = 0;
+    public float percentEnergy = 0;
 
     public int forStar_maxSteps;
     public int forStar_maxUMLElements;
@@ -45,6 +48,7 @@ public class LevelOutcome : MonoBehaviour
 
     //private bool _isLevelActive = true;
     private Vector2 _posNextLevelBtn;
+    private Vector2 _posResetLevelBtn;
 
 
     // Start is called before the first frame update
@@ -61,6 +65,7 @@ public class LevelOutcome : MonoBehaviour
         LevelOutcomePrefab.SetActive(false);
 
         _posNextLevelBtn = NextBtn.transform.position;
+        _posResetLevelBtn = ResetBtn.transform.position;
 
         MenuBtn.onClick.AddListener(OnClickMenu);
         ResetBtn.onClick.AddListener(OnClickReset);
@@ -100,9 +105,22 @@ public class LevelOutcome : MonoBehaviour
         if (!playerDied)
         {
             if (garbageCollected)
+            {
                 EndLevel(true);
+                return;
+            }
         }
         EndLevel(false);
+    }
+
+    public void Reset()
+    {
+        playerDied = false;
+        garbageCollected = false;
+        successQualityPercent = 0;
+        percentHealth = 0;
+        percentEnergy = 0;
+        starsEarnedAmount = 0;
     }
 
     private void EndLevel(bool isSuccess)
@@ -113,12 +131,25 @@ public class LevelOutcome : MonoBehaviour
         // Level success
         if (isSuccess)
         {
+            /*
+            //DEBUG
             if (condition1_IsTrue)
                 starsEarnedAmount++;
             if (condition2_IsTrue)
                 starsEarnedAmount++;
             if (condition3_IsTrue)
                 starsEarnedAmount++;
+            */
+
+            successQualityPercent = (percentHealth + percentEnergy) / 2;
+
+            if (successQualityPercent >= 0.25)
+                starsEarnedAmount++;
+            if (successQualityPercent >= 0.5)
+                starsEarnedAmount++;
+            if (successQualityPercent >= 0.75)
+                starsEarnedAmount++;
+            
 
             ShowLevelSuccessUI();
             SaveLevelOutcome();
@@ -132,6 +163,13 @@ public class LevelOutcome : MonoBehaviour
     private void ShowLevelSuccessUI()
     {
         OutcomeText.text = "Level complete";
+
+        // Show "Next" Button
+        NextBtn.gameObject.SetActive(true);
+
+        // Reset Button Position = middle
+        ResetBtn.transform.position = _posResetLevelBtn;
+
         ShowStars();
     }
 
@@ -144,6 +182,9 @@ public class LevelOutcome : MonoBehaviour
 
         // Reset Button Position = right side
         ResetBtn.transform.position = _posNextLevelBtn;
+
+        //Hide Stars
+        Stars.gameObject.SetActive(false);
     }
 
     private void ShowStars()
@@ -170,6 +211,9 @@ public class LevelOutcome : MonoBehaviour
         levelSaveData.starsEarned = starsEarnedAmount;
         levelSaveData.stepsTaken = 0;
         levelSaveData.umlElementsUsed = 0;
+        levelSaveData.successQualityPercent = successQualityPercent;
+        levelSaveData.percentHealth = percentHealth;
+        levelSaveData.percentEnergy = percentEnergy;
 
         SaveManager.Instance.SaveLevel(levelSaveData);
     }
@@ -180,6 +224,7 @@ public class LevelOutcome : MonoBehaviour
     }
     private void OnClickReset()
     {
+        gameManager.ResetLevel();
         gameObject.SetActive(false);
     }
     private void OnClickNext()

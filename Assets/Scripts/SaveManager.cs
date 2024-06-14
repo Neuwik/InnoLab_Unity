@@ -9,6 +9,9 @@ public class LevelSaveData
     public int starsEarned;
     public int stepsTaken;
     public int umlElementsUsed;
+    public float successQualityPercent;
+    public float percentHealth;
+    public float percentEnergy;
 }
 
 [System.Serializable]
@@ -103,7 +106,8 @@ public class SaveManager : MonoBehaviour
         int index = levelSaveDataList.levelSaveDataList.FindIndex(data => data.levelNumber == levelData.levelNumber);
         if (index != -1)
         {
-            levelSaveDataList.levelSaveDataList[index] = levelData;
+            if (levelSaveDataList.levelSaveDataList[index].starsEarned <= levelData.starsEarned)
+                levelSaveDataList.levelSaveDataList[index] = levelData;
         }
         else
         {
