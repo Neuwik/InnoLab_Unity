@@ -32,18 +32,22 @@ public class ArrowPainter : MonoBehaviour
     private RectTransform _conditionTextRectT;
     public GameObject ConditionText;
 
-    private Rect _parentRect;
-
     public Vector2 StartPos;
     private Vector2 mouseOffset = new Vector2(-5, 5); //  3px does not work, it autosnaps the mouse click???
 
     private bool _conditionOutcome;
     public bool ConditionOutcome { get { return _conditionOutcome; } set { _conditionOutcome = value; } }
 
+    private GameObject _parentElem;
+    private Rect _parentRect;
+
     private GameObject _targetElem;
     private Rect _targetRect;
 
     private AUMLElement _prev;
+
+
+    private CreateArrow _prevCreateArrow;
 
     public GameObject TargetElem 
     { 
@@ -61,14 +65,15 @@ public class ArrowPainter : MonoBehaviour
             CA.OnDelete.AddListener(TargetDestroyed);
 
             //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
-            CreateArrow prevCA = _prev.GetComponent<CreateArrow>();
-            bool conditional = prevCA.TargetMaxAmount > 1 && prevCA.TargetAmount > 1;
+            _prevCreateArrow = _prev.GetComponent<CreateArrow>();
+            bool conditional = _prevCreateArrow.TargetMaxAmount > 1 && _prevCreateArrow.TargetAmount > 1;
 
             _prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), conditional);
         }
     }
     private void TargetDestroyed()
     {
+        _prevCreateArrow.ReduceTargetAmount();
         Destroy(gameObject);
     }
 
@@ -78,7 +83,8 @@ public class ArrowPainter : MonoBehaviour
     }
     void Start()
     {
-        _parentRect = gameObject.transform.parent.GetComponent<RectTransform>().rect;
+        _parentElem = gameObject.transform.parent.gameObject;
+        _parentRect = _parentElem.GetComponent<RectTransform>().rect;
         _upperVerticleShaftRectT = UpperVerticleShaft.GetComponent<RectTransform>();
         _lowerVerticleShaftRectT = LowerVerticleShaft.GetComponent<RectTransform>();
         _lowerHorizontalShaftRectT = LowerHorizontalShaft.GetComponent<RectTransform>();

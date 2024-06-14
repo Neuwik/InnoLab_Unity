@@ -40,20 +40,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             return;
         }
         GameObject childHelper;
-        if (eventData.button == PointerEventData.InputButton.Middle)
-        {
-            childHelper = gameObject.transform.GetChild(0).gameObject;
-            if (childHelper.name.Contains("Arrow"))
-            {
-                ReduceTargetAmount();
-                Destroy(childHelper);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-            return;
-        }
+        
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left: // Attach Arrow -> happens on TargetObject
@@ -62,13 +49,14 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 {
                     GameManager.Instance.ActiveArrow.GetComponent<ArrowPainter>().TargetElem = gameObject;
                     GameManager.Instance.ActiveArrow = null;
+                    
                 }
                 return;
 
-            case PointerEventData.InputButton.Right: 
+            case PointerEventData.InputButton.Right:
 
-                // change true or false if arrows starts in conditionblock
-                
+                // (TargetAmount == 2 == true) => conditionblock
+
                 if (TargetAmount == 2)
                 {
                     foreach (ArrowPainter arrow in gameObject.GetComponentsInChildren<ArrowPainter>())
@@ -114,16 +102,16 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 return;
 
             case PointerEventData.InputButton.Middle: // Delete Arrow
-                GameObject child = gameObject.transform.GetChild(0).gameObject;
-                if (child.name.Contains("Arrow"))
+                childHelper = gameObject.transform.GetChild(0).gameObject;
+                if (childHelper.name.Contains("Arrow"))
                 {
                     ReduceTargetAmount();
-                    Destroy(child);
+                    Destroy(childHelper);
                 }
                 else
                 {
-                    Destroy(gameObject);
                     OnDelete.Invoke();
+                    Destroy(gameObject);
                     // needs to invoke onDelete on Arrow of previous action
                 } 
                 return;
