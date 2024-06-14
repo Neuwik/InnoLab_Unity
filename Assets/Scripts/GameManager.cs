@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 
         if (LevelOutcome == null)
         {
-            LevelOutcome = FindObjectOfType<LevelOutcome>();
+            LevelOutcome = FindObjectOfType<LevelOutcome>(true);
         }
 
         if (LevelManager == null)

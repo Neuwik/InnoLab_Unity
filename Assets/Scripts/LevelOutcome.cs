@@ -50,9 +50,10 @@ public class LevelOutcome : MonoBehaviour, IResetable
     private Vector2 _posNextLevelBtn;
     private Vector2 _posResetLevelBtn;
 
+    private int levelNumber;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (gameManager == null)
             gameManager = GameManager.Instance;
@@ -62,7 +63,12 @@ public class LevelOutcome : MonoBehaviour, IResetable
             LevelOutcomePrefab = gameObject;
         }
 
-        LevelOutcomePrefab.SetActive(false);
+        //LevelOutcomePrefab.SetActive(false);
+
+        //gameObject.SetActive(false);
+
+        levelNumber = SceneManager.GetActiveScene().buildIndex;
+        LevelIndexText.text = "Level " + levelNumber;
 
         _posNextLevelBtn = NextBtn.transform.position;
         _posResetLevelBtn = ResetBtn.transform.position;
@@ -126,7 +132,8 @@ public class LevelOutcome : MonoBehaviour, IResetable
     private void EndLevel(bool isSuccess)
     {
         //_isLevelActive = false;
-        LevelOutcomePrefab.SetActive(true);
+        //LevelOutcomePrefab.SetActive(true);
+        gameObject.SetActive(true);
 
         // Level success
         if (isSuccess)
@@ -207,7 +214,7 @@ public class LevelOutcome : MonoBehaviour, IResetable
     private void SaveLevelOutcome()
     {
         LevelSaveData levelSaveData = new LevelSaveData();
-        levelSaveData.levelNumber = SceneManager.GetActiveScene().buildIndex;
+        levelSaveData.levelNumber = levelNumber;
         levelSaveData.starsEarned = starsEarnedAmount;
         levelSaveData.stepsTaken = 0;
         levelSaveData.umlElementsUsed = 0;

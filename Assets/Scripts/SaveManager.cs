@@ -35,6 +35,7 @@ public class SaveManager : MonoBehaviour
         else
         {
             Instance = this;
+            transform.parent = null;
             DontDestroyOnLoad(gameObject);
             Init();
         }

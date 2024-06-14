@@ -15,8 +15,8 @@ public class AudioManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            transform.parent = null;
-            DontDestroyOnLoad(gameObject); //keep AudioManager across scenes
+            //transform.parent = null;
+            //DontDestroyOnLoad(gameObject); //keep AudioManager across scenes
         }
         else
         {
