@@ -25,6 +25,17 @@ public class UMLCondition : AUMLElement
     public EUMLConditionType ConditionType;
     private Func<bool> condition;
 
+    public void HandleInputData(int val)
+    {
+        if (val >= 1)
+            val += 10;
+        if (val >= 16)
+            val += 5;
+        
+        ConditionType = (EUMLConditionType) val;
+
+    }
+
     protected override bool Execute(UMLActor actor)
     {
         GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {ConditionType}");
