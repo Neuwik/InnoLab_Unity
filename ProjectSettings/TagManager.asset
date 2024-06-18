@@ -13,8 +13,7 @@ TagManager:
   - Water
   - UMLSelectionPanel
   - UMLCanvas
-  - btn_UMLStart
-  - btn_UMLStop
+  - WaterSplash
   layers:
   - Default
   - TransparentFX
@@ -25,10 +24,10 @@ TagManager:
   - Player
   - Obstical
   - Danger
-  - Collectable
+  - Garbage
   - UMLElement
   - SpecialField
-  - Enemy
+  - 
   - 
   - 
   - 
