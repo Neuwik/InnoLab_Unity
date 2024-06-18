@@ -16,14 +16,15 @@ public class Big_Splash : MonoBehaviour
     {
         if (splashFlag == 0)
         {
-            StartCoroutine(ActivateAndTriggerSplash());
+            //StartCoroutine(ActivateAndTriggerSplash());
+            ActivateAndTriggerSplash();
         }
     }
 
-    private IEnumerator ActivateAndTriggerSplash()
+    private void ActivateAndTriggerSplash()
     {
         BigSplash.SetActive(true);
-        yield return null;
+        //yield return null;
         StartCoroutine(TriggerSplash());
     }
 

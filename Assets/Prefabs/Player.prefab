@@ -287,8 +287,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rocketTrail: {fileID: 847367971617345493}
+  waterSplash: {fileID: 2287986379284948399}
   waterSplashscript: {fileID: 8550204602328123555}
-  activateRocketTrail: 0
+  activateRocketTrail: 1
 --- !u!1 &7198170989828703948
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,6 +608,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61a39c296450d94459d7334f91efd280, type: 3}
+--- !u!1 &2287986379284948399 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1585961298877964, guid: 61a39c296450d94459d7334f91efd280, type: 3}
+  m_PrefabInstance: {fileID: 2289285537698085795}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2293965833769563823 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4750803572706572, guid: 61a39c296450d94459d7334f91efd280, type: 3}
@@ -617,7 +623,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7596799450706834176, guid: 61a39c296450d94459d7334f91efd280, type: 3}
   m_PrefabInstance: {fileID: 2289285537698085795}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2287986379284948399}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e695bbdcdc9732448a7e8d5da038640b, type: 3}

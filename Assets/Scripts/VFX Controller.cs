@@ -8,7 +8,7 @@ public class VFXController : MonoBehaviour
 
     public bool activateRocketTrail;
 
-    private float splashFlag = 0;
+    //private float splashFlag = 0;
     private Rigidbody rb;
 
     void Start()
@@ -32,14 +32,14 @@ public class VFXController : MonoBehaviour
                 rocketTrail.Stop();
             }
         }
+    }
 
-        if (Input.GetButtonDown("Fire1"))
+    public void PlayWAterSplash()
+    {
+        if (waterSplashscript != null)
         {
-            if (waterSplashscript != null)
-            {
-                waterSplash.SetActive(true);
-                waterSplashscript.TriggerSplashEffect();
-            }
+            waterSplash.SetActive(true);
+            waterSplashscript.TriggerSplashEffect();
         }
     }
 }

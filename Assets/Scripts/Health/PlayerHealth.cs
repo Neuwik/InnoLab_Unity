@@ -87,6 +87,7 @@ public class PlayerHealth : Health, ILooseCondition, IResetable
             {
                 TakeDamage(currentHealth);
                 AudioManager.instance.PlayWaterSplashSound();
+                GetComponent<VFXController>()?.PlayWAterSplash();
             }
 
             else
