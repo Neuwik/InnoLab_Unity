@@ -40,20 +40,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             return;
         }
         GameObject childHelper;
-        if (eventData.button == PointerEventData.InputButton.Middle)
-        {
-            childHelper = gameObject.transform.GetChild(0).gameObject;
-            if (childHelper.name.Contains("Arrow"))
-            {
-                ReduceTargetAmount();
-                Destroy(childHelper);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-            return;
-        }
+        
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left: // Attach Arrow -> happens on TargetObject
@@ -62,12 +49,14 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 {
                     GameManager.Instance.ActiveArrow.GetComponent<ArrowPainter>().TargetElem = gameObject;
                     GameManager.Instance.ActiveArrow = null;
+                    
                 }
                 return;
 
-            case PointerEventData.InputButton.Right: 
+            case PointerEventData.InputButton.Right:
 
-                // change true or false if arrows starts in conditionblock
+                // (TargetAmount == 2 == true) => conditionblock
+
                 if (TargetAmount == 2)
                 {
                     foreach (ArrowPainter arrow in gameObject.GetComponentsInChildren<ArrowPainter>())
@@ -83,28 +72,12 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                             conditionText.text = "true";
                         }
                     }
-                    /*for (int i = 0; i < 2; i++)
-                    {
-                        childHelper = gameObject.transform.GetChild(i).gameObject.transform.GetChild(5).gameObject;
-
-                        TMPro.TextMeshProUGUI conditionText = childHelper.GetComponent<TMPro.TextMeshProUGUI>();
-
-                        if (conditionText.text.Contains("true"))
-                        {
-                            conditionText.text = "false";
-                        }
-                        else
-                        {
-                            conditionText.text = "true";
-                        }
-
-                    }*/
+                    
                     gameObject.GetComponent<UMLCondition>().SwitchNextActions();
 
                     return;
                 }
 
-                // Create Arrow happens on Parent Object
                 if (GameManager.Instance.ActiveArrow == null &&
                     TargetAmount < TargetMaxAmount )
                 {
@@ -115,7 +88,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     IncreaseTargetAmount();
                     if (TargetMaxAmount == 2) // => only Condition blocks
                     {
-                        childHelper = newArrow.transform.GetChild(5).gameObject;
+                        childHelper = newArrow.transform.Find("ConditionalValue").gameObject;
                         Debug.Log(childHelper.name);
                         childHelper.SetActive(true);
                         if (TargetAmount == 2)
@@ -129,16 +102,17 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 return;
 
             case PointerEventData.InputButton.Middle: // Delete Arrow
-                GameObject child = gameObject.transform.GetChild(0).gameObject;
-                if (child.name.Contains("Arrow"))
+                childHelper = gameObject.transform.GetChild(0).gameObject;
+                if (childHelper.name.Contains("Arrow"))
                 {
                     ReduceTargetAmount();
-                    Destroy(child);
+                    Destroy(childHelper);
                 }
                 else
                 {
-                    Destroy(gameObject);
                     OnDelete.Invoke();
+                    Destroy(gameObject);
+                    // needs to invoke onDelete on Arrow of previous action
                 } 
                 return;
         }

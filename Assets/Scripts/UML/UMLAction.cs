@@ -11,6 +11,15 @@ public class UMLAction : AUMLElement
     public EUMLActionType ActionType;
     private Action action;
 
+    public void HandleInputData(int val)
+    {
+        if (val >= 3)
+        {
+            val += 8;
+        }
+        ActionType = (EUMLActionType) val;
+    }
+
     protected override bool Execute(UMLActor actor)
     {
         GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {ActionType}");
