@@ -496,6 +496,7 @@ MonoBehaviour:
   OnDelete:
     m_PersistentCalls:
       m_Calls: []
+  CanDraw: 0
 --- !u!114 &8256643148071424692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +514,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4278190335
   EnergyNeeded: 0
-  ActionType: 11
+  ActionType: 0
 --- !u!1 &4367250488028426081
 GameObject:
   m_ObjectHideFlags: 0

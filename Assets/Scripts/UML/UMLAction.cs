@@ -13,6 +13,7 @@ public class UMLAction : AUMLElement
 
     public void HandleInputData(int val)
     {
+        Debug.Log(ActionType);
         if (val >= 3)
         {
             val += 8;

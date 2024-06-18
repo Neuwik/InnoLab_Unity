@@ -49,6 +49,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             );
             newUMLElement.transform.SetParent(_selectionPanel.transform);
             gameObject.transform.SetParent(_umlPanel.transform);
+            GetComponent<CreateArrow>().CanDraw = true;
         }
         GameManager.Instance.ReDrawArrow = true;
     }

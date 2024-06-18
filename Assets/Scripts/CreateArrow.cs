@@ -17,6 +17,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
     public GameObject Arrow;
 
     public UnityEvent OnDelete;
+    public bool CanDraw = false;
 
     private void Start()
     {
@@ -35,7 +36,13 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        /*
         if (Actionbox.transform.parent.name != "UMLPanel")
+        {
+            return;
+        }
+        */
+        if (!CanDraw)
         {
             return;
         }

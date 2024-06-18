@@ -567,6 +567,7 @@ MonoBehaviour:
   OnDelete:
     m_PersistentCalls:
       m_Calls: []
+  CanDraw: 1
 --- !u!114 &23193659168216628
 MonoBehaviour:
   m_ObjectHideFlags: 0
