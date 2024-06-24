@@ -62,9 +62,14 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        Vector3 posInUml = _umlRectT.InverseTransformPoint(transform.position);
         GameManager.Instance.ReDrawArrow = false;
+        /*
         if (Mathf.Abs(gameObject.transform.localPosition.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
             Mathf.Abs(gameObject.transform.localPosition.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2 )  // right, left bordercheck
+        */
+        if (Mathf.Abs(posInUml.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
+            Mathf.Abs(posInUml.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2)  // right, left bordercheck
         {
             gameObject.GetComponent<CreateArrow>().ReduceTargetAmount();
             OnDelete.Invoke();

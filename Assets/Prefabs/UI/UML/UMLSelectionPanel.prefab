@@ -236,7 +236,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.007182875}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7760291431361237308
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 2249925545518933879}
   m_Layer: 5
   m_Name: UMLSelectionPanel
-  m_TagString: Untagged
+  m_TagString: UMLSelectionPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6588913575301690137}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999632
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

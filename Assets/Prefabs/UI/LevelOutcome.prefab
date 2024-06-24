@@ -975,7 +975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4756665206308030606
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1014,11 +1014,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed92b494dd7d8a4487ed91e7ce5fdfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDied: 0
-  garbageCollected: 0
   condition1_IsTrue: 1
   condition2_IsTrue: 1
   condition3_IsTrue: 1
+  playerDied: 0
+  garbageCollected: 0
+  percentHealth: 0
+  percentEnergy: 0
   forStar_maxSteps: 0
   forStar_maxUMLElements: 0
   gameManager: {fileID: 0}
