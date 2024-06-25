@@ -35,6 +35,8 @@ public abstract class AUMLElement : MonoBehaviour
 
     public IEnumerator Run(UMLActor actor)
     {
+        TickManager = GameManager.Instance.TickManager;
+
         yield return TickManager.WaitForPlayerTickStart();
 
         if (!GameManager.Instance.UMLIsRunning)

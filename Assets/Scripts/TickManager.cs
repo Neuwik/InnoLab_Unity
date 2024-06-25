@@ -32,6 +32,9 @@ public class TickManager : MonoBehaviour, IResetable
     public void StartTicks()
     {
         //Debug.LogWarning("START TICK");
+        Actors = GameManager.Instance.UMLActors;
+        Enemies = GameManager.Instance.Enemies;
+        //Debug.Log("TICK MANAGER ACTORS: " + Actors.Count);
         Status = ETickManagerStatus.Started;
         StartCoroutine(ManageTicks());
     }

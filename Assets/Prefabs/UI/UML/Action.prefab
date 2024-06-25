@@ -513,7 +513,7 @@ MonoBehaviour:
   highlightColor:
     serializedVersion: 2
     rgba: 4278190335
-  EnergyNeeded: 0
+  EnergyNeeded: 2
   ActionType: 0
 --- !u!1 &4367250488028426081
 GameObject:
