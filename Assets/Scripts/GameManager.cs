@@ -75,6 +75,11 @@ public class GameManager : MonoBehaviour
             LevelOutcome = FindObjectOfType<LevelOutcome>(true);
         }
 
+        if (LevelProgress == null)
+        {
+            LevelProgress = FindObjectOfType<LevelProgress>();
+        }
+
         if (LevelManager == null)
         {
             LevelManager = FindObjectOfType<LevelManager>();
@@ -110,7 +115,11 @@ public class GameManager : MonoBehaviour
     public bool UMLIsRunning = false;
     public UMLTree CurrentTree;
     public LevelOutcome LevelOutcome;
+    public LevelProgress LevelProgress;
     public LevelManager LevelManager;
+
+    // For Level Outcome Tracking
+    private StarCalculationValues outcomeCalculationValues;
 
     //UML Objects
     private GameObject _uml_canvas;
@@ -182,15 +191,9 @@ public class GameManager : MonoBehaviour
     public IEnumerator AllBotsDone()
     {
         yield return new WaitUntil(() => (UMLActors.Find(a => !a.UMLFinished) == null)); //Not Performant?
-        if (CheckIfWon())
-        {
-            Debug.Log("You have Won");
-        }
-        else
-        {
-            Debug.Log("Try Again");
-        }
-        LevelOutcome.ShowLevelOutcome();
+
+        UpdateLevelProgress();
+        LevelOutcome.ShowLevelOutcome(outcomeCalculationValues);
         btn_UMLStart.enabled = false;
         btn_UMLStop.enabled = false;
         yield break;
@@ -207,6 +210,7 @@ public class GameManager : MonoBehaviour
         SearchForResetableComponents();
         TickManager.Reset();
         ResetableComponents?.ForEach(r => r.Reset());
+        UpdateLevelProgress();
     }
 
     private void SearchForResetableComponents()
@@ -233,14 +237,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private bool CheckIfWon()
+    public void UpdateLevelProgress()
     {
-
-        int count = 0;
-        GarbageCollectors.ForEach(gc => count += gc.GarbageCount);
-
-        LevelOutcome.garbageCollected = Garbages.Count <= count;
-        LevelOutcome.playerDied = UMLActors.Where(a => a.State != EUMLActorState.Done).ToList().Count > 0;
+        int trashCount = 0;
+        GarbageCollectors.ForEach(gc => trashCount += gc.GarbageCount);
+        
+        bool allAlife = !(UMLActors.Where(a => a.State != EUMLActorState.Done).ToList().Count > 0);
 
         float percentHealthSum = 0;
         float percentEnergySum = 0;
@@ -251,9 +253,19 @@ public class GameManager : MonoBehaviour
             percentEnergySum += a.Battery.PercentEnergy;
         });
 
-        LevelOutcome.percentHealth = percentHealthSum / UMLActors.Count;
-        LevelOutcome.percentEnergy = percentEnergySum / UMLActors.Count;
+        outcomeCalculationValues = new StarCalculationValues
+        {
+            collectedTrash = trashCount,
+            maxTrashCount = Garbages.Count,
+            allAlife = allAlife,
+            percentHealth = percentHealthSum / UMLActors.Count,
+            percentEnergy = percentEnergySum / UMLActors.Count
+        };
 
-        return LevelOutcome.garbageCollected && !LevelOutcome.playerDied;
+        Debug.Log(outcomeCalculationValues.percentHealth);
+        Debug.Log(outcomeCalculationValues.percentEnergy);
+        Debug.Log(outcomeCalculationValues.SuccessQualityPercent);
+
+        LevelProgress.UpdateLevelProgress(outcomeCalculationValues);
     }
 }

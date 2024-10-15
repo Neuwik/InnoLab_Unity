@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
     protected int currentHealth;
     public float PercentHealth { get {  return currentHealth / maxHealth; } }
 
-    void Start()
+    void Awake()
     {
         currentHealth = maxHealth;
     }

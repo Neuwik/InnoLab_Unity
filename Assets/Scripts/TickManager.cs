@@ -55,10 +55,16 @@ public class TickManager : MonoBehaviour, IResetable
             yield return WaitForTick();
             yield return WaitForPlayerMovement();
 
+            // Should Probably not happen every Tick
+            GameManager.Instance.UpdateLevelProgress();
+
             //Debug.LogWarning("ENEMY TURN");
             Status = ETickManagerStatus.Enemy;
             yield return WaitForTick();
             yield return WaitForEnemyMovement();
+
+            // Should Probably not happen every Tick
+            GameManager.Instance.UpdateLevelProgress();
         }
 
         //Debug.LogWarning("END TICK (WHILE)");

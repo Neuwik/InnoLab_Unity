@@ -12,22 +12,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelOutcome : MonoBehaviour, IResetable
 {
-    #region DEBUG
-
-    public bool condition1_IsTrue = true;
-    public bool condition2_IsTrue = true;
-    public bool condition3_IsTrue = true;
-
-    #endregion
-
-    public bool playerDied = false;
-    public bool garbageCollected = false;
-    private float successQualityPercent = 0;
-    public float percentHealth = 0;
-    public float percentEnergy = 0;
-
-    public int forStar_maxSteps;
-    public int forStar_maxUMLElements;
+    private StarCalculationValues calculationValues;
+    private int starsEarnedAmount = -1;
 
     public GameManager gameManager;
 
@@ -43,8 +29,6 @@ public class LevelOutcome : MonoBehaviour, IResetable
     public Button MenuBtn;
     public Button ResetBtn;
     public Button NextBtn;
-
-    private int starsEarnedAmount = 0;
 
     //private bool _isLevelActive = true;
     private Vector2 _posNextLevelBtn;
@@ -63,101 +47,40 @@ public class LevelOutcome : MonoBehaviour, IResetable
             LevelOutcomePrefab = gameObject;
         }
 
-        //LevelOutcomePrefab.SetActive(false);
-
-        //gameObject.SetActive(false);
-
         levelNumber = SceneManager.GetActiveScene().buildIndex;
         LevelIndexText.text = "Level " + levelNumber;
-
-        _posNextLevelBtn = NextBtn.transform.position;
-        _posResetLevelBtn = ResetBtn.transform.position;
 
         MenuBtn.onClick.AddListener(OnClickMenu);
         ResetBtn.onClick.AddListener(OnClickReset);
         NextBtn.onClick.AddListener(OnClickNext);
     }
 
-    // Update is called once per frame
-    /*
-    void Update()
+    private void Start()
     {
-        if (_isLevelActive)
-        {
-            // Level success
-            if(!playerDied)
-            {
-                if (garbageCollected)
-                    EndLevel(true);
-            }
-            // Level failed
-            else
-            {
-                EndLevel(false);
-            }
-
-            //Implement these counters
-            if(gameManager.steps > forStar_maxSteps)
-                condition2_IsTrue = false;
-
-            if(gameManager.UMLElements.Count > forStar_maxUMLElements)
-                condition3_IsTrue = false;
-        }
+        _posNextLevelBtn = NextBtn.transform.localPosition;
+        _posResetLevelBtn = ResetBtn.transform.localPosition;
     }
-    */
 
-    public void ShowLevelOutcome()
+    public void ShowLevelOutcome(StarCalculationValues values)
     {
-        if (!playerDied)
-        {
-            if (garbageCollected)
-            {
-                EndLevel(true);
-                return;
-            }
-        }
-        EndLevel(false);
+        calculationValues = values;
+        starsEarnedAmount = StarCalculator.CalculateStarAmount(calculationValues);
+        EndLevel(!(starsEarnedAmount < 0));
+        gameObject.SetActive(true);
     }
 
     public void Reset()
     {
-        playerDied = false;
-        garbageCollected = false;
-        successQualityPercent = 0;
-        percentHealth = 0;
-        percentEnergy = 0;
-        starsEarnedAmount = 0;
+        calculationValues = new StarCalculationValues();
+        starsEarnedAmount = -1;
+        gameObject.SetActive(false);
     }
 
     private void EndLevel(bool isSuccess)
     {
-        //_isLevelActive = false;
-        //LevelOutcomePrefab.SetActive(true);
-        gameObject.SetActive(true);
-
         // Level success
         if (isSuccess)
         {
-            /*
-            //DEBUG
-            if (condition1_IsTrue)
-                starsEarnedAmount++;
-            if (condition2_IsTrue)
-                starsEarnedAmount++;
-            if (condition3_IsTrue)
-                starsEarnedAmount++;
-            */
-
-            successQualityPercent = (percentHealth + percentEnergy) / 2;
-
-            if (successQualityPercent >= 0.25)
-                starsEarnedAmount++;
-            if (successQualityPercent >= 0.5)
-                starsEarnedAmount++;
-            if (successQualityPercent >= 0.75)
-                starsEarnedAmount++;
-            
-
             ShowLevelSuccessUI();
             SaveLevelOutcome();
             return;
@@ -175,7 +98,7 @@ public class LevelOutcome : MonoBehaviour, IResetable
         NextBtn.gameObject.SetActive(true);
 
         // Reset Button Position = middle
-        ResetBtn.transform.position = _posResetLevelBtn;
+        ResetBtn.transform.localPosition = _posResetLevelBtn;
 
         ShowStars();
     }
@@ -188,7 +111,8 @@ public class LevelOutcome : MonoBehaviour, IResetable
         NextBtn.gameObject.SetActive(false);
 
         // Reset Button Position = right side
-        ResetBtn.transform.position = _posNextLevelBtn;
+        ResetBtn.transform.localPosition = _posNextLevelBtn;
+        //ResetBtn.transform.localPosition = NextBtn.transform.localPosition;
 
         //Hide Stars
         Stars.gameObject.SetActive(false);
@@ -216,11 +140,11 @@ public class LevelOutcome : MonoBehaviour, IResetable
         LevelSaveData levelSaveData = new LevelSaveData();
         levelSaveData.levelNumber = levelNumber;
         levelSaveData.starsEarned = starsEarnedAmount;
-        levelSaveData.stepsTaken = 0;
-        levelSaveData.umlElementsUsed = 0;
-        levelSaveData.successQualityPercent = successQualityPercent;
-        levelSaveData.percentHealth = percentHealth;
-        levelSaveData.percentEnergy = percentEnergy;
+        //levelSaveData.stepsTaken = 0;
+        //levelSaveData.umlElementsUsed = 0;
+        levelSaveData.successQualityPercent = calculationValues.SuccessQualityPercent;
+        levelSaveData.percentHealth = calculationValues.percentHealth;
+        levelSaveData.percentEnergy = calculationValues.percentEnergy;
 
         SaveManager.Instance.SaveLevel(levelSaveData);
     }
