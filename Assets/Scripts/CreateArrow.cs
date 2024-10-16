@@ -21,6 +21,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
+        /*
         // a better solution would be to get the type from the original prefab, but I could get it to work
         Debug.Log(gameObject.name);
         if(gameObject.name.Contains("Condition"))
@@ -31,6 +32,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             TargetMaxAmount = 1;
         }
+        */
         TargetAmount = 0;
     }
 

@@ -15,10 +15,16 @@ public class LevelSelectPrefab : MonoBehaviour
     public GameObject Star2;
     public GameObject Star3;
 
+    private void Awake()
+    {
+        GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.LevelManager.LoadLevelByIndex(index));
+    }
+
     public void SetUnlocked()
     {
         IndexGO.SetActive(true);
         Lock.SetActive(false);
+        GetComponent<Button>().enabled = true;
     }
 
     public void SetSaveData(LevelSaveData saveData)

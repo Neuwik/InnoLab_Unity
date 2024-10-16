@@ -489,7 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f417a01b57e3e8f4dbafc88794f2aa37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetMaxAmount: 0
+  TargetMaxAmount: 1
   TargetAmount: 0
   Actionbox: {fileID: 4290903654985495056}
   Arrow: {fileID: 133962267425589854, guid: 65b20e40ebd36a848bb7c0c66dfe7128, type: 3}
