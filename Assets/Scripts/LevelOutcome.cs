@@ -50,23 +50,20 @@ public class LevelOutcome : MonoBehaviour, IResetable
         levelNumber = SceneManager.GetActiveScene().buildIndex;
         LevelIndexText.text = "Level " + levelNumber;
 
+        _posNextLevelBtn = NextBtn.transform.localPosition;
+        _posResetLevelBtn = ResetBtn.transform.localPosition;
+
         MenuBtn.onClick.AddListener(OnClickMenu);
         ResetBtn.onClick.AddListener(OnClickReset);
         NextBtn.onClick.AddListener(OnClickNext);
     }
 
-    private void Start()
-    {
-        _posNextLevelBtn = NextBtn.transform.localPosition;
-        _posResetLevelBtn = ResetBtn.transform.localPosition;
-    }
-
     public void ShowLevelOutcome(StarCalculationValues values)
     {
+        gameObject.SetActive(true);
         calculationValues = values;
         starsEarnedAmount = StarCalculator.CalculateStarAmount(calculationValues);
         EndLevel(!(starsEarnedAmount < 0));
-        gameObject.SetActive(true);
     }
 
     public void Reset()

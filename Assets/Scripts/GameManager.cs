@@ -192,6 +192,8 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitUntil(() => (UMLActors.Find(a => !a.UMLFinished) == null)); //Not Performant?
 
+        UMLIsRunning = false;
+
         UpdateLevelProgress();
         LevelOutcome.ShowLevelOutcome(outcomeCalculationValues);
         btn_UMLStart.enabled = false;
