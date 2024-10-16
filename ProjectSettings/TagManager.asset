@@ -14,6 +14,9 @@ TagManager:
   - UMLSelectionPanel
   - UMLCanvas
   - WaterSplash
+  - btn_UMLStop
+  - btn_UMLStart
+  - UMLContent
   layers:
   - Default
   - TransparentFX

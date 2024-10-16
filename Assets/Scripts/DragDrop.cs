@@ -11,9 +11,10 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private RectTransform _canvasRectT;
     private RectTransform _rectT;
 
-    private GameObject _umlPanel;
     private RectTransform _umlRectT;
     private GameObject _selectionPanel;
+
+    private GameObject _uml_content;
 
     public UnityEvent OnPossitionChanged;
     public UnityEvent OnDelete;
@@ -22,8 +23,8 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         _canvasRectT = GameManager.Instance.UML_Canvas.GetComponent<RectTransform>();
         _selectionPanel = GameManager.Instance.UML_SelectionPanel; 
-        _umlPanel = GameManager.Instance.UML_Panel;
-        _umlRectT = _umlPanel.GetComponent<RectTransform>();
+        _uml_content = GameManager.Instance.UML_Content;
+        _umlRectT = GameManager.Instance.UML_Panel.GetComponent<RectTransform>();
         _rectT = GetComponent<RectTransform>();
     }
 
@@ -48,7 +49,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 Quaternion.identity
             );
             newUMLElement.transform.SetParent(_selectionPanel.transform);
-            gameObject.transform.SetParent(_umlPanel.transform);
+            gameObject.transform.SetParent(_uml_content.transform);
             GetComponent<CreateArrow>().CanDraw = true;
         }
         GameManager.Instance.ReDrawArrow = true;

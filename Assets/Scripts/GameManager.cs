@@ -134,6 +134,19 @@ public class GameManager : MonoBehaviour
             return _uml_canvas;
         }
     }
+    private GameObject _uml_content;
+    public GameObject UML_Content
+    {
+        get
+        {
+            if (_uml_content == null)
+            {
+                _uml_content = GameObject.FindGameObjectWithTag("UMLContent");
+            }
+            return _uml_content;
+        }
+    }
+
     private GameObject _uml_selectionPanel;
     public GameObject UML_SelectionPanel
     {
