@@ -41,7 +41,10 @@ public class UMLManager : MonoBehaviour
     }
 
     public UMLTree TreePrefab;
+    public UMLTreeButton TreeButtonPrefab;
+
     public GameObject BuildArea { get { return GameManager.Instance.UMLWindow.BuildArea; } }
+    public GameObject TreeList { get { return GameManager.Instance.UMLWindow.TreeList; } }
 
     private Dictionary<long, UMLTree> treesDict;
     private List<UMLTree> trees
@@ -76,7 +79,7 @@ public class UMLManager : MonoBehaviour
 
             if (value != null)
             {
-                _currentTree.gameObject.SetActive(false);
+                _currentTree?.gameObject.SetActive(false);
                 _currentTree = value;
                 _currentTree.gameObject.SetActive(true);
             }
@@ -94,7 +97,8 @@ public class UMLManager : MonoBehaviour
         //LoadTrees();
         foreach (UMLTree t in FindObjectsByType<UMLTree>(FindObjectsSortMode.InstanceID).ToList())
         {
-            AddTreeToDict(t);
+            if(AddTreeToDict(t))
+                CreateTreeButtonForTree(t);
         }
     }
 
@@ -118,6 +122,13 @@ public class UMLManager : MonoBehaviour
 
         newTree.TreeName = TreeName;
         CurrentTree = newTree;
+        CreateTreeButtonForTree(newTree);
+    }
+
+    private void CreateTreeButtonForTree(UMLTree newTree)
+    {
+        UMLTreeButton button = Instantiate(TreeButtonPrefab, TreeList.transform);
+        button.SetTree(newTree);
     }
 
     private bool AddTreeToDict(UMLTree tree)
@@ -130,6 +141,22 @@ public class UMLManager : MonoBehaviour
 
         Debug.LogWarning("Tree added: " + tree.ID);
         treesDict.Add(tree.ID, tree);
+
+        return true;
+    }
+
+    public bool SetTreeAsCurrentTree(UMLTree tree)
+    {
+        if (tree == null)
+        {
+            return false;
+        }
+        if (!trees.Contains(tree))
+        {
+            return false;
+        }
+
+        CurrentTree = tree;
 
         return true;
     }

@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TreePrefab: {fileID: 7016704108598171495, guid: 23c0bf65424979d45a5528739283893f, type: 3}
+  TreeButtonPrefab: {fileID: 4629406948870176840, guid: 9902b5080e86088479512ff3a76e1233, type: 3}
