@@ -22,7 +22,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         _canvasRectT = GameManager.Instance.UML_Canvas.GetComponent<RectTransform>();
         _selectionPanel = GameManager.Instance.UML_SelectionPanel; 
-        _umlPanel = GameManager.Instance.UML_Panel;
+        _umlPanel = GameManager.Instance.UMLWindow.BuildArea;
         _umlRectT = _umlPanel.GetComponent<RectTransform>();
         _rectT = GetComponent<RectTransform>();
     }
@@ -48,7 +48,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 Quaternion.identity
             );
             newUMLElement.transform.SetParent(_selectionPanel.transform);
-            gameObject.transform.SetParent(_umlPanel.transform);
+            gameObject.transform.SetParent(UMLManager.Instance.CurrentTree.transform);
             GetComponent<CreateArrow>().CanDraw = true;
         }
         GameManager.Instance.ReDrawArrow = true;
@@ -62,12 +62,14 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Vector3 posInUml = _umlRectT.InverseTransformPoint(transform.position);
+        //Vector3 posInUml = _umlRectT.InverseTransformPoint(transform.position);
+        Vector3 posInUml = transform.localPosition;
         GameManager.Instance.ReDrawArrow = false;
         /*
         if (Mathf.Abs(gameObject.transform.localPosition.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
             Mathf.Abs(gameObject.transform.localPosition.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2 )  // right, left bordercheck
         */
+        
         if (Mathf.Abs(posInUml.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
             Mathf.Abs(posInUml.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2)  // right, left bordercheck
         {
@@ -75,6 +77,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             OnDelete.Invoke();
             Destroy(gameObject);
         }
+        
         //Debug.Log("OnEndDrag");
     }
 }
