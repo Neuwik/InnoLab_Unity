@@ -8,8 +8,11 @@ using UnityEngine.UI;
 
 public abstract class AUMLElement : MonoBehaviour
 {
+    public virtual string Name { get { return name; } }
+
     [SerializeField]
-    protected AUMLElement NextElement;
+    private AUMLElement _nextElement;
+    public AUMLElement NextElement { get { return _nextElement; } protected set { _nextElement = value; } }
 
     [SerializeField]
     private Color32 highlightColor = Color.red;
@@ -18,13 +21,13 @@ public abstract class AUMLElement : MonoBehaviour
 
     public int EnergyNeeded = 0;
 
-    private TickManager TickManager;
+    //private TickManager TickManager;
 
     protected void Start()
     {
         image = GetComponentInChildren<Image>();
         baseColor = image.color;
-        TickManager = GameManager.Instance.TickManager;
+        //TickManager = GameManager.Instance.TickManager;
     }
 
     public virtual bool ChangeNextAction(AUMLElement NewNextAction, bool conditional = false)
@@ -33,28 +36,10 @@ public abstract class AUMLElement : MonoBehaviour
         return true;
     }
 
+    /*
     public IEnumerator Run(UMLActor actor)
     {
-        TickManager = GameManager.Instance.TickManager;
-
-        yield return TickManager.WaitForPlayerTickStart();
-
-        if (!GameManager.Instance.UMLIsRunning)
-        {
-            yield break;
-        }
-
-        if (!actor.UMLRunning)
-        {
-            yield break;
-        }
-
         Highlight();
-
-        if (EnergyNeeded > 0)
-        {
-            actor.Battery?.LooseEnergy(EnergyNeeded);
-        }
 
         if (!Execute(actor))
         {
@@ -82,20 +67,21 @@ public abstract class AUMLElement : MonoBehaviour
 
         yield return NextElement?.Run(actor);
     }
+    */
 
-    protected virtual bool Execute(UMLActor actor)
+    public virtual bool Execute(UMLActor actor)
     {
-        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {name}");
+        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {Name}");
         //Debug.Log("Some Element: " + name);
         return true;
     }
 
-    private void Highlight()
+    public void Highlight()
     {
         image.color = highlightColor;
     }
 
-    private void StopHighlight()
+    public void StopHighlight()
     {
         image.color = baseColor;
     }

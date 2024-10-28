@@ -51,6 +51,45 @@ public class UMLActor : MonoBehaviour, IResetable
         }
     }
 
+    private AUMLElement _currentElement;
+    private AUMLElement currentElement
+    {
+        get { return _currentElement; }
+        set
+        {
+            if (value == null)
+            {
+                if (treeActions.Count > 0)
+                {
+                    currentElement = treeActions.Pop().NextElement;
+                }
+                else
+                {
+                    _currentElement = null;
+                }
+            }
+            else
+            {
+                if (value != currentElement)
+                {
+                    if (value is UMLTreeAction)
+                    {
+                        UMLTreeAction ta = value as UMLTreeAction;
+                        treeActions.Push(ta);
+                        _currentElement = ta.Tree.StartElement;
+                    }
+                    else
+                    {
+                        _currentElement = value;
+                    }
+                }
+            }
+        }
+    }
+
+    private Stack<UMLTreeAction> treeActions;
+    private Dictionary<AUMLElement, int> runElements;
+
     private void Awake()
     {
         GetComponents<ILooseCondition>().ToList().ForEach(c => c.OnLoose = Crash);
@@ -65,10 +104,13 @@ public class UMLActor : MonoBehaviour, IResetable
 
     public IEnumerator StartUML()
     {
-        SetActorState(EUMLActorState.Running);
+        currentElement = Tree.StartElement;
+        treeActions = new Stack<UMLTreeAction>();
+        runElements = new Dictionary<AUMLElement, int>();
+
         Debug.Log("Started " + name);
 
-        yield return Tree?.Run(this);
+        yield return Run();
 
         switch (State)
         {
@@ -90,6 +132,50 @@ public class UMLActor : MonoBehaviour, IResetable
                 Debug.Log(name + " was not running");
                 break;
         }
+    }
+
+    private IEnumerator Run()
+    {
+        SetActorState(EUMLActorState.Running);
+        TickManager tickManager = GameManager.Instance.TickManager;
+
+        while (GameManager.Instance.UMLIsRunning && UMLRunning && currentElement != null)
+        {
+            yield return tickManager.WaitForPlayerTickStart();
+
+            currentElement.Highlight();
+
+            if (!currentElement.Execute(this))
+            {
+                currentElement.StopHighlight();
+                Crash();
+                yield break; // Execution failed
+            }
+
+            if (!runElements.TryAdd(currentElement, 1))
+            {
+                runElements[currentElement]++;
+            }
+
+            yield return tickManager.WaitForPlayerTickEnd();
+
+            LooseEnergyForCurrentAction();
+            currentElement.StopHighlight();
+
+            currentElement = currentElement.NextElement;
+        }
+    }
+
+    private void LooseEnergyForCurrentAction()
+    {
+        float lossFactor = 1;
+        if (runElements.ContainsKey(currentElement) && runElements[currentElement] > 1)
+        {
+            lossFactor = 1f / 2f;
+        }
+
+        float energyLoss = currentElement.EnergyNeeded * lossFactor;
+        Battery?.LooseEnergy((int)energyLoss);
     }
 
     public void Crash()

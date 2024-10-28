@@ -36,7 +36,7 @@ public class UMLCondition : AUMLElement
 
     }
 
-    protected override bool Execute(UMLActor actor)
+    public override bool Execute(UMLActor actor)
     {
         GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {ConditionType}");
         //Debug.Log("Some Condition: " + name);

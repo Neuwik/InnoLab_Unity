@@ -46,7 +46,7 @@ public class UMLForLoop : AUMLElement, IResetable
         ForMaxIndex = newMaxIndex;
     }
 
-    protected override bool Execute(UMLActor actor)
+    public override bool Execute(UMLActor actor)
     {
         if (input.interactable)
         {

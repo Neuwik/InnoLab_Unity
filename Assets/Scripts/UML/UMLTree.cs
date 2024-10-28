@@ -5,10 +5,15 @@ using UnityEngine;
 public class UMLTree : AUMLElement
 {
     [SerializeField]
-    private AUMLElement StartElement;
-    //public List<AUMLElement> Ends;
+    private AUMLElement _startElement;
 
-    protected override bool Execute(UMLActor actor)
+    public AUMLElement StartElement 
+    { 
+        get { return _startElement; } 
+        private set { _startElement = value; } 
+    }
+
+    public override bool Execute(UMLActor actor)
     {
         GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {name}");
         //Debug.Log("Some Tree: " + name);

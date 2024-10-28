@@ -21,7 +21,7 @@ public class UMLAction : AUMLElement
         ActionType = (EUMLActionType) val;
     }
 
-    protected override bool Execute(UMLActor actor)
+    public override bool Execute(UMLActor actor)
     {
         GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {ActionType}");
         //Debug.Log("Some Action: " + name);
