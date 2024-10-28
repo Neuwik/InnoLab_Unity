@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,65 +7,85 @@ using UnityEngine.UI;
 
 public class UMLForLoop : AUMLElement, IResetable
 {
+    public override string Name
+    {
+        get 
+        {
+            if (forCurrentIndex >= 0)
+            {
+                return $"For {forCurrentIndex} < {forMaxIndex}";
+            }
+            else
+            {
+                return $"For i < {forMaxIndex}";
+            }
+        }
+    }
+
     [SerializeField]
     private AUMLElement trueNextAction;
     [SerializeField]
     private AUMLElement falseNextAction;
 
-    public TMP_InputField input;
-    private int ForMaxIndex = 3;
-    private int ForCurrentIndex;
+    public TMP_InputField Input;
+    private int forMaxIndex = 3;
+    private int forCurrentIndex;
 
     protected new void Start()
     {
-        ForCurrentIndex = 0;
+        forCurrentIndex = 0;
         SynchronizeMaxIndex();
-        input.interactable = true;
+        Input.interactable = true;
         base.Start();
     }
 
     public void Reset()
     {
-        ForCurrentIndex = 0;
+        forCurrentIndex = 0;
         SynchronizeMaxIndex();
-        input.interactable = true;
+        Input.interactable = true;
     }
 
     private void SynchronizeMaxIndex()
     {
-        if (string.IsNullOrEmpty(input.text))
+        if (string.IsNullOrEmpty(Input.text))
         {
-            input.text = ForMaxIndex.ToString();
+            Input.text = forMaxIndex.ToString();
             return;
         }
-        int newMaxIndex = int.Parse(input.text);
+        int newMaxIndex = int.Parse(Input.text);
         if (newMaxIndex <= 0)
         {
-            input.text = ForMaxIndex.ToString();
+            Input.text = forMaxIndex.ToString();
             return;
         }
-        ForMaxIndex = newMaxIndex;
+        forMaxIndex = newMaxIndex;
     }
 
     public override bool Execute(UMLActor actor)
     {
-        if (input.interactable)
+        if (Input.interactable)
         {
-            input.interactable = false;
+            Input.interactable = false;
             SynchronizeMaxIndex();
         }
 
-        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing ForLoop ({ForCurrentIndex}<{ForMaxIndex})");
-        
-        if (ForCurrentIndex < ForMaxIndex)
+        if (forCurrentIndex > forMaxIndex) // When current == max then the for loop just ended, but when current > max then the for loop was started a second time
         {
-            ForCurrentIndex++;
+            forCurrentIndex = 0;
+        }
+
+        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {Name}");
+        
+        if (forCurrentIndex < forMaxIndex)
+        {
             NextElement = trueNextAction;
         }
         else
         {
             NextElement = falseNextAction;
         }
+        forCurrentIndex++;
         return true;
     }
 

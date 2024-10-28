@@ -14,6 +14,8 @@ public enum EUMLConditionType
 
 public class UMLCondition : AUMLElement
 {
+    public override string Name { get { return ConditionType.ToString(); } }
+
     [SerializeField]
     private AUMLElement trueNextAction;
     
@@ -38,7 +40,7 @@ public class UMLCondition : AUMLElement
 
     public override bool Execute(UMLActor actor)
     {
-        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {ConditionType}");
+        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {Name}");
         //Debug.Log("Some Condition: " + name);
         SetConditionByEnum(actor);
         if (condition.Invoke())

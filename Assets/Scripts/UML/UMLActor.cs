@@ -104,6 +104,9 @@ public class UMLActor : MonoBehaviour, IResetable
 
     public IEnumerator StartUML()
     {
+        // Always execute current Tree?
+        Tree = GameManager.Instance.CurrentTree;
+
         currentElement = Tree.StartElement;
         treeActions = new Stack<UMLTreeAction>();
         runElements = new Dictionary<AUMLElement, int>();

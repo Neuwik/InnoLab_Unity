@@ -252,6 +252,7 @@ MonoBehaviour:
   OnDelete:
     m_PersistentCalls:
       m_Calls: []
+  CanDraw: 0
 --- !u!114 &-740125637844770881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,14 +265,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bca1832abbe7854b8b9859628dcaff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 0}
+  _nextElement: {fileID: 0}
   highlightColor:
     serializedVersion: 2
     rgba: 4278190335
   EnergyNeeded: 1
   trueNextAction: {fileID: 0}
   falseNextAction: {fileID: 0}
-  input: {fileID: 843621222261393742}
+  Input: {fileID: 843621222261393742}
 --- !u!1 &2413323201540967815
 GameObject:
   m_ObjectHideFlags: 0

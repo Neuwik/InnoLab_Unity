@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public abstract class AUMLElement : MonoBehaviour
 {
-    public virtual string Name { get { return name; } }
+    public virtual string Name { get { return $"Element ({name})"; } }
 
     [SerializeField]
     private AUMLElement _nextElement;

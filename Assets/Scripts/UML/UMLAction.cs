@@ -11,6 +11,8 @@ public class UMLAction : AUMLElement
     public EUMLActionType ActionType;
     private Action action;
 
+    public override string Name { get { return ActionType.ToString(); } }
+
     public void HandleInputData(int val)
     {
         Debug.Log(ActionType);

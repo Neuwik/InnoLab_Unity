@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                Debug.LogError("Game Manger is NULL");
+                Debug.LogError("Game Manager is NULL");
             }
 
             return _instance;
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     {
         if (_instance != null)
         {
-            //Debug.LogWarning("Game Manger exists " + _instance.name);
+            //Debug.LogWarning("Game Manager exists " + _instance.name);
             Destroy(gameObject);
         }
         else
@@ -65,9 +65,9 @@ public class GameManager : MonoBehaviour
             TickManager = FindObjectOfType<TickManager>();
         }
 
-        if (CurrentTree == null)
+        if (UMLWindow == null)
         {
-            CurrentTree = FindObjectOfType<UMLTree>();
+            UMLWindow = FindObjectOfType<UMLWindow>();
         }
 
         if (LevelOutcome == null)
@@ -113,7 +113,8 @@ public class GameManager : MonoBehaviour
     public Button btn_UMLStop;
     public TickManager TickManager;
     public bool UMLIsRunning = false;
-    public UMLTree CurrentTree;
+    public UMLTree CurrentTree { get { return UMLManager.Instance.CurrentTree; } }
+    public UMLWindow UMLWindow;
     public LevelOutcome LevelOutcome;
     public LevelProgress LevelProgress;
     public LevelManager LevelManager;

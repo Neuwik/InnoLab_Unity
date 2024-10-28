@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class UMLTreeStart : AUMLElement
 {
-    private UMLTree _tree;
+    [SerializeField]
+    private UMLTree tree;
 
-    public override string Name { get { return _tree.name + " Start"; } }
+    public override string Name { get { return tree.TreeName + " Start"; } }
 }
