@@ -15,9 +15,9 @@ public abstract class AUMLElement : MonoBehaviour
     public AUMLElement NextElement { get { return _nextElement; } protected set { _nextElement = value; } }
 
     [SerializeField]
-    private Color32 highlightColor = Color.red;
-    private Color32 baseColor;
-    private Image image;
+    private Color highlightColor = Color.red;
+    private Color baseColor;
+    public Image Image { get; protected set; }
 
     public int EnergyNeeded = 0;
 
@@ -25,8 +25,8 @@ public abstract class AUMLElement : MonoBehaviour
 
     protected void Start()
     {
-        image = GetComponentInChildren<Image>();
-        baseColor = image.color;
+        Image = GetComponentInChildren<Image>();
+        baseColor = Image.color;
         //TickManager = GameManager.Instance.TickManager;
     }
 
@@ -78,11 +78,11 @@ public abstract class AUMLElement : MonoBehaviour
 
     public void Highlight()
     {
-        image.color = highlightColor;
+        Image.color = highlightColor;
     }
 
     public void StopHighlight()
     {
-        image.color = baseColor;
+        Image.color = baseColor;
     }
 }

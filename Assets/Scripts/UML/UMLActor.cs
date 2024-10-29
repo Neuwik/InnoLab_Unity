@@ -111,6 +111,8 @@ public class UMLActor : MonoBehaviour, IResetable
         treeActions = new Stack<UMLTreeAction>();
         runElements = new Dictionary<AUMLElement, int>();
 
+        GameManager.Instance.UMLWindow.CallStack.ClearCallStack();
+
         Debug.Log("Started " + name);
 
         yield return Run();
@@ -145,6 +147,8 @@ public class UMLActor : MonoBehaviour, IResetable
         while (GameManager.Instance.UMLIsRunning && UMLRunning && currentElement != null)
         {
             yield return tickManager.WaitForPlayerTickStart();
+
+            GameManager.Instance.UMLWindow.CallStack.AddCallStackElement(currentElement);
 
             currentElement.Highlight();
 

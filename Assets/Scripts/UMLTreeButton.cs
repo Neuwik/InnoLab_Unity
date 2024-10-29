@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UMLTreeButton : MonoBehaviour
 {
@@ -9,6 +11,21 @@ public class UMLTreeButton : MonoBehaviour
 
     [SerializeField]
     private TMP_Text text;
+
+    [SerializeField]
+    private Color highlightColor = Color.red;
+    private Color baseColor;
+
+    [SerializeField]
+    private Image image;
+
+    private bool isHighlighted = false;
+
+    private void Awake()
+    {
+        baseColor = image.color;
+        UMLManager.Instance.OnCurrentTreeChanged.AddListener(OnSelectedTreeChanged);
+    }
 
     public void SetTree(UMLTree tree)
     {
@@ -31,6 +48,30 @@ public class UMLTreeButton : MonoBehaviour
                 Destroy(tree.gameObject);
                 Destroy(gameObject);
             }
+            else
+            {
+                Highlight();
+            }
         }
+    }
+
+    private void OnSelectedTreeChanged(UMLTree selectedTree)
+    {
+        if (isHighlighted && selectedTree.ID != tree.ID)
+        {
+            StopHighlight();
+        }
+    }
+
+    public void Highlight()
+    {
+        isHighlighted = true;
+        image.color = highlightColor;
+    }
+
+    private void StopHighlight()
+    {
+        isHighlighted = false;
+        image.color = baseColor;
     }
 }

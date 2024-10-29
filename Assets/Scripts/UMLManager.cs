@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UMLManager : MonoBehaviour
 {
@@ -82,9 +83,12 @@ public class UMLManager : MonoBehaviour
                 _currentTree?.gameObject.SetActive(false);
                 _currentTree = value;
                 _currentTree.gameObject.SetActive(true);
+                OnCurrentTreeChanged.Invoke(_currentTree);
             }
         }
     }
+
+    public UnityEvent<UMLTree> OnCurrentTreeChanged;
 
     private void Awake()
     {
@@ -121,14 +125,15 @@ public class UMLManager : MonoBehaviour
         }
 
         newTree.TreeName = TreeName;
+        CreateTreeButtonForTree(newTree).Highlight();
         CurrentTree = newTree;
-        CreateTreeButtonForTree(newTree);
     }
 
-    private void CreateTreeButtonForTree(UMLTree newTree)
+    private UMLTreeButton CreateTreeButtonForTree(UMLTree newTree)
     {
         UMLTreeButton button = Instantiate(TreeButtonPrefab, TreeList.transform);
         button.SetTree(newTree);
+        return button;
     }
 
     private bool AddTreeToDict(UMLTree tree)
