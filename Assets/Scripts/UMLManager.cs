@@ -205,4 +205,22 @@ public class UMLManager : MonoBehaviour
 
         return treesDict[id];
     }
+
+    public void RemoveTree(UMLTree tree)
+    {
+        if (tree != null)
+        {
+            if (treesDict.Remove(tree.ID))
+            {
+                if (tree.ID == CurrentTree.ID)
+                {
+                    CurrentTree = trees.FirstOrDefault();
+                }
+
+                Destroy(tree.gameObject);
+
+                OnTreesChanged.Invoke(trees);
+            }
+        }
+    }
 }

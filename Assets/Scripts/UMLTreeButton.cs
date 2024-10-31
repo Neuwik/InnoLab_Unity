@@ -42,15 +42,27 @@ public class UMLTreeButton : MonoBehaviour
         }
         else
         {
-            if (!UMLManager.Instance.SetTreeAsCurrentTree(tree))
+            if (Input.GetMouseButtonDown(2))
             {
-                // Tree is not in UML Manager
-                Destroy(tree.gameObject);
+                // NOT WORKING ---> TODO
+                // Middle Mouse Button -> delete
+                UMLManager.Instance.RemoveTree(tree);
                 Destroy(gameObject);
             }
             else
             {
-                Highlight();
+                // NOT Middke Mouse Button -> select
+
+                if (!UMLManager.Instance.SetTreeAsCurrentTree(tree))
+                {
+                    // Tree is not in UML Manager
+                    Destroy(tree.gameObject);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    Highlight();
+                }
             }
         }
     }
