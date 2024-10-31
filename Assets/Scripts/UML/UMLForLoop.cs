@@ -33,10 +33,10 @@ public class UMLForLoop : AUMLElement, IResetable
 
     protected new void Start()
     {
+        base.Start();
         forCurrentIndex = 0;
         SynchronizeMaxIndex();
         Input.interactable = true;
-        base.Start();
     }
 
     public void Reset()

@@ -34,8 +34,8 @@ public class UMLManager : MonoBehaviour
                 else
                 {
                     _instance = value;
-                    _instance.transform.parent = null;
-                    DontDestroyOnLoad(_instance);
+                    //_instance.transform.parent = null;
+                    //DontDestroyOnLoad(_instance);
                 }
             }
         }
@@ -66,7 +66,14 @@ public class UMLManager : MonoBehaviour
                 }
                 else
                 {
-                    CreateNewTree("First Tree");
+                    if (FindAndAddAllTreesOfScene() > 0)
+                    {
+                        _currentTree = treesDict.First().Value;
+                    }
+                    else
+                    {
+                        CreateNewTree("First Tree");
+                    }
                 }
             }
             return _currentTree;
@@ -89,21 +96,36 @@ public class UMLManager : MonoBehaviour
     }
 
     public UnityEvent<UMLTree> OnCurrentTreeChanged;
+    public UnityEvent<List<UMLTree>> OnTreesChanged;
 
     private void Awake()
     {
         Instance = this;
         treesDict = new Dictionary<long, UMLTree>();
+
+        OnTreesChanged.Invoke(trees);
     }
 
     private void Start()
     {
         //LoadTrees();
-        foreach (UMLTree t in FindObjectsByType<UMLTree>(FindObjectsSortMode.InstanceID).ToList())
+        if (treesDict.Count == 0)
         {
-            if(AddTreeToDict(t))
-                CreateTreeButtonForTree(t);
+            FindAndAddAllTreesOfScene();
         }
+    }
+
+    private int FindAndAddAllTreesOfScene()
+    {
+        List<UMLTree> trees = FindObjectsByType<UMLTree>(FindObjectsSortMode.InstanceID).ToList();
+        foreach (UMLTree t in trees)
+        {
+            if (AddTreeToDict(t))
+            {
+                CreateTreeButtonForTree(t);
+            }
+        }
+        return trees.Count;
     }
 
     private void OnDestroy()
@@ -117,6 +139,7 @@ public class UMLManager : MonoBehaviour
     public void CreateNewTree(string TreeName = "New Tree")
     {
         UMLTree newTree = Instantiate(TreePrefab, BuildArea.transform);
+        newTree.TreeName = TreeName;
 
         if (!AddTreeToDict(newTree))
         {
@@ -124,7 +147,6 @@ public class UMLManager : MonoBehaviour
             return;
         }
 
-        newTree.TreeName = TreeName;
         CreateTreeButtonForTree(newTree).Highlight();
         CurrentTree = newTree;
     }
@@ -144,8 +166,10 @@ public class UMLManager : MonoBehaviour
             return false;
         }
 
-        Debug.LogWarning("Tree added: " + tree.ID);
+        Debug.Log("Tree added: " + tree.ID);
         treesDict.Add(tree.ID, tree);
+
+        OnTreesChanged.Invoke(trees);
 
         return true;
     }
@@ -164,5 +188,21 @@ public class UMLManager : MonoBehaviour
         CurrentTree = tree;
 
         return true;
+    }
+
+    public List<UMLTree> GetTreesAndSubscribeToTreesChanged(UnityAction<List<UMLTree>> listener)
+    {
+        OnTreesChanged.AddListener(listener);
+        return trees;
+    }
+
+    public UMLTree GetTree(long id)
+    {
+        if (!treesDict.ContainsKey(id))
+        {
+            return null;
+        }
+
+        return treesDict[id];
     }
 }

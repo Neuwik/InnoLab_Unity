@@ -17,6 +17,7 @@ public abstract class AUMLElement : MonoBehaviour
     [SerializeField]
     private Color highlightColor = Color.red;
     private Color baseColor;
+    protected int highlightCounter = 0;
     public Image Image { get; protected set; }
 
     public int EnergyNeeded = 0;
@@ -78,11 +79,23 @@ public abstract class AUMLElement : MonoBehaviour
 
     public void Highlight()
     {
-        Image.color = highlightColor;
+        highlightCounter++;
+        if (highlightCounter == 1)
+        {
+            Image.color = highlightColor;
+        }
     }
 
     public void StopHighlight()
     {
-        Image.color = baseColor;
+        if (highlightCounter > 0)
+        {
+            highlightCounter--;
+        }
+
+        if (highlightCounter == 0)
+        {
+            Image.color = baseColor;
+        }
     }
 }

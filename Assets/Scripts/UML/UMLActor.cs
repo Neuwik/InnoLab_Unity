@@ -61,7 +61,9 @@ public class UMLActor : MonoBehaviour, IResetable
             {
                 if (treeActions.Count > 0)
                 {
-                    currentElement = treeActions.Pop().NextElement;
+                    UMLTreeAction ta = treeActions.Pop();
+                    ta.StopHighlight();
+                    currentElement = ta.NextElement;
                 }
                 else
                 {
@@ -76,6 +78,7 @@ public class UMLActor : MonoBehaviour, IResetable
                     {
                         UMLTreeAction ta = value as UMLTreeAction;
                         treeActions.Push(ta);
+                        ta.Highlight();
                         _currentElement = ta.Tree.StartElement;
                     }
                     else
@@ -95,7 +98,10 @@ public class UMLActor : MonoBehaviour, IResetable
         GetComponents<ILooseCondition>().ToList().ForEach(c => c.OnLoose = Crash);
         Battery = GetComponent<Battery>();
         PlayerController = GetComponent<PlayerMovementController>();
+    }
 
+    private void Start()
+    {
         if (Tree == null)
         {
             Tree = GameManager.Instance.CurrentTree;
