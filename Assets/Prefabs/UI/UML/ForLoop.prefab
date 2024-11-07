@@ -266,9 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nextElement: {fileID: 0}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
   EnergyNeeded: 1
   trueNextAction: {fileID: 0}
   falseNextAction: {fileID: 0}
@@ -398,14 +396,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 2
+  m_ContentType: 9
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 4
+  m_KeyboardType: 0
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 2
+  m_CharacterValidation: 1
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 0
