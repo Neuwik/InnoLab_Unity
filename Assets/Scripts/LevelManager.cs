@@ -6,14 +6,16 @@ using UnityEditor;
 public class LevelManager : MonoBehaviour
 {
     private string sceneName;
-    public SceneAsset sceneAsset;
+    //public SceneAsset sceneAsset; // NOT WORKING IN BUILD
     public int LevelSelectionSceneIndex = 0;
 
+    /* NOT WORKING IN BUILD
     void OnValidate()
     {
         if (sceneAsset != null)
             sceneName = sceneAsset.name;
     }
+    */
 
     public void LoadNextLevel()
     {
@@ -22,15 +24,17 @@ public class LevelManager : MonoBehaviour
             Go to File > Build Settings.
             Drag and drop your scenes into the window under "Scenes In Build" or use the "Add Open Scenes" button to add the currently open scene. 
          */
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex + 1);
     }
 
+    /* NOT WORKING IN BUILD
     public void LoadLevelByName()
     {
         if(!string.IsNullOrEmpty(sceneName))
             SceneManager.LoadScene(sceneName);
     }
+    */
 
     public void LoadLevelByIndex(int index)
     {

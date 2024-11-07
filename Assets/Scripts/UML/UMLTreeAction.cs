@@ -1,12 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class UMLTreeAction : AUMLElement, IResetable
 {

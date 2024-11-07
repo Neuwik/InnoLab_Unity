@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
 
 public enum ETickManagerStatus { None = 0, Started = 1, Stopped = 2, Player = 11, Enemy = 12 }
 

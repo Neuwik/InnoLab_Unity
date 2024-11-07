@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum EPushDirection { Up = 0, Down = 1, Left = 2, Right = 3 };
 public class PushField : MonoBehaviour

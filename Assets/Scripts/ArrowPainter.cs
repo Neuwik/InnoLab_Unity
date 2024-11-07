@@ -1,15 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 public class ArrowPainter : MonoBehaviour
 {
