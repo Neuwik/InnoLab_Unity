@@ -39,7 +39,7 @@ public class UMLTreeAction : AUMLElement, IResetable
     private new void Start()
     {
         base.Start();
-        UpdateDropDownOptions();
+        SelectableTrees.Count(); // Update at first call
     }
 
     public void Reset()
@@ -65,7 +65,7 @@ public class UMLTreeAction : AUMLElement, IResetable
 
     private void UpdateDropDownOptions()
     {
-        Debug.Log("Tree Action: UpdateDropDownOptions");
+        Debug.LogWarning("Tree Action: UpdateDropDownOptions");
         dropDown.options.Clear();
         foreach (var item in SelectableTrees)
         {

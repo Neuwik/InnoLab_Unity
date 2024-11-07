@@ -11,6 +11,8 @@ public class UMLForLoop : AUMLElement, IResetable
     {
         get 
         {
+            SynchronizeMaxIndex();
+
             if (forCurrentIndex >= 0)
             {
                 return $"For {forCurrentIndex} < {forMaxIndex}";
