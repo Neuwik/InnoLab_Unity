@@ -58,7 +58,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 {
                     GameManager.Instance.ActiveArrow.GetComponent<ArrowPainter>().TargetElem = gameObject;
                     GameManager.Instance.ActiveArrow = null;
-                    
                 }
                 return;
 
@@ -93,7 +92,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     var newArrow = GameObject.Instantiate(Arrow, gameObject.transform);
                     newArrow.transform.SetAsFirstSibling();
                     Rect _ = gameObject.GetComponent<RectTransform>().rect;
-                    newArrow.GetComponent<ArrowPainter>().StartPos = (Vector2)gameObject.transform.position + new Vector2(_.width / 2, _.height / 2);
+                    newArrow.GetComponent<ArrowPainter>().StartPos = (Vector2) gameObject.transform.position + new Vector2(_.width / 2, _.height / 2);
                     IncreaseTargetAmount();
                     if (TargetMaxAmount == 2) // => only Condition blocks
                     {
