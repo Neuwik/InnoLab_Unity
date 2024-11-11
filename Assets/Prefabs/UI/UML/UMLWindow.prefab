@@ -1267,6 +1267,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5830317623015033631}
     m_Modifications:
+    - target: {fileID: 1482140126926473168, guid: fa271060d013b644eb55ed6c3a0539e0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1671451167260164169, guid: fa271060d013b644eb55ed6c3a0539e0, type: 3}
       propertyPath: m_Name
       value: UMLPanel
@@ -1285,7 +1289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3749351604362830391, guid: fa271060d013b644eb55ed6c3a0539e0, type: 3}
       propertyPath: m_Size
-      value: 0.63875
+      value: 0.6125
       objectReference: {fileID: 0}
     - target: {fileID: 7186183077526772284, guid: fa271060d013b644eb55ed6c3a0539e0, type: 3}
       propertyPath: m_AnchorMax.x
