@@ -73,7 +73,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (Mathf.Abs(posInUml.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
             Mathf.Abs(posInUml.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2)  // right, left bordercheck
         {
-            gameObject.GetComponent<CreateArrow>().ReduceTargetAmount();
+            //TODO???: gameObject.GetComponent<CreateArrow>().ReduceTargetAmount();
             OnDelete.Invoke();
             Destroy(gameObject);
         }

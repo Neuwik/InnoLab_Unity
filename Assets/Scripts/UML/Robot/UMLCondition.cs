@@ -12,16 +12,9 @@ public enum EUMLConditionType
     IsUpGarbage = 21, IsDownGarbage = 22, IsLeftGarbage = 23, IsRightGarbage = 24, IsThisGarbage = 25
 }
 
-public class UMLCondition : AUMLElement
+public class UMLCondition : AUMLElementTrueFalse
 {
     public override string Name { get { return ConditionType.ToString(); } }
-
-    [SerializeField]
-    private AUMLElement trueNextAction;
-    
-
-    [SerializeField]
-    private AUMLElement falseNextAction;
     
 
     public EUMLConditionType ConditionType;
@@ -52,23 +45,6 @@ public class UMLCondition : AUMLElement
             NextElement = falseNextAction;
         }
         return true;
-    }
-
-    public override bool ChangeNextAction(AUMLElement NewNextAction, bool conditional)
-    {
-        if (conditional)
-        {
-            falseNextAction = NewNextAction;
-        }
-        else
-        {
-            trueNextAction = NewNextAction;
-        }
-        return true;
-    }
-    public void SwitchNextActions()
-    {
-        (trueNextAction, falseNextAction) = (falseNextAction, trueNextAction);
     }
 
     private void SetConditionByEnum(UMLActor actor)

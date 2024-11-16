@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
 
     //drawing arrows
     [HideInInspector]
-    public GameObject ActiveArrow;
+    public ArrowPainter ActiveArrow;
     [HideInInspector]
     public bool ReDrawArrow;
 

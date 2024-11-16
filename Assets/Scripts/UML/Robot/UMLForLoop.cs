@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UMLForLoop : AUMLElement, IResetable
+public class UMLForLoop : AUMLElementTrueFalse, IResetable
 {
     public override string Name
     {
@@ -23,11 +23,6 @@ public class UMLForLoop : AUMLElement, IResetable
             }
         }
     }
-
-    [SerializeField]
-    private AUMLElement trueNextAction;
-    [SerializeField]
-    private AUMLElement falseNextAction;
 
     public TMP_InputField Input;
     private int forMaxIndex = 3;
@@ -88,19 +83,6 @@ public class UMLForLoop : AUMLElement, IResetable
             NextElement = falseNextAction;
         }
         forCurrentIndex++;
-        return true;
-    }
-
-    public override bool ChangeNextAction(AUMLElement NewNextAction, bool conditional = false)
-    {
-        if (conditional)
-        {
-            falseNextAction = NewNextAction;
-        }
-        else
-        {
-            trueNextAction = NewNextAction;
-        }
         return true;
     }
 }

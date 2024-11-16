@@ -61,6 +61,7 @@ MonoBehaviour:
   ArrowHead: {fileID: 4238099971640653798}
   ConditionText: {fileID: 3138043229459554470}
   StartPos: {x: 0, y: 0}
+  _textField: {fileID: 7017774030946300950}
 --- !u!1 &2047797054703446293
 GameObject:
   m_ObjectHideFlags: 0

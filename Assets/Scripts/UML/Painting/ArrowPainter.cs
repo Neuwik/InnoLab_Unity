@@ -53,31 +53,74 @@ public class ArrowPainter : MonoBehaviour
     private float shaftOffset;
     private float targetHalfWidth;
 
+    public UnityEvent<ArrowPainter> OnDelete;
+
     public GameObject TargetElem 
     { 
-        get { return _targetElem; } 
-        set 
-        { 
-            _targetElem = value;
-            _targetRect = GetComponent<RectTransform>().rect;
-            gameObject.transform.parent.GetComponent<DragDrop>()?.OnPossitionChanged.AddListener(SetEnabled);
-            _targetElem.GetComponent<DragDrop>().OnPossitionChanged.AddListener(SetEnabled);
-            _targetElem.GetComponent<DragDrop>().OnDelete.AddListener(TargetDestroyed);
+        get { return _targetElem; }
+    }
+    public bool TrySetTargetElem(GameObject value, bool condition = true)
+    {
+        if (_parentElem == value || _targetElem == value)
+        {
+            return false;
+        }
 
-            _prev = transform.parent.GetComponent<AUMLElement>();
-            CreateArrow CA = _targetElem.GetComponent<CreateArrow>();
-            CA.OnDelete.AddListener(TargetDestroyed);
+        _targetElem = value;
+        _targetRect = GetComponent<RectTransform>().rect;
+        gameObject.transform.parent.GetComponent<DragDrop>()?.OnPossitionChanged.AddListener(SetEnabled);
+        _targetElem.GetComponent<DragDrop>().OnPossitionChanged.AddListener(SetEnabled);
+        _targetElem.GetComponent<DragDrop>().OnDelete.AddListener(TargetDestroyed);
 
-            //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
-            _prevCreateArrow = _prev.GetComponent<CreateArrow>();
-            bool conditional = _prevCreateArrow.TargetMaxAmount > 1 && _prevCreateArrow.TargetAmount > 1;
+        _prev = transform.parent.GetComponent<AUMLElement>();
+        CreateArrow CA = _targetElem.GetComponent<CreateArrow>();
+        CA.OnDelete.AddListener(TargetDestroyed);
 
-            _prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), conditional);
+        //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
+        _prevCreateArrow = _prev.GetComponent<CreateArrow>();
+
+        if (IsConditional)
+        {
+            _condition = condition;
+        }
+
+        _prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), _condition);
+        return true;
+    }
+
+    [SerializeField]
+    private TMP_Text _textField;
+    private bool _isConditional = false;
+    public bool IsConditional
+    {
+        get { return _isConditional; }
+        set
+        {
+            _isConditional = value;
+            _textField.gameObject.SetActive(_isConditional);
         }
     }
+    private bool _condition = true;
+    public void ToggleCondition()
+    {
+        if (_isConditional)
+        {
+            if (_condition)
+            {
+                _textField.text = "false";
+                _condition = false;
+            }
+            else
+            {
+                _textField.text = "true";
+                _condition = true;
+            }
+        }
+    }
+
     private void TargetDestroyed()
     {
-        _prevCreateArrow.ReduceTargetAmount();
+        OnDelete.Invoke(this);
         Destroy(gameObject);
     }
 
@@ -116,7 +159,6 @@ public class ArrowPainter : MonoBehaviour
             enabled = false;
     }
     
- 
     private void DrawArrow(Vector2 targetPoint)
     {
         targetHalfWidth = TargetElem != null ? TargetElem.GetComponent<RectTransform>().rect.width / 2 : 0;
@@ -198,7 +240,7 @@ public class ArrowPainter : MonoBehaviour
     }
     private void DrawUpwardsArrow(Vector2 targetPoint)
     {
-        Debug.Log("arrow: 2");
+        //Debug.Log("arrow: 2");
         if (UpperVerticleShaft.activeSelf)
         {
             UpperVerticleShaft.SetActive(false);
@@ -254,7 +296,7 @@ public class ArrowPainter : MonoBehaviour
     }
     private void DrawDownwardsArrow(Vector2 targetPoint)
     {
-        Debug.Log("arrow: 1");
+        //Debug.Log("arrow: 1");
         StartPos -= new Vector2(0, (_parentRect.height - 15.0f) / 2);
         if (UpperHorizontalShaft.activeSelf)
         {

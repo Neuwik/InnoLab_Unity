@@ -89,10 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f417a01b57e3e8f4dbafc88794f2aa37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetMaxAmount: 1
-  TargetAmount: 0
   Actionbox: {fileID: 1572147431915544548}
-  Arrow: {fileID: 133962267425589854, guid: 65b20e40ebd36a848bb7c0c66dfe7128, type: 3}
+  ArrowPrefab: {fileID: 3532675991438122460, guid: 65b20e40ebd36a848bb7c0c66dfe7128, type: 3}
   OnDelete:
     m_PersistentCalls:
       m_Calls: []
@@ -110,9 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nextElement: {fileID: 0}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
   EnergyNeeded: 0
   tree: {fileID: 7016704108598171495}
 --- !u!1 &8976481998373475147
