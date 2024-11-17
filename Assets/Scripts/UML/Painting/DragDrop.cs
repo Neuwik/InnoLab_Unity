@@ -15,7 +15,9 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private RectTransform _umlRectT;
     private GameObject _selectionPanel;
 
-    public UnityEvent OnPossitionChanged;
+    public UnityEvent OnPossitionChanged; // not used
+    public UnityEvent OnStartedMoving;
+    public UnityEvent OnStoppedMoving;
     public UnityEvent OnDelete;
 
     private void Start()
@@ -51,25 +53,25 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             gameObject.transform.SetParent(UMLManager.Instance.CurrentTree.transform);
             GetComponent<CreateArrow>().CanDraw = true;
         }
-        GameManager.Instance.ReDrawArrow = true;
+        OnStartedMoving.Invoke();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         _rectT.anchoredPosition += eventData.delta;
-        OnPossitionChanged.Invoke();
+        //OnPossitionChanged.Invoke();
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         //Vector3 posInUml = _umlRectT.InverseTransformPoint(transform.position);
         Vector3 posInUml = transform.localPosition;
-        GameManager.Instance.ReDrawArrow = false;
+        OnStoppedMoving.Invoke();
         /*
         if (Mathf.Abs(gameObject.transform.localPosition.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
             Mathf.Abs(gameObject.transform.localPosition.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2 )  // right, left bordercheck
         */
-        
+
         if (Mathf.Abs(posInUml.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
             Mathf.Abs(posInUml.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2)  // right, left bordercheck
         {

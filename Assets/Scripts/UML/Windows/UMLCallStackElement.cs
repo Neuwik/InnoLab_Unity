@@ -15,5 +15,6 @@ public class UMLCallStackElement : MonoBehaviour
     {
         textField.text = element.Name;
         background.sprite = element.Image.sprite;
+        background.color = element.Image.color;
     }
 }

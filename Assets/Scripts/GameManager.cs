@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public ArrowPainter ActiveArrow;
     [HideInInspector]
-    public bool ReDrawArrow;
+    public bool ReDrawArrow; // USELESS???
 
     public void RunUML()
     {

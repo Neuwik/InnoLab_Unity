@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.HID;
+using static UnityEditor.Rendering.FilterWindow;
 
 public class CreateArrow : MonoBehaviour, IPointerClickHandler
 {
@@ -53,9 +54,9 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             case PointerEventData.InputButton.Left: // Attach Arrow -> happens on TargetObject
                 if (GameManager.Instance.ActiveArrow != null &&
-                    gameObject.TryGetComponent<AUMLElement>(out _))
+                    gameObject.TryGetComponent<CreateArrow>(out CreateArrow element))
                 {
-                    if(GameManager.Instance.ActiveArrow.GetComponent<ArrowPainter>().TrySetTargetElem(gameObject))
+                    if(GameManager.Instance.ActiveArrow.GetComponent<ArrowPainter>().TrySetTargetElem(element))
                         GameManager.Instance.ActiveArrow = null;
                 }
                 return;
@@ -79,10 +80,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 {
                     ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
                     newArrow.transform.SetAsFirstSibling();
-
-                    //Center Arrow position
-                    Rect arrowRect = gameObject.GetComponent<RectTransform>().rect;
-                    newArrow.GetComponent<ArrowPainter>().StartPos = (Vector2) gameObject.transform.position + new Vector2(arrowRect.width / 2, arrowRect.height / 2);
                     AddArrow(newArrow);
 
                     if (_maxArrowCount == 2) // => only Condition blocks

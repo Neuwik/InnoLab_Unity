@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 8.5, y: 335}
+  m_AnchoredPosition: {x: 0, y: -35}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3238931568390108886
@@ -109,6 +109,7 @@ MonoBehaviour:
   _nextElement: {fileID: 0}
   highlightColor: {r: 1, g: 0, b: 0, a: 1}
   EnergyNeeded: 0
+  dropDown: {fileID: 0}
   tree: {fileID: 7016704108598171495}
 --- !u!1 &8976481998373475147
 GameObject:
@@ -142,10 +143,10 @@ RectTransform:
   - {fileID: 3196773507956486985}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7016704108598171495
 MonoBehaviour:
