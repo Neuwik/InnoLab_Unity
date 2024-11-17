@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,11 +26,19 @@ public abstract class AUMLElement : MonoBehaviour
 
     //private TickManager TickManager;
 
+    [SerializeField]
+    protected TMP_Dropdown dropDown;
+
+    private void Awake()
+    {
+        dropDown?.onValueChanged.AddListener(SelectedValueChanged);
+    }
+
     protected void Start()
     {
+        SeedDropDownOptions();
         Image = GetComponentInChildren<Image>();
         baseColor = Image.color;
-        //TickManager = GameManager.Instance.TickManager;
     }
 
     public virtual bool ChangeNextAction(AUMLElement NewNextAction, bool conditional = false)
@@ -97,5 +107,15 @@ public abstract class AUMLElement : MonoBehaviour
         {
             Image.color = baseColor;
         }
+    }
+
+    protected virtual void SelectedValueChanged(int index)
+    {
+        //Debug.LogWarning("AUMLElement: SelectedValueChanged");
+    }
+
+    protected virtual void SeedDropDownOptions()
+    {
+        //Debug.LogWarning("AUMLElement: UpdateDropDownOptions");
     }
 }

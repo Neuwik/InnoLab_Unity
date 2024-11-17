@@ -59,7 +59,7 @@ public class ArrowPainter : MonoBehaviour
     { 
         get { return _targetElem; }
     }
-    public bool TrySetTargetElem(GameObject value, bool condition = true)
+    public bool TrySetTargetElem(GameObject value)
     {
         if (_parentElem == value || _targetElem == value)
         {
@@ -79,11 +79,6 @@ public class ArrowPainter : MonoBehaviour
         //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
         _prevCreateArrow = _prev.GetComponent<CreateArrow>();
 
-        if (IsConditional)
-        {
-            _condition = condition;
-        }
-
         _prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), _condition);
         return true;
     }
@@ -91,13 +86,13 @@ public class ArrowPainter : MonoBehaviour
     [SerializeField]
     private TMP_Text _textField;
     private bool _isConditional = false;
-    public bool IsConditional
+    public void SetCondition(bool condition)
     {
-        get { return _isConditional; }
-        set
+        _isConditional = true;
+        _textField.gameObject.SetActive(_isConditional);
+        if (_condition != condition)
         {
-            _isConditional = value;
-            _textField.gameObject.SetActive(_isConditional);
+            ToggleCondition();
         }
     }
     private bool _condition = true;

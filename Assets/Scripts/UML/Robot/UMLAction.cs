@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -65,6 +67,24 @@ public class UMLAction : AUMLElement
                 action = () => {  };
                 break;
         }
+    }
+
+    protected override void SelectedValueChanged(int index)
+    {
+        //Debug.Log("UMLCondition: SelectedValueChanged");
+        ActionType = Enum.GetValues(typeof(EUMLActionType)).Cast<EUMLActionType>().ElementAt(index);
+    }
+
+    protected override void SeedDropDownOptions()
+    {
+        //Debug.Log("UMLCondition: SeedDropDownOptions");
+        dropDown.ClearOptions();
+        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+        foreach (EUMLActionType item in Enum.GetValues(typeof(EUMLActionType)).Cast<EUMLActionType>())
+        {
+            options.Add(new TMP_Dropdown.OptionData(StringEditor.SplitCamelCase(item.ToString())));
+        }
+        dropDown.AddOptions(options);
     }
 }
 

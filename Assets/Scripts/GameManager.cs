@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -278,9 +279,9 @@ public class GameManager : MonoBehaviour
             percentEnergy = percentEnergySum / UMLActors.Count
         };
 
-        Debug.Log(outcomeCalculationValues.percentHealth);
-        Debug.Log(outcomeCalculationValues.percentEnergy);
-        Debug.Log(outcomeCalculationValues.SuccessQualityPercent);
+        //Debug.Log(outcomeCalculationValues.percentHealth);
+        //Debug.Log(outcomeCalculationValues.percentEnergy);
+        //Debug.Log(outcomeCalculationValues.SuccessQualityPercent);
 
         LevelProgress.UpdateLevelProgress(outcomeCalculationValues);
     }

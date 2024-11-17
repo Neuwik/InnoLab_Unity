@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -88,5 +90,23 @@ public class UMLCondition : AUMLElementTrueFalse
                 condition = () => { return true; };
                 break;
         }
+    }
+
+    protected override void SelectedValueChanged(int index)
+    {
+        //Debug.Log("UMLCondition: SelectedValueChanged");
+        ConditionType = Enum.GetValues(typeof(EUMLConditionType)).Cast<EUMLConditionType>().ElementAt(index);
+    }
+
+    protected override void SeedDropDownOptions()
+    {
+        //Debug.Log("UMLCondition: SeedDropDownOptions");
+        dropDown.ClearOptions();
+        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+        foreach (EUMLConditionType item in Enum.GetValues(typeof(EUMLConditionType)).Cast<EUMLConditionType>())
+        {
+            options.Add(new TMP_Dropdown.OptionData(StringEditor.SplitCamelCase(item.ToString())));
+        }
+        dropDown.AddOptions(options);
     }
 }

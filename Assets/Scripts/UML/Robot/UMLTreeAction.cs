@@ -13,8 +13,8 @@ public class UMLTreeAction : AUMLElement, IResetable
     public UMLTree Tree;
     public override string Name { get { return Tree.TreeName + " Action"; } }
 
-    [SerializeField]
-    private TMP_Dropdown dropDown;
+    //[SerializeField]
+    //private TMP_Dropdown dropDown;
 
     private static Dictionary<long, string> selectableTrees;
     public static Dictionary<long, string> SelectableTrees
@@ -32,14 +32,7 @@ public class UMLTreeAction : AUMLElement, IResetable
 
     private void Awake()
     {
-        dropDown.onValueChanged.AddListener(SelectedTreeChanged);
         OnSelectableTreesChanged.AddListener(UpdateDropDownOptions);
-    }
-
-    private new void Start()
-    {
-        base.Start();
-        SelectableTrees.Count(); // Update at first call
     }
 
     public void Reset()
@@ -65,7 +58,8 @@ public class UMLTreeAction : AUMLElement, IResetable
 
     private void UpdateDropDownOptions()
     {
-        Debug.LogWarning("Tree Action: UpdateDropDownOptions");
+        //Debug.Log("Tree Action: UpdateDropDownOptions");
+        //Dictionary<long, string> trees = SelectableTrees; // if SelectableTrees is null then the get will trigger UpdateDropDownOptions again
         dropDown.options.Clear();
         foreach (var item in SelectableTrees)
         {
@@ -76,7 +70,7 @@ public class UMLTreeAction : AUMLElement, IResetable
                 // dropDown.value = dropDown.options.Count - 1;
                 int newIndex = dropDown.options.Count - 1;
                 dropDown.SetValueWithoutNotify(newIndex);
-                SelectedTreeChanged(newIndex);
+                SelectedValueChanged(newIndex);
             }
         }
 
@@ -86,13 +80,13 @@ public class UMLTreeAction : AUMLElement, IResetable
             // dropDown.value = 0;
 
             dropDown.SetValueWithoutNotify(0);
-            SelectedTreeChanged(0);
+            SelectedValueChanged(0);
         }
     }
 
-    private void SelectedTreeChanged(int index)
+    protected override void SelectedValueChanged(int index)
     {
-        Debug.Log("Tree Action: SelectedTreeChanged");
+        //Debug.Log("UMLTreeAction: SelectedTreeChanged");
         if (index < 0 || index >= SelectableTrees.Count)
         {
             Debug.LogWarning("Selected Tree (Tree Action Drop Down) does not exist");
@@ -100,5 +94,11 @@ public class UMLTreeAction : AUMLElement, IResetable
         }
         Tree = UMLManager.Instance.GetTree(SelectableTrees.ElementAt(index).Key);
         dropDown.RefreshShownValue();
+    }
+
+    protected override void SeedDropDownOptions()
+    {
+        //Debug.Log("UMLTreeAction: SeedDropDownOptions");
+        SelectableTrees.Count(); // Trigger the Getter
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AUMLElementTrueFalse : AUMLElement
+public abstract class AUMLElementTrueFalse : AUMLElement
 {
     [SerializeField]
     protected AUMLElement trueNextAction;

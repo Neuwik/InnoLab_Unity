@@ -85,9 +85,9 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     newArrow.GetComponent<ArrowPainter>().StartPos = (Vector2) gameObject.transform.position + new Vector2(arrowRect.width / 2, arrowRect.height / 2);
                     AddArrow(newArrow);
 
-                    if (_arrows.Count == 2) // => only Condition blocks
+                    if (_maxArrowCount == 2) // => only Condition blocks
                     {
-                        newArrow.IsConditional = true;
+                        newArrow.SetCondition(_arrows.Count != 2);
                     }
                     GameManager.Instance.ActiveArrow = newArrow;
                     
