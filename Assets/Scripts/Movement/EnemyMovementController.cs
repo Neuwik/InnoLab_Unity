@@ -1,11 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovementController : MovementController
 {
-    private Vector3[] directions = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
-
     private Coroutine MovementCoroutine;
     private TickManager TickManager;
 
@@ -13,7 +12,16 @@ public class EnemyMovementController : MovementController
     private SpriteRenderer sprite;
     private Vector3 spriteForward = Vector3.left;
 
-    // Start is called before the first frame update
+    // Movement no longer random
+    // List of movement directions + loop bool
+    [SerializeField]
+    private bool movesRandom = true;
+    [SerializeField]
+    private bool loopMovement = true;
+    [SerializeField]
+    private List<EDirection2D> movement = new List<EDirection2D>();
+    private int movementIndex = 0;
+    
     protected new void Start()
     {
         base.Start();
@@ -37,22 +45,42 @@ public class EnemyMovementController : MovementController
         {
             yield return TickManager.WaitForEnemyTickStart();
 
-            Vector3 randomDirection = Vector3.zero;
+            Vector3 direction = Vector3.zero;
 
-            while (movePoint.position == transform.position && GameManager.Instance.UMLIsRunning)
+            // while (movePoint.position == transform.position && GameManager.Instance.UMLIsRunning) // needed to make random enemey not get stuck
+            // {
+            direction = GetNextMovementDirection();
+
+            Move(direction);
+            //}
+
+            if (direction.x != 0)
             {
-                int randomIndex = Random.Range(0, directions.Length);
-                randomDirection = directions[randomIndex];
-
-                Move(randomDirection);
-            }
-
-            if (randomDirection.x != 0)
-            {
-                sprite.flipX = randomDirection.x != spriteForward.x;
+                sprite.flipX = direction.x != spriteForward.x;
             }
 
             yield return TickManager.WaitForEnemyTickEnd();
         }
+    }
+
+    private Vector3 GetNextMovementDirection()
+    {
+        if (movesRandom)
+        {
+            Array directions = Enum.GetValues(typeof(EDirection2D));
+            int randomIndex = UnityEngine.Random.Range(0, directions.Length);
+            return Converters.EDirection2DToVector3((EDirection2D)directions.GetValue(randomIndex));
+        }
+
+        if (movement.Count <= 0)
+            return Vector3.zero;
+
+        if (!loopMovement && movementIndex >= movement.Count)
+            return Vector3.zero;
+
+        if (loopMovement && movementIndex >= movement.Count)
+            movementIndex = 0;
+
+        return Converters.EDirection2DToVector3(movement[movementIndex++]);
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class UMLTreeAction : AUMLElement, IResetable
+public class UMLTreeAction : AUMLElement
 {
     public UMLTree Tree;
     public override string Name { get { return Tree.TreeName + " Action"; } }
@@ -35,8 +35,9 @@ public class UMLTreeAction : AUMLElement, IResetable
         OnSelectableTreesChanged.AddListener(UpdateDropDownOptions);
     }
 
-    public void Reset()
+    public new void Reset()
     {
+        base.Reset();
         highlightCounter = 0;
         StopHighlight();
     }

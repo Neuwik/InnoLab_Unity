@@ -84,7 +84,14 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
                     if (_maxArrowCount == 2) // => only Condition blocks
                     {
-                        newArrow.SetCondition(_arrows.Count != 2);
+                        if (_arrows.Count > 1) // second arrow
+                        {
+                            newArrow.Condition = !(_arrows[0].Condition);
+                        }
+                        else // first arrow
+                        {
+                            newArrow.Condition = true;
+                        }
                     }
                     GameManager.Instance.ActiveArrow = newArrow;
                     

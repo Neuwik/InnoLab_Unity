@@ -36,8 +36,9 @@ public class UMLForLoop : AUMLElementTrueFalse, IResetable
         Input.interactable = true;
     }
 
-    public void Reset()
+    public new void Reset()
     {
+        base.Reset();
         forCurrentIndex = 0;
         SynchronizeMaxIndex();
         Input.interactable = true;
@@ -72,8 +73,11 @@ public class UMLForLoop : AUMLElementTrueFalse, IResetable
             forCurrentIndex = 0;
         }
 
-        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {Name}");
-        
+        if (!base.Execute(actor))
+        {
+            return false;
+        }
+
         if (forCurrentIndex < forMaxIndex)
         {
             NextElement = trueNextAction;

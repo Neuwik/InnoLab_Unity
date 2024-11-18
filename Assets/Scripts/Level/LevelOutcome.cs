@@ -117,6 +117,10 @@ public class LevelOutcome : MonoBehaviour, IResetable
 
     private void ShowStars()
     {
+        Star1.SetActive(false);
+        Star2.SetActive(false);
+        Star3.SetActive(false);
+
         Stars.gameObject.SetActive(true);
 
         // One Star

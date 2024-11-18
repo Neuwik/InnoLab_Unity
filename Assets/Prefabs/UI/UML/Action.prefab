@@ -475,6 +475,12 @@ MonoBehaviour:
   OnPossitionChanged:
     m_PersistentCalls:
       m_Calls: []
+  OnStartedMoving:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStoppedMoving:
+    m_PersistentCalls:
+      m_Calls: []
   OnDelete:
     m_PersistentCalls:
       m_Calls: []

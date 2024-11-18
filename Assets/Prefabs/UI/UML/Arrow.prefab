@@ -49,13 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59c35e9dd7d001b40aeacfd6f95f198c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UpperVerticleShaft: {fileID: 5215513846119357467}
-  LowerVerticleShaft: {fileID: 8864595968498777439}
-  LowerHorizontalShaft: {fileID: 2902425621404089636}
-  UpperHorizontalShaft: {fileID: 2047797054703446293}
-  ArrowHead: {fileID: 4238099971640653798}
-  ConditionText: {fileID: 3138043229459554470}
-  StartPos: {x: 0, y: 0}
+  minHeight: 10
   _visualRect: {fileID: 5470094585100235544}
   OnDelete:
     m_PersistentCalls:

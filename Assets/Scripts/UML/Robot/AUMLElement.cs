@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class AUMLElement : MonoBehaviour
+public abstract class AUMLElement : MonoBehaviour, IResetable
 {
     public virtual string Name { get { return $"Element ({name})"; } }
 
@@ -41,7 +41,15 @@ public abstract class AUMLElement : MonoBehaviour
         baseColor = Image.color;
     }
 
-    public virtual bool ChangeNextAction(AUMLElement NewNextAction, bool conditional = false)
+    public void Reset()
+    {
+        if (dropDown != null && !dropDown.interactable)
+        {
+            dropDown.interactable = true;
+        }
+    }
+
+    public virtual bool ChangeNextAction(AUMLElement NewNextAction, bool condition = false)
     {
         NextElement = NewNextAction;
         return true;
@@ -84,6 +92,12 @@ public abstract class AUMLElement : MonoBehaviour
     {
         GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {Name}");
         //Debug.Log("Some Element: " + name);
+
+        if (dropDown != null && dropDown.interactable)
+        {
+            dropDown.interactable = false;
+        }
+
         return true;
     }
 

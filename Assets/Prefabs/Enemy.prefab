@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ead491d7cc691940b824d4bee2b3e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 3
   instantDeath: 0
 --- !u!114 &6728264706453558241
 MonoBehaviour:
@@ -260,3 +260,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   sprite: {fileID: 6144239172693859032}
+  movesRandom: 1
+  loopMovement: 1
+  movement: 

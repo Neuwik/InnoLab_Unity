@@ -37,7 +37,7 @@ public class UMLTree : MonoBehaviour
         {
             if ((String.IsNullOrEmpty(_treeName)))
             {
-                TreeName = "New Tree";
+                TreeName = "Tree";
             }
             return _treeName;
         }

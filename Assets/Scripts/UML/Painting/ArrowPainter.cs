@@ -10,6 +10,7 @@ using UnityEngine.Animations;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public class ArrowPainter : MonoBehaviour
 {
@@ -58,23 +59,28 @@ public class ArrowPainter : MonoBehaviour
         //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
         _prevCreateArrow = _prev.GetComponent<CreateArrow>();
 
-        _prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), _condition);
+        _prev.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), _condition);
         return true;
     }
 
     [SerializeField]
     private TMP_Text _textField;
     private bool _isConditional = false;
-    public void SetCondition(bool condition)
+    private bool _condition = true;
+    public bool Condition
     {
-        _isConditional = true;
-        _textField.gameObject.SetActive(_isConditional);
-        if (_condition != condition)
+        get { return _condition; }
+        set
         {
-            ToggleCondition();
+            _isConditional = true;
+            _textField.gameObject.SetActive(_isConditional);
+            if (_condition != value)
+            {
+                ToggleCondition();
+            }
         }
     }
-    private bool _condition = true;
+
     public void ToggleCondition()
     {
         if (_isConditional)
@@ -136,7 +142,7 @@ public class ArrowPainter : MonoBehaviour
         else
         {
             targetPos = (Vector2)Input.mousePosition + mouseOffset;
-            Debug.Log("MOUSE: " + targetPos);
+            //Debug.Log("MOUSE: " + targetPos);
         }
 
         Vector2 parentPos = _parentRect.position;

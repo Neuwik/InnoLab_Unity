@@ -27,8 +27,13 @@ public class UMLAction : AUMLElement
 
     public override bool Execute(UMLActor actor)
     {
-        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {ActionType}");
+        if (!base.Execute(actor))
+        {
+            return false;
+        }
+
         //Debug.Log("Some Action: " + name);
+
         SetActionByEnum(actor);
         if (action == null)
         {
@@ -82,7 +87,7 @@ public class UMLAction : AUMLElement
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
         foreach (EUMLActionType item in Enum.GetValues(typeof(EUMLActionType)).Cast<EUMLActionType>())
         {
-            options.Add(new TMP_Dropdown.OptionData(StringEditor.SplitCamelCase(item.ToString())));
+            options.Add(new TMP_Dropdown.OptionData(Converters.SplitCamelCase(item.ToString())));
         }
         dropDown.AddOptions(options);
     }

@@ -35,8 +35,13 @@ public class UMLCondition : AUMLElementTrueFalse
 
     public override bool Execute(UMLActor actor)
     {
-        GameManager.Instance.Console.Log(actor.State.ToString(), actor.name, $"Is executing {Name}");
+        if (!base.Execute(actor))
+        {
+            return false;
+        }
+
         //Debug.Log("Some Condition: " + name);
+
         SetConditionByEnum(actor);
         if (condition.Invoke())
         {
@@ -105,7 +110,7 @@ public class UMLCondition : AUMLElementTrueFalse
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
         foreach (EUMLConditionType item in Enum.GetValues(typeof(EUMLConditionType)).Cast<EUMLConditionType>())
         {
-            options.Add(new TMP_Dropdown.OptionData(StringEditor.SplitCamelCase(item.ToString())));
+            options.Add(new TMP_Dropdown.OptionData(Converters.SplitCamelCase(item.ToString())));
         }
         dropDown.AddOptions(options);
     }
