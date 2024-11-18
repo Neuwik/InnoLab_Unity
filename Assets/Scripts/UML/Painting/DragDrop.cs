@@ -29,11 +29,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         _rectT = GetComponent<RectTransform>();
     }
 
-    private void Awake()
-    {
-
-    }
-    
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Debug.Log("OnBeginDrag");
@@ -58,6 +53,11 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (GameManager.Instance.UMLIsRunning) // disable dragging when UML is running (tro prevent Block deletion)
+        {
+            return;
+        }
+
         _rectT.anchoredPosition += eventData.delta;
         //OnPossitionChanged.Invoke();
     }
