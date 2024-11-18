@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 916359877068436959}
   - component: {fileID: 6144239172693859032}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845446212761637670}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: EnemyMovePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 8207544480676145955}
   - component: {fileID: 553231282432168812}
   - component: {fileID: 6728264706453558241}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

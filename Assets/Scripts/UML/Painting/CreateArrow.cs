@@ -30,6 +30,9 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
     public UnityEvent OnDelete;
     public bool CanDraw = false;
 
+    [SerializeField]
+    private bool _isDeleteable = true;
+
     private void Start()
     {
         _arrows = new List<ArrowPainter>();
@@ -113,6 +116,11 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 }
                 else
                 {
+                    if (!_isDeleteable)
+                    {
+                        return;
+                    }
+
                     OnDelete.Invoke();
                     Destroy(gameObject);
                     // needs to invoke onDelete on Arrow of previous action

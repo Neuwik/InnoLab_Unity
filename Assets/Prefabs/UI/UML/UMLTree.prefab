@@ -94,6 +94,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   CanDraw: 1
+  _isDeleteable: 0
 --- !u!114 &1687775080954383157
 MonoBehaviour:
   m_ObjectHideFlags: 0
