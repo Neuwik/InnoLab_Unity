@@ -41,7 +41,7 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
         baseColor = Image.color;
     }
 
-    public void Reset()
+    public virtual void Reset()
     {
         if (dropDown != null && !dropDown.interactable)
         {

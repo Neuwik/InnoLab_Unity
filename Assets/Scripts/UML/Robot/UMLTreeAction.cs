@@ -35,7 +35,7 @@ public class UMLTreeAction : AUMLElement
         OnSelectableTreesChanged.AddListener(UpdateDropDownOptions);
     }
 
-    public new void Reset()
+    public override void Reset()
     {
         base.Reset();
         highlightCounter = 0;

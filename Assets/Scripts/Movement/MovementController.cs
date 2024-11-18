@@ -25,7 +25,7 @@ public class MovementController : MonoBehaviour, IResetable
         }
     }
 
-    public void Reset()
+    public virtual void Reset()
     {
         transform.position = startPosition;
         movePoint.parent = transform;

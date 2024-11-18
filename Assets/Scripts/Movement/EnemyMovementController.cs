@@ -28,10 +28,11 @@ public class EnemyMovementController : MovementController
         TickManager = GameManager.Instance.TickManager;
     }
 
-    public new void Reset()
+    public override void Reset()
     {
         StopCoroutine(Movement());
         base.Reset();
+        movementIndex = 0;
     }
 
     public void StartMovement()

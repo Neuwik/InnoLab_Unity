@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UMLForLoop : AUMLElementTrueFalse, IResetable
+public class UMLForLoop : AUMLElementTrueFalse
 {
     public override string Name
     {
@@ -36,7 +36,7 @@ public class UMLForLoop : AUMLElementTrueFalse, IResetable
         Input.interactable = true;
     }
 
-    public new void Reset()
+    public override void Reset()
     {
         base.Reset();
         forCurrentIndex = 0;

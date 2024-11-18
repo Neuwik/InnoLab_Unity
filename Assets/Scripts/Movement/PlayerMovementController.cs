@@ -8,7 +8,7 @@ public class PlayerMovementController : MovementController
 {
     private bool pushesAllowed;
 
-    public new void Reset()
+    public override void Reset()
     {
         pushesAllowed = false;
         base.Reset();
