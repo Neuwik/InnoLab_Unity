@@ -16,6 +16,10 @@ public class LevelSelectPrefab : MonoBehaviour
     public GameObject Star2;
     public GameObject Star3;
 
+    public GameObject EmptyStar1;
+    public GameObject EmptyStar2;
+    public GameObject EmptyStar3;
+
     private void Awake()
     {
         IndexGO.GetComponent<TextMeshProUGUI>().text = index.ToString();
@@ -24,9 +28,16 @@ public class LevelSelectPrefab : MonoBehaviour
 
     public void SetUnlocked()
     {
+        // show
         IndexGO.SetActive(true);
+        EmptyStar1.SetActive(true);
+        EmptyStar2.SetActive(true);
+        EmptyStar3.SetActive(true);
+
+        // hide
         Lock.SetActive(false);
         GreyCover.SetActive(false);
+
         GetComponent<Button>().enabled = true;
     }
 
