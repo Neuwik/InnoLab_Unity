@@ -48,9 +48,9 @@ public class ArrowPainter : MonoBehaviour
         _targetElem = value;
         _targetRect = _targetElem.GetComponent<RectTransform>();
 
-        _targetElem.GetComponent<DragDrop>().OnStartedMoving.AddListener(EnableDrawing);
-        _targetElem.GetComponent<DragDrop>().OnStoppedMoving.AddListener(DisableDrawing);
-        _targetElem.GetComponent<DragDrop>().OnDelete.AddListener(TargetDestroyed);
+        _targetElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
+        _targetElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
+        _targetElem.GetComponent<DragDrop>()?.OnDelete.AddListener(TargetDestroyed);
 
         _prev = transform.parent.GetComponent<AUMLElement>();
         CreateArrow CA = _targetElem.GetComponent<CreateArrow>();
@@ -59,7 +59,7 @@ public class ArrowPainter : MonoBehaviour
         //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
         _prevCreateArrow = _prev.GetComponent<CreateArrow>();
 
-        _prev.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), _condition);
+        _prev.ChangeNextElement(_targetElem.GetComponent<AUMLElement>(), _condition);
         return true;
     }
 

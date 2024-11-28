@@ -46,3 +46,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TreePrefab: {fileID: 7016704108598171495, guid: 23c0bf65424979d45a5528739283893f, type: 3}
   TreeButtonPrefab: {fileID: 4629406948870176840, guid: 9902b5080e86088479512ff3a76e1233, type: 3}
+  ElementTypePrefabs:
+  - prefab: {fileID: 8256643148071424692, guid: efbba2d15c52a014bb7b69bfb045417a, type: 3}
+  - prefab: {fileID: 7422114329308412470, guid: 0ef209f50455ae44089001a69a5bb7fe, type: 3}
+  - prefab: {fileID: -740125637844770881, guid: b880114a9f9e99d498a33f03aeba0bcc, type: 3}
+  - prefab: {fileID: 2539485637559265636, guid: c94113463c2a4d84eba241bdc85a9571, type: 3}
+  OnCurrentTreeChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTreesChanged:
+    m_PersistentCalls:
+      m_Calls: []

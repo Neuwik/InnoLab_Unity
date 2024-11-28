@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TreeEditor;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -43,6 +45,7 @@ public class UMLManager : MonoBehaviour
 
     public UMLTree TreePrefab;
     public UMLTreeButton TreeButtonPrefab;
+    public List<UMLElementTypePrefab> ElementTypePrefabs;
 
     public GameObject BuildArea { get { return GameManager.Instance.UMLWindow.BuildArea; } }
     public GameObject TreeList { get { return GameManager.Instance.UMLWindow.TreeList; } }
@@ -66,7 +69,7 @@ public class UMLManager : MonoBehaviour
                 }
                 else
                 {
-                    if (FindAndAddAllTreesOfScene() > 0)
+                    if (ReloadAllTrees() > 0)
                     {
                         _currentTree = treesDict.First().Value;
                     }
@@ -87,7 +90,7 @@ public class UMLManager : MonoBehaviour
 
             if (value != null)
             {
-                _currentTree?.gameObject.SetActive(false);
+                _currentTree?.gameObject?.SetActive(false);
                 _currentTree = value;
                 _currentTree.gameObject.SetActive(true);
                 OnCurrentTreeChanged.Invoke(_currentTree);
@@ -108,11 +111,7 @@ public class UMLManager : MonoBehaviour
 
     private void Start()
     {
-        //LoadTrees();
-        if (treesDict.Count == 0)
-        {
-            FindAndAddAllTreesOfScene();
-        }
+        ReloadAllTrees();
     }
 
     private int FindAndAddAllTreesOfScene()
@@ -124,6 +123,10 @@ public class UMLManager : MonoBehaviour
             {
                 CreateTreeButtonForTree(t);
             }
+            else
+            {
+                Destroy(t);
+            }
         }
         return trees.Count;
     }
@@ -132,7 +135,7 @@ public class UMLManager : MonoBehaviour
     {
         if (_instance == this)
         {
-            //SaveTrees();
+            SaveTrees();
         }
     }
 
@@ -172,6 +175,34 @@ public class UMLManager : MonoBehaviour
         OnTreesChanged.Invoke(trees);
 
         return true;
+    }
+
+    private UMLTree AddTreeToDict(UMLTreeData treeData)
+    {
+        if (treesDict.ContainsKey(treeData.ID))
+        {
+            Debug.LogWarning("TreeID already exists: " + treeData.ID);
+            return null;
+        }
+
+        Debug.Log("Tree added: " + treeData.ID);
+
+        UMLTree tree = Instantiate(TreePrefab, BuildArea.transform);
+
+        tree.ApplySimpleData(treeData);
+
+        if (!AddTreeToDict(tree))
+        {
+            Destroy(tree.gameObject);
+            return null;
+        }
+
+        CreateTreeButtonForTree(tree).Highlight();
+        CurrentTree = tree;
+
+        OnTreesChanged.Invoke(trees);
+
+        return tree;
     }
 
     public bool SetTreeAsCurrentTree(UMLTree tree)
@@ -219,8 +250,64 @@ public class UMLManager : MonoBehaviour
 
                 Destroy(tree.gameObject);
 
-                OnTreesChanged.Invoke(trees);
+                OnTreesChanged.Invoke(trees); 
             }
         }
+    }
+
+    private void SaveTrees()
+    {
+        if (treesDict == null)
+        {
+            Debug.LogWarning("UML Manager: No trees found");
+            return;
+        }
+
+        UMLSaveSystem.DeleteSaves();
+
+        foreach (UMLTree tree in trees)
+        {
+            Debug.Log("UML Manager: Saving Tree " + tree.UTreeName);
+            UMLSaveSystem.SaveTree(tree);
+        }
+    }
+
+    private int ReloadAllTrees()
+    {
+        int count = 0;
+        treesDict = new Dictionary<long, UMLTree>();
+
+        count += FindAndAddAllTreesOfScene();
+        count += LoadTreesFrommSave();
+
+        OnTreesChanged.Invoke(trees);
+
+        return count;
+    }
+
+    private int LoadTreesFrommSave()
+    {
+        List<UMLTreeData> treesData = UMLSaveSystem.LoadTrees();
+        Dictionary<UMLTreeData, UMLTree> newTrees = new Dictionary<UMLTreeData, UMLTree>();
+
+        foreach (UMLTreeData treeData in treesData)
+        {
+            UMLTree newTree = AddTreeToDict(treeData);
+            if (newTree != null)
+            {
+                newTrees.Add(treeData, newTree);
+            }
+        }
+
+        foreach (var item in newTrees)
+        {
+            if(!item.Value.ApplyElementData(item.Key))
+            {
+                Debug.LogWarning("UML Manager: Could not load Tree " + item.Key.ID + " - " + item.Key.TreeName);
+                RemoveTree(item.Value);
+            }
+        }
+
+        return newTrees.Count;
     }
 }

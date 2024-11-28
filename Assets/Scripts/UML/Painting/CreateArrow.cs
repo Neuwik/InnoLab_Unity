@@ -33,7 +33,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private bool _isDeleteable = true;
 
-    private void Start()
+    private void Awake()
     {
         _arrows = new List<ArrowPainter>();
         if (TryGetComponent<AUMLElementTrueFalse>(out _))
@@ -127,5 +127,30 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 } 
                 return;
         }
+    }
+
+    public bool DrawArrowToElement(CreateArrow target, bool condition = true)
+    {
+        if (_arrows.Count < _maxArrowCount)
+        {
+            ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
+            newArrow.transform.SetAsFirstSibling();
+            AddArrow(newArrow);
+
+            if (_maxArrowCount == 2) // => only Condition blocks
+            {
+                newArrow.Condition = condition;
+            }
+
+            if (!newArrow.TrySetTargetElem(target))
+            {
+                Destroy(newArrow.gameObject);
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

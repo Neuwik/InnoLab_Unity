@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,5 +102,24 @@ public class UMLTreeAction : AUMLElement
     {
         //Debug.Log("UMLTreeAction: SeedDropDownOptions");
         SelectableTrees.Count(); // Trigger the Getter
+    }
+
+    public override long GetElementLongValue()
+    {
+        return Tree.ID;
+    }
+
+    protected override bool SetElementLongValue(long value)
+    {
+        int index = Array.IndexOf(SelectableTrees.Keys.ToArray(), value);
+
+        if (index < 0)
+        {
+            return false;
+        }
+
+        dropDown.value = index;
+
+        return true;
     }
 }

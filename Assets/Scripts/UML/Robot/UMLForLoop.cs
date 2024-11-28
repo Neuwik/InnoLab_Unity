@@ -48,16 +48,21 @@ public class UMLForLoop : AUMLElementTrueFalse
     {
         if (string.IsNullOrEmpty(Input.text))
         {
-            Input.text = forMaxIndex.ToString();
+            OverrideInputWithCurrentMaxIndex();
             return;
         }
         int newMaxIndex = int.Parse(Input.text);
         if (newMaxIndex <= 0)
         {
-            Input.text = forMaxIndex.ToString();
+            OverrideInputWithCurrentMaxIndex();
             return;
         }
         forMaxIndex = newMaxIndex;
+    }
+
+    private void OverrideInputWithCurrentMaxIndex()
+    {
+        Input.text = forMaxIndex.ToString();
     }
 
     public override bool Execute(UMLActor actor)
@@ -87,6 +92,23 @@ public class UMLForLoop : AUMLElementTrueFalse
             NextElement = falseNextAction;
         }
         forCurrentIndex++;
+        return true;
+    }
+
+    public override long GetElementLongValue()
+    {
+        return (long)forMaxIndex;
+    }
+
+    protected override bool SetElementLongValue(long value)
+    {
+        forMaxIndex = (int)value;
+        if (forMaxIndex <= 0)
+        {
+            forMaxIndex = 3;
+        }
+        OverrideInputWithCurrentMaxIndex();
+
         return true;
     }
 }

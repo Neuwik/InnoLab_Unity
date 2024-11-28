@@ -79,7 +79,7 @@ public class OldArrowPainter : MonoBehaviour
         //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
         _prevCreateArrow = _prev.GetComponent<CreateArrow>();
 
-        _prev?.ChangeNextAction(_targetElem.GetComponent<AUMLElement>(), _condition);
+        _prev?.ChangeNextElement(_targetElem.GetComponent<AUMLElement>(), _condition);
         return true;
     }
 

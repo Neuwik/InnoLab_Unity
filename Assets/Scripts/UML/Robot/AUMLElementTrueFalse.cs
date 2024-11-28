@@ -9,7 +9,7 @@ public abstract class AUMLElementTrueFalse : AUMLElement
     [SerializeField]
     protected AUMLElement falseNextAction;
 
-    public override bool ChangeNextAction(AUMLElement NewNextAction, bool condition)
+    public override bool ChangeNextElement(AUMLElement NewNextAction, bool condition)
     {
         if (condition)
         {
@@ -25,5 +25,10 @@ public abstract class AUMLElementTrueFalse : AUMLElement
     public void SwitchNextActions()
     {
         (trueNextAction, falseNextAction) = (falseNextAction, trueNextAction);
+    }
+
+    public override AUMLElement GetNextElement(bool condition = true)
+    {
+        return condition ? trueNextAction : falseNextAction;
     }
 }

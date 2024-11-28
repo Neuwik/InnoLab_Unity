@@ -15,16 +15,6 @@ public class UMLAction : AUMLElement
 
     public override string Name { get { return ActionType.ToString(); } }
 
-    public void HandleInputData(int val)
-    {
-        Debug.Log(ActionType);
-        if (val >= 3)
-        {
-            val += 8;
-        }
-        ActionType = (EUMLActionType) val;
-    }
-
     public override bool Execute(UMLActor actor)
     {
         if (!base.Execute(actor))
@@ -90,6 +80,25 @@ public class UMLAction : AUMLElement
             options.Add(new TMP_Dropdown.OptionData(Converters.SplitCamelCase(item.ToString())));
         }
         dropDown.AddOptions(options);
+    }
+
+    public override long GetElementLongValue()
+    {
+        return (long)ActionType;
+    }
+
+    protected override bool SetElementLongValue(long value)
+    {
+        int index = Array.IndexOf(Enum.GetValues(typeof(EUMLActionType)), (EUMLActionType)value);
+
+        if (index < 0)
+        {
+            return false;
+        }
+
+        dropDown.value = index;
+
+        return true;
     }
 }
 

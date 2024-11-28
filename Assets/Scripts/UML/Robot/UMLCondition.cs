@@ -114,4 +114,23 @@ public class UMLCondition : AUMLElementTrueFalse
         }
         dropDown.AddOptions(options);
     }
+
+    public override long GetElementLongValue()
+    {
+        return (long)ConditionType;
+    }
+
+    protected override bool SetElementLongValue(long value)
+    {
+        int index = Array.IndexOf(Enum.GetValues(typeof(EUMLConditionType)), (EUMLConditionType)value);
+
+        if (index < 0)
+        {
+            return false;
+        }
+
+        dropDown.value = index;
+
+        return true;
+    }
 }
