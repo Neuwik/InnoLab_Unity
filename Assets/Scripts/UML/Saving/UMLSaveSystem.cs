@@ -45,11 +45,11 @@ public class UMLSaveSystem
 
         UMLTreeData data = new UMLTreeData(tree);
 
-        if(data.IsValid())
+        if (data.IsValid())
         {
             string filePath = Path.Combine(folderPath, $"{tree.UTreeName}.json");
 
-            Debug.LogWarning(data.elements.Length);
+            Debug.Log($"Saving Tree {tree.UTreeName} with {data.elements.Length} Elements");
 
             string json = JsonUtility.ToJson(data, true);
 

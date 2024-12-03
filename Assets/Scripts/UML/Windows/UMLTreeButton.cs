@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,9 +33,9 @@ public class UMLTreeButton : MonoBehaviour
     {
         this.tree = tree;
         text.text = tree.TreeName;
-        name = "btn_"+tree.UTreeName;
+        name = "btn_" + tree.UTreeName;
 
-        tree.OnDestroyEvent.AddListener(()=> Destroy(gameObject));
+        tree.OnDestroyEvent.AddListener(() => Destroy(gameObject));
     }
 
     public void OnButtonClick()

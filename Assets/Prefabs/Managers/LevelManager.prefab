@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f464146a693004479f2b9d52151791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: UMLFunctionTests
   sceneAsset: {fileID: 102900000, guid: 42d64a1fed3f3af4cba0255ae478232e, type: 3}
+  LevelSelectionSceneIndex: 1

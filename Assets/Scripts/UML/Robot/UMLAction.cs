@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEngine;
-using UnityEngine.Events;
 
 public enum EUMLActionType { DoNothing = 0, MoveUp = 11, MoveDown = 12, MoveLeft = 13, MoveRight = 14, CollectGarbage = 1, CollectBattery = 2 }
 
@@ -59,7 +56,7 @@ public class UMLAction : AUMLElement
                 action = actor.CollectBattery;
                 break;
             default:
-                action = () => {  };
+                action = () => { };
                 break;
         }
     }

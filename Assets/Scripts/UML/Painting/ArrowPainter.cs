@@ -1,16 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI;
 
 public class ArrowPainter : MonoBehaviour
 {
@@ -155,7 +145,7 @@ public class ArrowPainter : MonoBehaviour
         if (direction.y < 0 && direction.y * -1 > targetSize.y / 2 + parentSize.y / 2 + minHeight) // taget is under parent
         {
             DrawArrow(
-                parentPos - new Vector2(0, parentSize.y /2 ),
+                parentPos - new Vector2(0, parentSize.y / 2),
                 targetPos + new Vector2(0, targetSize.y / 2),
                 180
             );

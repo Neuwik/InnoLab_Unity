@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TreeEditor;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -69,6 +66,10 @@ public class UMLManager : MonoBehaviour
                 }
                 else
                 {
+                    Debug.LogWarning("Trees not loaded yet.");
+                    return null;
+                    /*
+                    // Causes Bug because the trees are reloaded twice at the same time (on startup)
                     if (ReloadAllTrees() > 0)
                     {
                         _currentTree = treesDict.First().Value;
@@ -77,6 +78,7 @@ public class UMLManager : MonoBehaviour
                     {
                         CreateNewTree("First Tree");
                     }
+                    */
                 }
             }
             return _currentTree;
@@ -250,7 +252,7 @@ public class UMLManager : MonoBehaviour
 
                 Destroy(tree.gameObject);
 
-                OnTreesChanged.Invoke(trees); 
+                OnTreesChanged.Invoke(trees);
             }
         }
     }
@@ -274,8 +276,9 @@ public class UMLManager : MonoBehaviour
 
     private int ReloadAllTrees()
     {
-        int count = 0;
         treesDict = new Dictionary<long, UMLTree>();
+
+        int count = 0;
 
         count += FindAndAddAllTreesOfScene();
         count += LoadTreesFrommSave();
@@ -301,7 +304,7 @@ public class UMLManager : MonoBehaviour
 
         foreach (var item in newTrees)
         {
-            if(!item.Value.ApplyElementData(item.Key))
+            if (!item.Value.ApplyElementData(item.Key))
             {
                 Debug.LogWarning("UML Manager: Could not load Tree " + item.Key.ID + " - " + item.Key.TreeName);
                 RemoveTree(item.Value);

@@ -1,19 +1,22 @@
-using UnityEngine.SceneManagement;
 using UnityEngine;
-using UnityEditor;
+using UnityEngine.SceneManagement;
+//using UnityEditor;
 
 
 public class LevelManager : MonoBehaviour
 {
-    private string sceneName;
-    public SceneAsset sceneAsset;
+    // private string sceneName; // Never used
+    //public SceneAsset sceneAsset; // Only works in Editor not in Build
     public int LevelSelectionSceneIndex = 0;
 
+    /*
+    // Only works in Editor not in Build
     void OnValidate()
     {
         if (sceneAsset != null)
             sceneName = sceneAsset.name;
     }
+    */
 
     public void LoadNextLevel()
     {
@@ -26,11 +29,14 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex + 1);
     }
 
+    /*
+    // Never used
     public void LoadLevelByName()
     {
         if(!string.IsNullOrEmpty(sceneName))
             SceneManager.LoadScene(sceneName);
     }
+    */
 
     public void LoadLevelByIndex(int index)
     {

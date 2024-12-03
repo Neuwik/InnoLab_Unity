@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -43,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        Debug.LogWarning("Game Manager: New Scene loaded");
+        Debug.Log("Game Manager: New Scene loaded");
         LoadReferences();
     }
 
@@ -86,7 +83,7 @@ public class GameManager : MonoBehaviour
             LevelManager = FindObjectOfType<LevelManager>();
         }
 
-        if(btn_UMLStart == null || btn_UMLStop == null)
+        if (btn_UMLStart == null || btn_UMLStop == null)
         {
             UMLStartStop startstop = FindObjectOfType<UMLStartStop>();
             btn_UMLStart = startstop?.btn_Start;
@@ -258,7 +255,7 @@ public class GameManager : MonoBehaviour
     {
         int trashCount = 0;
         GarbageCollectors.ForEach(gc => trashCount += gc.GarbageCount);
-        
+
         bool allAlife = !(UMLActors.Where(a => a.State != EUMLActorState.Done).ToList().Count > 0);
 
         float percentHealthSum = 0;

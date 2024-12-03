@@ -21,7 +21,7 @@ public class EnemyMovementController : MovementController
     [SerializeField]
     private List<EDirection2D> movement = new List<EDirection2D>();
     private int movementIndex = 0;
-    
+
     protected new void Start()
     {
         base.Start();

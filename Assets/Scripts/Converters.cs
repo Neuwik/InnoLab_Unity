@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using UnityEditor;
 using UnityEngine;
 
 public enum EDirection2D { Up = 0, Down = 1, Left = 2, Right = 3 };

@@ -1,12 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.HID;
 
 public class OldCreateArrow : MonoBehaviour, IPointerClickHandler
 {
@@ -49,7 +43,7 @@ public class OldCreateArrow : MonoBehaviour, IPointerClickHandler
             return;
         }
         GameObject childHelper;
-        
+
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left: // Attach Arrow -> happens on TargetObject
@@ -81,14 +75,14 @@ public class OldCreateArrow : MonoBehaviour, IPointerClickHandler
                             conditionText.text = "true";
                         }
                     }
-                    
+
                     gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
 
                     return;
                 }
 
                 if (GameManager.Instance.ActiveArrow == null &&
-                    TargetAmount < TargetMaxAmount )
+                    TargetAmount < TargetMaxAmount)
                 {
                     var newArrow = GameObject.Instantiate(Arrow, gameObject.transform);
                     newArrow.transform.SetAsFirstSibling();
@@ -107,7 +101,7 @@ public class OldCreateArrow : MonoBehaviour, IPointerClickHandler
                     }
                     // DOES NOT WORK ANYMORE
                     //GameManager.Instance.ActiveArrow = newArrow;
-                    
+
                 }
                 return;
 
@@ -123,11 +117,11 @@ public class OldCreateArrow : MonoBehaviour, IPointerClickHandler
                     OnDelete.Invoke();
                     Destroy(gameObject);
                     // needs to invoke onDelete on Arrow of previous action
-                } 
+                }
                 return;
         }
-        
-            
+
+
     }
     public void ReduceTargetAmount()
     {

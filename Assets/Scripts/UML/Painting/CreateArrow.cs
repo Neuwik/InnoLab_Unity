@@ -1,14 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.HID;
-using static UnityEditor.Rendering.FilterWindow;
 
 public class CreateArrow : MonoBehaviour, IPointerClickHandler
 {
@@ -52,14 +46,14 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             return;
         }
-        
+
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left: // Attach Arrow -> happens on TargetObject
                 if (GameManager.Instance.ActiveArrow != null &&
                     gameObject.TryGetComponent<CreateArrow>(out CreateArrow element))
                 {
-                    if(GameManager.Instance.ActiveArrow.GetComponent<ArrowPainter>().TrySetTargetElem(element))
+                    if (GameManager.Instance.ActiveArrow.GetComponent<ArrowPainter>().TrySetTargetElem(element))
                         GameManager.Instance.ActiveArrow = null;
                 }
                 return;
@@ -72,14 +66,14 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     {
                         arrow.ToggleCondition();
                     }
-                    
+
                     gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
 
                     return;
                 }
 
                 if (GameManager.Instance.ActiveArrow == null &&
-                    _arrows.Count < _maxArrowCount )
+                    _arrows.Count < _maxArrowCount)
                 {
                     ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
                     newArrow.transform.SetAsFirstSibling();
@@ -97,7 +91,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                         }
                     }
                     GameManager.Instance.ActiveArrow = newArrow;
-                    
+
                 }
                 return;
 
@@ -124,7 +118,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     OnDelete.Invoke();
                     Destroy(gameObject);
                     // needs to invoke onDelete on Arrow of previous action
-                } 
+                }
                 return;
         }
     }

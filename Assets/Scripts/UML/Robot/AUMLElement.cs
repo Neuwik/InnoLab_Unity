@@ -1,16 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text.RegularExpressions;
-using System.Threading;
 using TMPro;
-using TreeEditor;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public abstract class AUMLElement : MonoBehaviour, IResetable
 {
@@ -156,7 +148,7 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
 
     public virtual bool ApplySimpleData(UMLElementData data)
     {
-        if(!SetElementLongValue(data.value))
+        if (!SetElementLongValue(data.value))
         {
             return false;
         }

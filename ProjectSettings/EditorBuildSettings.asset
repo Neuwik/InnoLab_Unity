@@ -6,11 +6,38 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 475b37ce2f5be2a40b038c46ab886d8c
+  - enabled: 1
     path: Assets/Scenes/LevelSelect.unity
     guid: 10b35107f2f0e534da7ef09d0b498d94
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Tutorial1.unity
+    guid: 1c877767ae5ca1a4bb6b012fdfde5875
+  - enabled: 1
+    path: Assets/Scenes/Tutorial2.unity
+    guid: 6471152fa5c6c7247893da35b9aac740
+  - enabled: 1
+    path: Assets/Scenes/Tutorial3.unity
+    guid: 210fe611c9febc540b27ae8744243ce3
+  - enabled: 1
+    path: Assets/Scenes/Tutorial4.unity
+    guid: 8897a57adc2157c47833064c9242f19d
+  - enabled: 1
+    path: Assets/Scenes/Tutorial5.unity
+    guid: ea87be66ff2888648a724401c10940dd
+  - enabled: 1
+    path: Assets/Scenes/Tutorial6.unity
+    guid: 05ec89e7c55baf746ba0fe519434d9dc
+  - enabled: 1
+    path: Assets/Scenes/Tutorial7.unity
+    guid: b0e43c427cd79f743be3edac3b57c4ae
+  - enabled: 1
+    path: Assets/Scenes/Tutorial8.unity
+    guid: 1882caa4c8486e049be7521b328d051c
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: b6755e82980a4eb4aa21923cdc31b3a0
   - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: 02a8d9e4f783a624e91d3837286b6771

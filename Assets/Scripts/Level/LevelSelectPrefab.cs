@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +21,7 @@ public class LevelSelectPrefab : MonoBehaviour
     private void Awake()
     {
         IndexGO.GetComponent<TextMeshProUGUI>().text = index.ToString();
-        GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.LevelManager.LoadLevelByIndex(index));
+        GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.LevelManager.LoadLevelByIndex(LevelSelect.Instance.GetLevelSceneIndexByLevelNumber(index)));
     }
 
     public void SetUnlocked()

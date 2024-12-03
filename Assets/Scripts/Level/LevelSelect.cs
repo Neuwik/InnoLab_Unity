@@ -1,13 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LevelSelect : MonoBehaviour
 {
-    public List<LevelSelectPrefab> LevelPrefabs;
+    public static LevelSelect Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    private List<LevelSelectPrefab> LevelPrefabs;
+
+    [SerializeField]
+    private List<int> _levelSceneIndexes = new List<int>();
+    public int GetLevelSceneIndexByLevelNumber(int num)
+    {
+        if (num < 1 || _levelSceneIndexes.Count < num)
+        {
+            Debug.LogError($"Level with Number {num} does not exist in LevelSelect Manager.");
+            return -1;
+        }
+        return _levelSceneIndexes[num - 1];
+    }
 
     private void Start()
     {
+        LevelPrefabs = FindObjectsOfType<LevelSelectPrefab>().OrderBy(l => l.index).ToList();
+
         LoadAndSetLevelData();
     }
 
@@ -23,7 +51,7 @@ public class LevelSelect : MonoBehaviour
                 if (levelPrefab.index == saveDataList.Count + 1)
                 {
                     levelPrefab.SetUnlocked();
-                    Debug.LogWarning($"Next unlocked Level: {levelPrefab.index}");
+                    Debug.Log($"Next unlocked Level: {levelPrefab.index}");
                     return;
                 }
 
@@ -39,7 +67,8 @@ public class LevelSelect : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"Level index {levelPrefab.index} is out of range for save data list.");
+                // Has not been saved yet / was never played
+                Debug.Log($"Level index {levelPrefab.index} is out of range for save data list.");
             }
         }
     }

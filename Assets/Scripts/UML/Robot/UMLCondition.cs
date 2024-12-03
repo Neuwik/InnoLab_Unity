@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
-using UnityEngine;
-using UnityEngine.Events;
 
 public enum EUMLConditionType
 {
@@ -17,7 +13,7 @@ public enum EUMLConditionType
 public class UMLCondition : AUMLElementTrueFalse
 {
     public override string Name { get { return ConditionType.ToString(); } }
-    
+
 
     public EUMLConditionType ConditionType;
     private Func<bool> condition;
@@ -28,8 +24,8 @@ public class UMLCondition : AUMLElementTrueFalse
             val += 10;
         if (val >= 16)
             val += 5;
-        
-        ConditionType = (EUMLConditionType) val;
+
+        ConditionType = (EUMLConditionType)val;
 
     }
 

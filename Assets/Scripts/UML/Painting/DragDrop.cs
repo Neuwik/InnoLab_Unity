@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -23,7 +19,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private void Start()
     {
         _canvasRectT = GameManager.Instance.UML_Canvas.GetComponent<RectTransform>();
-        _selectionPanel = GameManager.Instance.UML_SelectionPanel; 
+        _selectionPanel = GameManager.Instance.UML_SelectionPanel;
         _umlPanel = GameManager.Instance.UMLWindow.BuildArea;
         _umlRectT = _umlPanel.GetComponent<RectTransform>();
         _rectT = GetComponent<RectTransform>();
@@ -79,7 +75,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             OnDelete.Invoke();
             Destroy(gameObject);
         }
-        
+
         //Debug.Log("OnEndDrag");
     }
 }

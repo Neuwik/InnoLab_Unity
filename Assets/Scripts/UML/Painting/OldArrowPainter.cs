@@ -1,15 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 public class OldArrowPainter : MonoBehaviour
 {
@@ -55,8 +47,8 @@ public class OldArrowPainter : MonoBehaviour
 
     public UnityEvent<ArrowPainter> OnDelete;
 
-    public GameObject TargetElem 
-    { 
+    public GameObject TargetElem
+    {
         get { return _targetElem; }
     }
     public bool TrySetTargetElem(GameObject value)
@@ -138,7 +130,7 @@ public class OldArrowPainter : MonoBehaviour
 
     void Update()
     {
-        
+
         //Debug.Log("UPDATE");
         if (TargetElem == null)
         {
@@ -149,25 +141,25 @@ public class OldArrowPainter : MonoBehaviour
         }
         else
         {
-            DrawArrow((Vector2) TargetElem.transform.position );
+            DrawArrow((Vector2)TargetElem.transform.position);
         }
-        if(!GameManager.Instance.ReDrawArrow)
+        if (!GameManager.Instance.ReDrawArrow)
             enabled = false;
     }
-    
+
     private void DrawArrow(Vector2 targetPoint)
     {
         targetHalfWidth = TargetElem != null ? TargetElem.GetComponent<RectTransform>().rect.width / 2 : 0;
 
-        StartPos = (Vector2) gameObject.transform.position;
+        StartPos = (Vector2)gameObject.transform.position;
         if (targetPoint.y < StartPos.y - _parentRect.height / 2)
         {
             DrawDownwardsArrow(targetPoint);
         }
-        else if(StartPos.x + _parentRect.width / 2 >= targetPoint.x - (TargetElem != null ? targetHalfWidth : 50) &&
+        else if (StartPos.x + _parentRect.width / 2 >= targetPoint.x - (TargetElem != null ? targetHalfWidth : 50) &&
                 StartPos.x - _parentRect.width / 2 <= targetPoint.x + (TargetElem != null ? targetHalfWidth : 50) ||
                 StartPos.x + _parentRect.width / 2 >= targetPoint.x + (TargetElem != null ? targetHalfWidth : 50) &&
-                StartPos.x - _parentRect.width / 2 <= targetPoint.x - (TargetElem != null ? targetHalfWidth : 50) )
+                StartPos.x - _parentRect.width / 2 <= targetPoint.x - (TargetElem != null ? targetHalfWidth : 50))
         {
             DrawUpwardsArrow(targetPoint);
         }
@@ -176,7 +168,7 @@ public class OldArrowPainter : MonoBehaviour
         //{
         //    DrawSimpleSidewaysArrow(targetPoint);
         //}
-        else 
+        else
         {
             DrawSidewaysArrow(targetPoint);
         }
@@ -245,7 +237,7 @@ public class OldArrowPainter : MonoBehaviour
 
         _ConditionalOffset = new Vector3(15, 0, 0);
         shaftOffset = _lowerVerticleShaftRectT.rect.width;
-        verticleLength = targetPoint.y  - StartPos.y;
+        verticleLength = targetPoint.y - StartPos.y;
 
         float directionHelper = 1;
         float upperLength;
