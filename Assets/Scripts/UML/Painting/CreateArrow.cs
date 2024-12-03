@@ -21,11 +21,16 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
     {
         arrow.OnDelete.AddListener(RemoveArrow);
         _arrows.Add(arrow);
+        if (arrow.GetTargetElm != null)
+        {
+            GetComponent<AUMLElement>().ChangeNextElement(arrow.GetTargetElm.GetComponent<AUMLElement>(), arrow.Condition);
+        }
     }
     private void RemoveArrow(ArrowPainter arrow)
     {
         _arrows.Remove(arrow);
         arrow?.OnDelete.RemoveListener(RemoveArrow);
+        GetComponent<AUMLElement>().ChangeNextElement(null, arrow.Condition);
     }
 
     public ArrowPainter ArrowPrefab;
@@ -46,11 +51,12 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left: // Attach Arrow -> happens on TargetObject
-                if (GameManager.Instance.ActiveArrow != null &&
-                    gameObject.TryGetComponent<CreateArrow>(out CreateArrow element))
+                if (GameManager.Instance.ActiveArrow != null)
                 {
-                    if (GameManager.Instance.ActiveArrow.GetComponent<ArrowPainter>().TrySetTargetElem(element))
+                    if (GameManager.Instance.ActiveArrow.TrySetTargetElem(this))
+                    {
                         GameManager.Instance.ActiveArrow = null;
+                    }
                 }
                 return;
 
@@ -73,6 +79,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 {
                     ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
                     newArrow.transform.SetAsFirstSibling();
+
                     AddArrow(newArrow);
 
                     if (getMaxArrowCount() == 2) // => only Condition blocks
@@ -87,7 +94,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                         }
                     }
                     GameManager.Instance.ActiveArrow = newArrow;
-
                 }
                 return;
 
@@ -125,7 +131,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
             newArrow.transform.SetAsFirstSibling();
-            AddArrow(newArrow);
 
             if (getMaxArrowCount() == 2) // => only Condition blocks
             {
@@ -138,6 +143,8 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 Destroy(newArrow.gameObject);
                 return false;
             }
+
+            AddArrow(newArrow);
 
             return true;
         }

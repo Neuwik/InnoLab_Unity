@@ -16,6 +16,7 @@ public class ArrowPainter : MonoBehaviour
     private RectTransform _parentRect;
 
     private CreateArrow _targetElem;
+    public CreateArrow GetTargetElm { get { return _targetElem; } }
     private RectTransform _targetRect;
 
     private AUMLElement _prev;
@@ -46,10 +47,10 @@ public class ArrowPainter : MonoBehaviour
         CreateArrow CA = _targetElem.GetComponent<CreateArrow>();
         CA.OnDelete.AddListener(TargetDestroyed);
 
-        //muss true sein, wenn man einen Pfeil für Condition == false zeichenen möchte
         _prevCreateArrow = _prev.GetComponent<CreateArrow>();
 
-        _prev.ChangeNextElement(_targetElem.GetComponent<AUMLElement>(), _condition);
+        _prev.ChangeNextElement(_targetElem.GetComponent<AUMLElement>(), Condition);
+
         return true;
     }
 
@@ -88,9 +89,13 @@ public class ArrowPainter : MonoBehaviour
         }
     }
 
-    private void TargetDestroyed()
+    private void OnDestroy()
     {
         OnDelete.Invoke(this);
+    }
+
+    private void TargetDestroyed()
+    {
         Destroy(gameObject);
     }
 
