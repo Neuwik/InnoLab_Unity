@@ -147,9 +147,6 @@ public class UMLManager : MonoBehaviour
             Destroy(newTree.gameObject);
             return;
         }
-
-        CreateTreeButtonForTree(newTree).Highlight();
-        CurrentTree = newTree;
     }
 
     private UMLTreeButton CreateTreeButtonForTree(UMLTree newTree)

@@ -89,14 +89,10 @@ public class ArrowPainter : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        OnDelete.Invoke(this);
-    }
-
     private void TargetDestroyed()
     {
         Destroy(gameObject);
+        OnDelete.Invoke(this);
     }
 
     void Start()
