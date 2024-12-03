@@ -504,6 +504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nextElement: {fileID: 0}
   highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  _image: {fileID: 2568920317831248406}
   EnergyNeeded: 1
   dropDown: {fileID: 6041357072132302223}
   trueNextAction: {fileID: 0}

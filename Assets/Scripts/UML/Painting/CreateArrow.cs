@@ -6,8 +6,17 @@ using UnityEngine.EventSystems;
 
 public class CreateArrow : MonoBehaviour, IPointerClickHandler
 {
-    private int _maxArrowCount;
-    private List<ArrowPainter> _arrows;
+    private int _maxArrowCount = 0;
+    private int getMaxArrowCount()
+    {
+        if(_maxArrowCount == 0)
+        {
+            _maxArrowCount = TryGetComponent<AUMLElementTrueFalse>(out _) ? 2 : 1;
+        }
+        return _maxArrowCount;
+    }
+
+    private List<ArrowPainter> _arrows = new List<ArrowPainter>();
     private void AddArrow(ArrowPainter arrow)
     {
         arrow.OnDelete.AddListener(RemoveArrow);
@@ -26,19 +35,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
     [SerializeField]
     private bool _isDeleteable = true;
-
-    private void Awake()
-    {
-        _arrows = new List<ArrowPainter>();
-        if (TryGetComponent<AUMLElementTrueFalse>(out _))
-        {
-            _maxArrowCount = 2;
-        }
-        else
-        {
-            _maxArrowCount = 1;
-        }
-    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -73,13 +69,13 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 }
 
                 if (GameManager.Instance.ActiveArrow == null &&
-                    _arrows.Count < _maxArrowCount)
+                    _arrows.Count < getMaxArrowCount())
                 {
                     ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
                     newArrow.transform.SetAsFirstSibling();
                     AddArrow(newArrow);
 
-                    if (_maxArrowCount == 2) // => only Condition blocks
+                    if (getMaxArrowCount() == 2) // => only Condition blocks
                     {
                         if (_arrows.Count > 1) // second arrow
                         {
@@ -125,25 +121,28 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
     public bool DrawArrowToElement(CreateArrow target, bool condition = true)
     {
-        if (_arrows.Count < _maxArrowCount)
+        if (_arrows.Count < getMaxArrowCount())
         {
             ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
             newArrow.transform.SetAsFirstSibling();
             AddArrow(newArrow);
 
-            if (_maxArrowCount == 2) // => only Condition blocks
+            if (getMaxArrowCount() == 2) // => only Condition blocks
             {
                 newArrow.Condition = condition;
             }
 
             if (!newArrow.TrySetTargetElem(target))
             {
+                Debug.LogWarning($"Create Arrow: Draw Arrow To Element failed because of Try Set Target Elem {target.name}");
                 Destroy(newArrow.gameObject);
                 return false;
             }
 
             return true;
         }
+
+        Debug.LogWarning($"Create Arrow: Draw Arrow To Element failed because of arrow counts {_arrows.Count} < {getMaxArrowCount()}");
 
         return false;
     }

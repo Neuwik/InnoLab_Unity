@@ -16,7 +16,10 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
     private Color highlightColor = Color.red;
     private Color baseColor;
     protected int highlightCounter = 0;
-    public Image Image { get; protected set; }
+
+    [SerializeField]
+    private Image _image;
+    public Image Image { get { return _image; } }
 
     public int EnergyNeeded = 0;
 
@@ -25,7 +28,7 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
     [SerializeField]
     protected TMP_Dropdown dropDown;
 
-    private void Awake()
+    protected void Awake()
     {
         dropDown?.onValueChanged.AddListener(SelectedValueChanged);
     }
@@ -33,7 +36,6 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
     protected void Start()
     {
         SeedDropDownOptions();
-        Image = GetComponentInChildren<Image>();
         baseColor = Image.color;
     }
 

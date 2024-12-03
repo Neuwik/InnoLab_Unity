@@ -105,6 +105,7 @@ public class UMLTree : MonoBehaviour
             // apply data to each block
             if (!newElement.ApplySimpleData(elementData))
             {
+                Debug.LogWarning($"UML Tree: Could not Apply Simple Data to element {elementData.ID}");
                 return false;
             }
 
@@ -112,17 +113,20 @@ public class UMLTree : MonoBehaviour
 
             if (!newElement.ApplyConnectionData(elementData, newElements))
             {
+                Debug.LogWarning($"UML Tree: Could not Connection Data to element {elementData.ID} - will retry later");
                 elementsWithNoConnectionYet.Add(newElement);
             }
         }
 
         if (!StartElement.ApplySimpleData(data.Start))
         {
+            Debug.LogWarning($"UML Tree: Could not Apply Simple Data to start element");
             return false;
         }
 
         if (!StartElement.ApplyConnectionData(data.Start, newElements))
         {
+            Debug.LogWarning($"UML Tree: Could not Connection Data to start element");
             return false;
         }
 
@@ -131,6 +135,8 @@ public class UMLTree : MonoBehaviour
         {
             if (!element.ApplyConnectionData(newElements.FirstOrDefault(e => e.Value == element).Key, newElements))
             {
+                Debug.LogWarning($"UML Tree: Could not Connection Data to start element {element.Name}");
+                //throw new Exception($"UML Tree: Could not Connection Data to start element {element.Name}");
                 return false;
             }
         }

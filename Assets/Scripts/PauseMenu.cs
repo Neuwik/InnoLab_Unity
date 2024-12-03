@@ -6,7 +6,6 @@ public class PauseMenu : MonoBehaviour
     public Slider VolumeSlider;
     public Button MenuButton;
     public Button ExitButton;
-    public int levelSelectSceneIndex;
 
     void Start()
     {
@@ -37,7 +36,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
 
         // Load the specified scene
-        GameManager.Instance.LevelManager.LoadLevelByIndex(levelSelectSceneIndex);
+        GameManager.Instance.LevelManager.LoadLevelSelectionScene();
     }
 
     public void QuitGame()

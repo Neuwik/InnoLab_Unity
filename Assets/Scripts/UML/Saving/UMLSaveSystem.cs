@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -31,8 +32,16 @@ public class UMLSaveSystem
         {
             return;
         }
+        // Save a new Backup every time
+        // string newFolderPath = Path.Combine(Application.persistentDataPath, $"{folderName}_{DateTime.UtcNow.ToBinary()}");
 
-        string newFolderPath = Path.Combine(Application.persistentDataPath, $"{folderName}_{DateTime.UtcNow.ToBinary()}");
+        // Only save latest Backup
+        string newFolderPath = Path.Combine(Application.persistentDataPath, $"{folderName}_prev");
+
+        if (Directory.Exists(newFolderPath))
+        {
+            Directory.Delete(newFolderPath,true);
+        }
 
         Directory.Move(folderPath, newFolderPath);
     }
@@ -73,6 +82,8 @@ public class UMLSaveSystem
             UMLTreeData tree = JsonUtility.FromJson<UMLTreeData>(json);
             trees.Add(tree);
         }
+
+        trees.OrderBy(t => t.TreeName);
 
         return trees;
     }

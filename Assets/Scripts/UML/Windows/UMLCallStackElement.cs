@@ -12,7 +12,7 @@ public class UMLCallStackElement : MonoBehaviour
     public void UpdateTextAndBackground(AUMLElement element)
     {
         textField.text = element.Name;
-        background.sprite = element.Image.sprite;
+        background.sprite = element.Image.sprite;  // Can cause a Bug when element start was never called
         background.color = element.Image.color;
     }
 }

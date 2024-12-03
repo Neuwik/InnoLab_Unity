@@ -27,8 +27,9 @@ public class UMLTreeAction : AUMLElement
 
     private static UnityEvent OnSelectableTreesChanged = new UnityEvent();
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         OnSelectableTreesChanged.AddListener(UpdateDropDownOptions);
     }
 
