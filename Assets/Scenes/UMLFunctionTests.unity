@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -850,10 +850,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc86bd1bde582d4ab04d60a16a15bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 589568369}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  _nextElement: {fileID: 0}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  EnergyNeeded: 0
+  dropDown: {fileID: 0}
   ActionType: 2
 --- !u!114 &117567187
 MonoBehaviour:
@@ -2914,10 +2914,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc86bd1bde582d4ab04d60a16a15bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 1631863469}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  _nextElement: {fileID: 0}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  EnergyNeeded: 0
+  dropDown: {fileID: 0}
   ActionType: 0
 --- !u!114 &589568370
 MonoBehaviour:
@@ -3943,10 +3943,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9235858eb347fb846bb7260a0c9d9b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 0}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  _nextElement: {fileID: 0}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  EnergyNeeded: 0
+  dropDown: {fileID: 0}
   trueNextAction: {fileID: 1573727040}
   falseNextAction: {fileID: 817542911}
   ConditionType: 1
@@ -4263,10 +4263,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc86bd1bde582d4ab04d60a16a15bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 796445182}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  _nextElement: {fileID: 0}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  EnergyNeeded: 0
+  dropDown: {fileID: 0}
   ActionType: 3
 --- !u!114 &817542912
 MonoBehaviour:
@@ -5967,11 +5967,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86022d87c08d2454a94b78df1ff0a804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 0}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
-  Start: {fileID: 1818111425}
+  _startElement: {fileID: 0}
+  OnDestroyEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1272481591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6161,10 +6160,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc86bd1bde582d4ab04d60a16a15bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 1805531858}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  _nextElement: {fileID: 0}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  EnergyNeeded: 0
+  dropDown: {fileID: 0}
   ActionType: 0
 --- !u!4 &1308634292 stripped
 Transform:
@@ -7154,10 +7153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc86bd1bde582d4ab04d60a16a15bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 1272481590}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  _nextElement: {fileID: 0}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  EnergyNeeded: 0
+  dropDown: {fileID: 0}
   ActionType: 1
 --- !u!114 &1573727041
 MonoBehaviour:
@@ -7335,11 +7334,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86022d87c08d2454a94b78df1ff0a804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 0}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
-  Start: {fileID: 1294364948}
+  _startElement: {fileID: 0}
+  OnDestroyEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1631863470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7491,10 +7489,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc86bd1bde582d4ab04d60a16a15bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 1631863469}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  _nextElement: {fileID: 0}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  EnergyNeeded: 0
+  dropDown: {fileID: 0}
   ActionType: 1
 --- !u!114 &1639543024
 MonoBehaviour:
@@ -8181,10 +8179,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9235858eb347fb846bb7260a0c9d9b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 0}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  _nextElement: {fileID: 0}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  EnergyNeeded: 0
+  dropDown: {fileID: 0}
   trueNextAction: {fileID: 1639543023}
   falseNextAction: {fileID: 117567186}
   ConditionType: 1
@@ -8301,10 +8299,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc86bd1bde582d4ab04d60a16a15bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextElement: {fileID: 796445182}
-  highlightColor:
-    serializedVersion: 2
-    rgba: 4278190335
+  _nextElement: {fileID: 0}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+  EnergyNeeded: 0
+  dropDown: {fileID: 0}
   ActionType: 0
 --- !u!114 &1818111426
 MonoBehaviour:
@@ -9714,6 +9712,22 @@ PrefabInstance:
       propertyPath: Tree
       value: 
       objectReference: {fileID: 1631863469}
+    - target: {fileID: 164509076281286924, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 164509076281286924, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 164509076281286924, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 164509076281286924, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2082711586549611080, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -9782,6 +9796,30 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 413077ae31222ca4ba8db825a90e2d07, type: 3}
+    - target: {fileID: 6053636518577579167, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053636518577579167, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7245463953649795887, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7245463953649795887, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7245463953649795887, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7245463953649795887, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7737078644307609033, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
       propertyPath: m_Icon
       value: 

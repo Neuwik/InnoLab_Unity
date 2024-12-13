@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
-  m_Name: tree2
+  m_Name: animated_tree2
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
   - {fileID: -1091836545, guid: 68e97840a5dbbf741a2634bd20d29d92, type: 3}
