@@ -41,7 +41,9 @@ public class LevelOutcome : MonoBehaviour, IResetable
         }
 
         levelNumber = SceneManager.GetActiveScene().buildIndex;
-        LevelIndexText.text = "Level " + levelNumber;
+
+        // TODO Build Index To level number
+        LevelIndexText.text = "Level " + (levelNumber - 1);
 
         _posNextLevelBtn = NextBtn.transform.localPosition;
         _posResetLevelBtn = ResetBtn.transform.localPosition;
