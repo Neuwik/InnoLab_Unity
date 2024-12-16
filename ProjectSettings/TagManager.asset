@@ -54,3 +54,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Water
+    uniqueID: 346213019
+    locked: 0
+  - name: 'Ground '
+    uniqueID: 1861223793
+    locked: 0
+  - name: Deco
+    uniqueID: 538026483
+    locked: 0
+  - name: Collectable
+    uniqueID: 2239571101
+    locked: 0
