@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEngine;
 
 public enum EUMLActionType { DoNothing = 0, MoveUp = 11, MoveDown = 12, MoveLeft = 13, MoveRight = 14, CollectGarbage = 1, CollectBattery = 2 }
 
@@ -63,7 +64,7 @@ public class UMLAction : AUMLElement
 
     protected override void SelectedValueChanged(int index)
     {
-        //Debug.Log("UMLCondition: SelectedValueChanged");
+        //Debug.Log("Action Index changed: " + index);
         ActionType = Enum.GetValues(typeof(EUMLActionType)).Cast<EUMLActionType>().ElementAt(index);
     }
 
@@ -81,6 +82,7 @@ public class UMLAction : AUMLElement
 
     public override long GetElementLongValue()
     {
+        //Debug.Log("Action Value: " + (long)ActionType);
         return (long)ActionType;
     }
 
@@ -88,12 +90,15 @@ public class UMLAction : AUMLElement
     {
         int index = Array.IndexOf(Enum.GetValues(typeof(EUMLActionType)), (EUMLActionType)value);
 
+        //Debug.Log("Action Value -> Index: " + value + " -> " + index);
+
         if (index < 0)
         {
             return false;
         }
 
         dropDown.value = index;
+        //SelectedValueChanged(index);
 
         return true;
     }

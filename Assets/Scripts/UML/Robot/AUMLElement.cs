@@ -31,11 +31,11 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
     protected void Awake()
     {
         dropDown?.onValueChanged.AddListener(SelectedValueChanged);
+        SeedDropDownOptions();
     }
 
     protected void Start()
     {
-        SeedDropDownOptions();
         baseColor = Image.color;
     }
 
