@@ -97,6 +97,11 @@ public class UMLTreeAction : AUMLElement
 
     protected override void SeedDropDownOptions()
     {
+        if (_dropDownIsSeeded)
+        {
+            return;
+        }
+        _dropDownIsSeeded = true;
         //Debug.Log("UMLTreeAction: SeedDropDownOptions");
         SelectableTrees.Count(); // Trigger the Getter
     }

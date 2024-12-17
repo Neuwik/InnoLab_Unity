@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum EUMLActionType { DoNothing = 0, MoveUp = 11, MoveDown = 12, MoveLeft = 13, MoveRight = 14, CollectGarbage = 1, CollectBattery = 2 }
 
@@ -70,7 +71,12 @@ public class UMLAction : AUMLElement
 
     protected override void SeedDropDownOptions()
     {
-        //Debug.Log("UMLCondition: SeedDropDownOptions");
+        if (_dropDownIsSeeded)
+        {
+            return;
+        }
+        _dropDownIsSeeded = true;
+        //Debug.Log("UMLAction: SeedDropDownOptions");
         dropDown.ClearOptions();
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
         foreach (EUMLActionType item in Enum.GetValues(typeof(EUMLActionType)).Cast<EUMLActionType>())
@@ -78,6 +84,7 @@ public class UMLAction : AUMLElement
             options.Add(new TMP_Dropdown.OptionData(Converters.SplitCamelCase(item.ToString())));
         }
         dropDown.AddOptions(options);
+
     }
 
     public override long GetElementLongValue()
@@ -90,13 +97,14 @@ public class UMLAction : AUMLElement
     {
         int index = Array.IndexOf(Enum.GetValues(typeof(EUMLActionType)), (EUMLActionType)value);
 
-        //Debug.Log("Action Value -> Index: " + value + " -> " + index);
+        Debug.Log("Action Value -> Index: " + value + " -> " + index);
 
         if (index < 0)
         {
             return false;
         }
 
+        Debug.Log("Action DropDown options count: " + dropDown.options.Count);
         dropDown.value = index;
         //SelectedValueChanged(index);
 

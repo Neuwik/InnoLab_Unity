@@ -101,6 +101,11 @@ public class UMLCondition : AUMLElementTrueFalse
 
     protected override void SeedDropDownOptions()
     {
+        if (_dropDownIsSeeded)
+        {
+            return;
+        }
+        _dropDownIsSeeded = true;
         //Debug.Log("UMLCondition: SeedDropDownOptions");
         dropDown.ClearOptions();
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();

@@ -27,6 +27,7 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
 
     [SerializeField]
     protected TMP_Dropdown dropDown;
+    protected bool _dropDownIsSeeded = false;
 
     protected void Awake()
     {
@@ -133,7 +134,14 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
 
     protected virtual void SeedDropDownOptions()
     {
-        //Debug.LogWarning("AUMLElement: UpdateDropDownOptions - " + name);
+        /*
+        if (_dropDownIsSeeded)
+        {
+            return;
+        }
+        _dropDownIsSeeded = true;
+        Debug.LogWarning("AUMLElement: UpdateDropDownOptions - " + name);
+        */
     }
 
     public virtual long GetElementLongValue()
@@ -150,6 +158,8 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
 
     public virtual bool ApplySimpleData(UMLElementData data)
     {
+        SeedDropDownOptions();
+        Debug.Log("UMLElement ApplySimpleData: Value -> " + data.value);
         if (!SetElementLongValue(data.value))
         {
             return false;
