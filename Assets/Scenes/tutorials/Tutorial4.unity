@@ -2066,6 +2066,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5251981355361148667, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
+      propertyPath: _tutorialBoxes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5251981355361148667, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
       propertyPath: _tutorialBoxes.Array.data[0]
       value: 
       objectReference: {fileID: 1728479852}
