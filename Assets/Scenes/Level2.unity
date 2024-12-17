@@ -17471,7 +17471,7 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 15
       m_TileSpriteIndex: 15
-      m_TileMatrixIndex: 2
+      m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
@@ -17708,23 +17708,23 @@ Tilemap:
   - m_RefCount: 3
     m_Data: {fileID: -1984355674, guid: 82d2afd2bfdb0294bb2207797df63fae, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 0
+  - m_RefCount: 1
     m_Data:
-      e00: -2.5239408e-36
-      e01: NaN
-      e02: -18039.594
+      e00: -0.5
+      e01: -0.0000001390709
+      e02: 1.3592683e-10
       e03: 0
-      e10: 7.3e-44
-      e11: 4e-45
-      e12: 4.5904e-41
+      e10: 0
+      e11: 0.00024434924
+      e12: 0.9999999
       e13: 0
-      e20: NaN
-      e21: 0
-      e22: -2.5239379e-36
+      e20: -0.00000013907092
+      e21: 0.49999994
+      e22: -0.0004887581
       e23: 0
       e30: 0
-      e31: 7.34684e-40
-      e32: 7.3e-44
+      e31: 0
+      e32: 0
       e33: 1
   - m_RefCount: 1
     m_Data:
@@ -17744,7 +17744,7 @@ Tilemap:
       e31: 0
       e32: 0
       e33: 1
-  - m_RefCount: 26
+  - m_RefCount: 25
     m_Data:
       e00: 0.5
       e01: -0
@@ -17864,6 +17864,18 @@ PrefabInstance:
     - target: {fileID: 3274215419585452012, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418232406574656613, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7277056
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418232406574656613, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_Color.g
+      value: 0.73356473
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418232406574656613, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
+      propertyPath: m_Color.r
+      value: 0.745283
       objectReference: {fileID: 0}
     - target: {fileID: 3496673621325432967, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
       propertyPath: m_AnchorMax.x
