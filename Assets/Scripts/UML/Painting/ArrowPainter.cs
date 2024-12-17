@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class ArrowPainter : MonoBehaviour
 {
@@ -28,6 +29,10 @@ public class ArrowPainter : MonoBehaviour
     private RectTransform _visualRect;
 
     public UnityEvent<ArrowPainter> OnDelete;
+
+    private Color _baseColor = Color.gray;
+    private static Color _trueColor = Color.green * 0.8f;
+    private static Color _falseColor = Color.red * 0.9f;
 
     public bool TrySetTargetElem(CreateArrow value)
     {
@@ -65,6 +70,7 @@ public class ArrowPainter : MonoBehaviour
         {
             _isConditional = true;
             _textField.gameObject.SetActive(_isConditional);
+            ChangeArrowColor(_trueColor);
             if (_condition != value)
             {
                 ToggleCondition();
@@ -79,11 +85,13 @@ public class ArrowPainter : MonoBehaviour
             if (_condition)
             {
                 _textField.text = "false";
+                ChangeArrowColor(_falseColor);
                 _condition = false;
             }
             else
             {
                 _textField.text = "true";
+                ChangeArrowColor(_trueColor);
                 _condition = true;
             }
         }
@@ -93,6 +101,11 @@ public class ArrowPainter : MonoBehaviour
     {
         Destroy(gameObject);
         OnDelete.Invoke(this);
+    }
+
+    private void Awake()
+    {
+        _baseColor = GetComponentInChildren<Image>().color;
     }
 
     void Start()
@@ -193,5 +206,13 @@ public class ArrowPainter : MonoBehaviour
         size = _rect.InverseTransformVector(size);
 
         _rect.sizeDelta = size;
+    }
+
+    private void ChangeArrowColor(Color color)
+    {
+        foreach (var arrowPart in GetComponentsInChildren<Image>())
+        {
+            arrowPart.color = color;
+        }
     }
 }
