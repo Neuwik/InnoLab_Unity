@@ -651,6 +651,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5251981355361148667, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
+      propertyPath: _tutorialBoxes.Array.data[0]
+      value: 
+      objectReference: {fileID: 831276775}
     - target: {fileID: 5697980958183642442, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -785,9 +789,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8246545484919291243, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 831276774}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
+--- !u!224 &255670568 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8246545484919291243, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
+  m_PrefabInstance: {fileID: 255670567}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &316454462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1282,6 +1294,173 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8341971044191406403, guid: 3ad9b7024c1b834478db72ca794a61a2, type: 3}
   m_PrefabInstance: {fileID: 712843420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &831276773
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 255670568}
+    m_Modifications:
+    - target: {fileID: 553630323426858052, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_text
+      value: Push-Field
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435885268814223783, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319411815003241576, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735646756012408449, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844636806452901580, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844636806452901580, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844636806452901580, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844636806452901580, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844636806452901580, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844636806452901580, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844636806452901580, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5562749234201041274, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_Name
+      value: PushField
+      objectReference: {fileID: 0}
+    - target: {fileID: 5562749234201041274, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 422
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -220
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 77
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6339846770755584457, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_text
+      value: "Ein Push-Field ist ein spezielles Spielfeld mit einem Pfeil, der eine
+        Richtung vorgibt. Sobald der M\xFCllroboter das Push-Field betritt, wird
+        er automatisch in die angezeigte Richtung geschoben. Dabei wird die restliche
+        Bewegung, die noch im aktuellen Befehl \xFCbrig ist, abgebrochen. Plane deine
+        Befehle entsprechend, um unerw\xFCnschte Unterbrechungen zu vermeiden."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6339846770755584457, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_fontSize
+      value: 16.45
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+--- !u!224 &831276774 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6059727578827761173, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+  m_PrefabInstance: {fileID: 831276773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &831276775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5562749234201041274, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+  m_PrefabInstance: {fileID: 831276773}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &896783211
 PrefabInstance:
