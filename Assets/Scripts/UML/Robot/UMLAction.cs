@@ -97,16 +97,18 @@ public class UMLAction : AUMLElement
     {
         int index = Array.IndexOf(Enum.GetValues(typeof(EUMLActionType)), (EUMLActionType)value);
 
-        Debug.Log("Action Value -> Index: " + value + " -> " + index);
+        //Debug.Log("Action Value -> Index: " + value + " -> " + index);
 
         if (index < 0)
         {
             return false;
         }
 
-        Debug.Log("Action DropDown options count: " + dropDown.options.Count);
-        dropDown.value = index;
-        //SelectedValueChanged(index);
+        //Debug.Log("Action DropDown options count: " + dropDown.options.Count);
+
+        // Is triggered befor Awake so Notify would not work anyways
+        dropDown.SetValueWithoutNotify(index);
+        SelectedValueChanged(index);
 
         return true;
     }

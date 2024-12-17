@@ -159,7 +159,7 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
     public virtual bool ApplySimpleData(UMLElementData data)
     {
         SeedDropDownOptions();
-        Debug.Log($"UMLElement ApplySimpleData: ID -> {data.ID}, Name -> {data.name}, Value -> {data.value}");
+        //Debug.Log($"UMLElement ApplySimpleData: ID -> {data.ID}, Name -> {data.name}, Value -> {data.value}");
         if (!SetElementLongValue(data.value))
         {
             return false;
@@ -182,10 +182,12 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
 
             if (tNextElement == null)
             {
+                Debug.LogWarning($"UML Element: {data.ID} could not find element {data.nextTID}");
                 return false;
             }
             if (!createArrow.DrawArrowToElement(tNextElement.GetComponent<CreateArrow>(), true))
             {
+                Debug.LogWarning($"UML Element: {data.ID} could not connect to element {data.nextTID}");
                 return false;
             }
         }
@@ -193,12 +195,14 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
         if (data.nextFID != 0)
         {
             AUMLElement fNextElement = elements.FirstOrDefault(e => e.Key.ID == data.nextFID).Value;
-            if (fNextElement != null)
+            if (fNextElement == null)
             {
+                Debug.LogWarning($"UML Element: {data.ID} could not find element {data.nextFID}");
                 return false;
             }
             if (!createArrow.DrawArrowToElement(fNextElement.GetComponent<CreateArrow>(), false))
             {
+                Debug.LogWarning($"UML Element: {data.ID} could not connect to element {data.nextFID}");
                 return false;
             }
         }

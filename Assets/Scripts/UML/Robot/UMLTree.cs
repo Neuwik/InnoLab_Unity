@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -138,7 +139,13 @@ public class UMLTree : MonoBehaviour
             if (!element.ApplyConnectionData(elementData, newElements))
             {
                 Debug.LogWarning($"UML Tree: Could not Connection Data to element {elementData.ID}");
-                //throw new Exception($"UML Tree: Could not Connection Data to start element {element.Name}");
+                /*
+                foreach (var item in newElements)
+                {
+                    Debug.LogWarning("New Element: ID -> " + item.Key.ID);
+                }
+                */
+                //throw new Exception($"UML Tree: Could not Connection Data to element {elementData.ID}");
                 return false;
             }
         }

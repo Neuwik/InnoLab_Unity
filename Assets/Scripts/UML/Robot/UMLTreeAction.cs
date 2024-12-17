@@ -120,7 +120,9 @@ public class UMLTreeAction : AUMLElement
             return false;
         }
 
-        dropDown.value = index;
+        // Is triggered befor Awake so Notify would not work anyways
+        dropDown.SetValueWithoutNotify(index);
+        SelectedValueChanged(index);
 
         return true;
     }

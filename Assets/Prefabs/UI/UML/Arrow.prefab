@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1379909003356406304}
   - component: {fileID: 3532675991438122460}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Arrow
   m_TagString: Arrow
   m_Icon: {fileID: 2800000, guid: ed54981daa42eea4aa4773f4ab49c03e, type: 3}
@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 7677601236308793855}
   - component: {fileID: 6089756098044087148}
   - component: {fileID: 587354324036339135}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: UpperHorizontalShaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 2317478404409252978}
   - component: {fileID: 2180546863713133664}
   - component: {fileID: 2434143595973052594}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: LowerHorizontalShaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5470094585100235544}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 3670876694011887240}
   - component: {fileID: 4582588765506958326}
   - component: {fileID: 7017774030946300950}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: ConditionalValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 8813964718540158414}
   - component: {fileID: 1056436948638084457}
   - component: {fileID: 5366836052792778608}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: ArrowHead (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 6586177614861656035}
   - component: {fileID: 8435959758586761527}
   - component: {fileID: 246346365645553535}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: ArrowHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 4764989513403254674}
   - component: {fileID: 3003311814886001284}
   - component: {fileID: 3693388953205812226}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: UpperVerticalShaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 3182187255420813513}
   - component: {fileID: 4111284034508170544}
   - component: {fileID: 1758046833759336906}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: LowerVerticalShaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
