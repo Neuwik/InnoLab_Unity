@@ -1782,6 +1782,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1562384004}
     m_Modifications:
+    - target: {fileID: 3669524869846476427, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7274431313918428083, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
       propertyPath: m_Name
       value: Bush (2)
@@ -1827,12 +1831,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8543446801641911941, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.14438
+      propertyPath: m_LocalScale.x
+      value: 0.19798437
       objectReference: {fileID: 0}
     - target: {fileID: 8543446801641911941, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.0318
+      propertyPath: m_LocalPosition.x
+      value: 0.0091
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14390,22 +14394,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8543446801641911941, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.18298
-      objectReference: {fileID: 0}
-    - target: {fileID: 8543446801641911941, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.17042
-      objectReference: {fileID: 0}
-    - target: {fileID: 8543446801641911941, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.0761
-      objectReference: {fileID: 0}
-    - target: {fileID: 8543446801641911941, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.0263
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16836,12 +16824,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8543446801641911941, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25359198
+      objectReference: {fileID: 0}
+    - target: {fileID: 8543446801641911941, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.13714
+      value: 0.17451066
+      objectReference: {fileID: 0}
+    - target: {fileID: 8543446801641911941, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.3916
       objectReference: {fileID: 0}
     - target: {fileID: 8543446801641911941, guid: 603fd20b66e6e5a4f81aa6ebffbb88b4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0333
+      value: -0.0241
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
