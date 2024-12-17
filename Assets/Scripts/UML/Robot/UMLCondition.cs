@@ -101,6 +101,11 @@ public class UMLCondition : AUMLElementTrueFalse
 
     protected override void SeedDropDownOptions()
     {
+        if (_dropDownIsSeeded)
+        {
+            return;
+        }
+        _dropDownIsSeeded = true;
         //Debug.Log("UMLCondition: SeedDropDownOptions");
         dropDown.ClearOptions();
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
@@ -125,7 +130,9 @@ public class UMLCondition : AUMLElementTrueFalse
             return false;
         }
 
-        dropDown.value = index;
+        // Is triggered befor Awake so Notify would not work anyways
+        dropDown.SetValueWithoutNotify(index);
+        SelectedValueChanged(index);
 
         return true;
     }

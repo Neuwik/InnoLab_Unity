@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -123,6 +124,7 @@ public class UMLTree : MonoBehaviour
             Debug.LogWarning($"UML Tree: Could not Apply Simple Data to start element");
             return false;
         }
+        newElements.Add(data.Start, StartElement);
 
         if (!StartElement.ApplyConnectionData(data.Start, newElements))
         {
@@ -133,10 +135,17 @@ public class UMLTree : MonoBehaviour
         // Try again to connect elements
         foreach (AUMLElement element in elementsWithNoConnectionYet)
         {
-            if (!element.ApplyConnectionData(newElements.FirstOrDefault(e => e.Value == element).Key, newElements))
+            UMLElementData elementData = newElements.FirstOrDefault(e => e.Value == element).Key;
+            if (!element.ApplyConnectionData(elementData, newElements))
             {
-                Debug.LogWarning($"UML Tree: Could not Connection Data to start element {element.Name}");
-                //throw new Exception($"UML Tree: Could not Connection Data to start element {element.Name}");
+                Debug.LogWarning($"UML Tree: Could not Connection Data to element {elementData.ID}");
+                /*
+                foreach (var item in newElements)
+                {
+                    Debug.LogWarning("New Element: ID -> " + item.Key.ID);
+                }
+                */
+                //throw new Exception($"UML Tree: Could not Connection Data to element {elementData.ID}");
                 return false;
             }
         }

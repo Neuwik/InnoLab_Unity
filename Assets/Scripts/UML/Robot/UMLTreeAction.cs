@@ -97,6 +97,11 @@ public class UMLTreeAction : AUMLElement
 
     protected override void SeedDropDownOptions()
     {
+        if (_dropDownIsSeeded)
+        {
+            return;
+        }
+        _dropDownIsSeeded = true;
         //Debug.Log("UMLTreeAction: SeedDropDownOptions");
         SelectableTrees.Count(); // Trigger the Getter
     }
@@ -115,7 +120,9 @@ public class UMLTreeAction : AUMLElement
             return false;
         }
 
-        dropDown.value = index;
+        // Is triggered befor Awake so Notify would not work anyways
+        dropDown.SetValueWithoutNotify(index);
+        SelectedValueChanged(index);
 
         return true;
     }

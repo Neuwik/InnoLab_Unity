@@ -27,6 +27,7 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
 
     [SerializeField]
     protected TMP_Dropdown dropDown;
+    protected bool _dropDownIsSeeded = false;
 
     protected void Awake()
     {
@@ -133,7 +134,14 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
 
     protected virtual void SeedDropDownOptions()
     {
-        //Debug.LogWarning("AUMLElement: UpdateDropDownOptions - " + name);
+        /*
+        if (_dropDownIsSeeded)
+        {
+            return;
+        }
+        _dropDownIsSeeded = true;
+        Debug.LogWarning("AUMLElement: UpdateDropDownOptions - " + name);
+        */
     }
 
     public virtual long GetElementLongValue()
@@ -150,6 +158,8 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
 
     public virtual bool ApplySimpleData(UMLElementData data)
     {
+        SeedDropDownOptions();
+        //Debug.Log($"UMLElement ApplySimpleData: ID -> {data.ID}, Name -> {data.name}, Value -> {data.value}");
         if (!SetElementLongValue(data.value))
         {
             return false;
@@ -166,21 +176,33 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
 
         createArrow.CanDraw = true;
 
-        AUMLElement tNextElement = elements.FirstOrDefault(e => e.Key.ID == data.nextTID).Value;
-
-        if (tNextElement != null)
+        if (data.nextTID != 0)
         {
+            AUMLElement tNextElement = elements.FirstOrDefault(e => e.Key.ID == data.nextTID).Value;
+
+            if (tNextElement == null)
+            {
+                Debug.LogWarning($"UML Element: {data.ID} could not find element {data.nextTID}");
+                return false;
+            }
             if (!createArrow.DrawArrowToElement(tNextElement.GetComponent<CreateArrow>(), true))
             {
+                Debug.LogWarning($"UML Element: {data.ID} could not connect to element {data.nextTID}");
                 return false;
             }
         }
 
-        AUMLElement fNextElement = elements.FirstOrDefault(e => e.Key.ID == data.nextFID).Value;
-        if (fNextElement != null)
+        if (data.nextFID != 0)
         {
+            AUMLElement fNextElement = elements.FirstOrDefault(e => e.Key.ID == data.nextFID).Value;
+            if (fNextElement == null)
+            {
+                Debug.LogWarning($"UML Element: {data.ID} could not find element {data.nextFID}");
+                return false;
+            }
             if (!createArrow.DrawArrowToElement(fNextElement.GetComponent<CreateArrow>(), false))
             {
+                Debug.LogWarning($"UML Element: {data.ID} could not connect to element {data.nextFID}");
                 return false;
             }
         }
