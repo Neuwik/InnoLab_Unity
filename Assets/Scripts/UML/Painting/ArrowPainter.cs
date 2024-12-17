@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class ArrowPainter : MonoBehaviour
 {
-    private Vector2 mouseOffset = new Vector2(-5, 5); //  3px does not work, it autosnaps the mouse click???
+    private float mouseOffset = 5f; //  3px does not work, it autosnaps the mouse click???
+
+    private float conditionOffset = 10f;
 
     [SerializeField]
     private float minHeight = 10;
@@ -137,15 +139,17 @@ public class ArrowPainter : MonoBehaviour
     {
         Vector2 targetSize = Vector2.zero;
         Vector2 targetPos = Vector2.zero;
+        bool targetIsMouse = _targetElem == null;
 
-        if (_targetElem != null)
+        if (!targetIsMouse)
         {
             targetPos = _targetRect.position;
             targetSize = _targetRect.sizeDelta;
         }
         else
         {
-            targetPos = (Vector2)Input.mousePosition + mouseOffset;
+            targetPos = (Vector2)Input.mousePosition;
+            //targetPos = (Vector2)Input.mousePosition + mouseOffset; // causes bug when drawing arrow to the upper right
             //Debug.Log("MOUSE: " + targetPos);
         }
 
@@ -158,6 +162,24 @@ public class ArrowPainter : MonoBehaviour
 
         if (direction.y < 0 && direction.y * -1 > targetSize.y / 2 + parentSize.y / 2 + minHeight) // taget is under parent
         {
+            if(targetIsMouse)
+            {
+                targetPos.y += mouseOffset; // apply mouse offset, so that arrow won't be clicked when drawing
+            }
+            else if(_isConditional)
+            {
+                if(_condition) // move "true" arrow to the left
+                {
+                    parentPos.x -= conditionOffset;
+                    targetPos.x -= conditionOffset;
+                }
+                else // move "false" arrow to the right
+                {
+                    parentPos.x += conditionOffset;
+                    targetPos.x += conditionOffset;
+                }
+            }
+
             DrawArrow(
                 parentPos - new Vector2(0, parentSize.y / 2),
                 targetPos + new Vector2(0, targetSize.y / 2),
@@ -166,6 +188,24 @@ public class ArrowPainter : MonoBehaviour
         }
         else if (direction.y > 0 && direction.y > targetSize.y / 2 + parentSize.y / 2 + minHeight) // taget is above parent
         {
+            if (targetIsMouse)
+            {
+                targetPos.y -= mouseOffset; // apply mouse offset, so that arrow won't be clicked when drawing
+            }
+            else if (_isConditional)
+            {
+                if (_condition) // move "true" arrow to the left
+                {
+                    parentPos.x -= conditionOffset;
+                    targetPos.x -= conditionOffset;
+                }
+                else // move "false" arrow to the right
+                {
+                    parentPos.x += conditionOffset;
+                    targetPos.x += conditionOffset;
+                }
+            }
+
             DrawArrow(
                 parentPos + new Vector2(0, parentSize.y / 2),
                 targetPos - new Vector2(0, targetSize.y / 2),
@@ -174,6 +214,24 @@ public class ArrowPainter : MonoBehaviour
         }
         else if (direction.x < 0 && direction.x * -1 > targetSize.x / 2 + parentSize.x / 2 + minHeight) // taget is left of parent
         {
+            if (targetIsMouse)
+            {
+                targetPos.x += mouseOffset; // apply mouse offset, so that arrow won't be clicked when drawing
+            }
+            else if (_isConditional)
+            {
+                if (_condition) // move "true" arrow to the up
+                {
+                    parentPos.y += conditionOffset;
+                    targetPos.y += conditionOffset;
+                }
+                else // move "false" arrow to the down
+                {
+                    parentPos.y -= conditionOffset;
+                    targetPos.y -= conditionOffset;
+                }
+            }
+
             DrawArrow(
                 parentPos - new Vector2(parentSize.x / 2, 0),
                 targetPos + new Vector2(targetSize.x / 2, 0),
@@ -182,6 +240,24 @@ public class ArrowPainter : MonoBehaviour
         }
         else if (direction.x > 0 && direction.x > targetSize.x / 2 + parentSize.x / 2 + minHeight) // taget is right of parent
         {
+            if (targetIsMouse)
+            {
+                targetPos.x -= mouseOffset; // apply mouse offset, so that arrow won't be clicked when drawing
+            }
+            else if (_isConditional)
+            {
+                if (_condition) // move "true" arrow to the up
+                {
+                    parentPos.y += conditionOffset;
+                    targetPos.y += conditionOffset;
+                }
+                else // move "false" arrow to the down
+                {
+                    parentPos.y -= conditionOffset;
+                    targetPos.y -= conditionOffset;
+                }
+            }
+
             DrawArrow(
                 parentPos + new Vector2(parentSize.x / 2, 0),
                 targetPos - new Vector2(targetSize.x / 2, 0),
