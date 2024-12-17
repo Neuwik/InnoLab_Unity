@@ -91,6 +91,7 @@ public class UMLManager : MonoBehaviour
 
             if (value != null)
             {
+                //Debug.Log($"Changing current from {_currentTree.TreeName} to {value.TreeName}");
                 _currentTree?.gameObject?.SetActive(false);
                 _currentTree = value;
                 _currentTree.gameObject.SetActive(true);
@@ -117,7 +118,7 @@ public class UMLManager : MonoBehaviour
 
     private int FindAndAddAllTreesOfScene()
     {
-        List<UMLTree> sceneTrees = FindObjectsByType<UMLTree>(FindObjectsSortMode.InstanceID).ToList();
+        List<UMLTree> sceneTrees = FindObjectsByType<UMLTree>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID).ToList();
         foreach (UMLTree t in sceneTrees)
         {
             if (!AddTreeToDict(t))
@@ -168,10 +169,10 @@ public class UMLManager : MonoBehaviour
         treesDict.Add(tree.ID, tree);
 
         UMLTreeButton btn = CreateTreeButtonForTree(tree);
-        if (tree.gameObject.activeInHierarchy)
+        if (tree.gameObject.activeSelf)
         {
             CurrentTree = tree;
-            btn.Highlight();
+            //btn.Highlight();
         }
 
         OnTreesChanged.Invoke(trees);
