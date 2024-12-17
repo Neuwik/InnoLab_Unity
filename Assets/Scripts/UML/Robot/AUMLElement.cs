@@ -159,7 +159,7 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
     public virtual bool ApplySimpleData(UMLElementData data)
     {
         SeedDropDownOptions();
-        Debug.Log("UMLElement ApplySimpleData: Value -> " + data.value);
+        Debug.Log($"UMLElement ApplySimpleData: ID -> {data.ID}, Name -> {data.name}, Value -> {data.value}");
         if (!SetElementLongValue(data.value))
         {
             return false;
@@ -176,19 +176,27 @@ public abstract class AUMLElement : MonoBehaviour, IResetable
 
         createArrow.CanDraw = true;
 
-        AUMLElement tNextElement = elements.FirstOrDefault(e => e.Key.ID == data.nextTID).Value;
-
-        if (tNextElement != null)
+        if (data.nextTID != 0)
         {
+            AUMLElement tNextElement = elements.FirstOrDefault(e => e.Key.ID == data.nextTID).Value;
+
+            if (tNextElement == null)
+            {
+                return false;
+            }
             if (!createArrow.DrawArrowToElement(tNextElement.GetComponent<CreateArrow>(), true))
             {
                 return false;
             }
         }
 
-        AUMLElement fNextElement = elements.FirstOrDefault(e => e.Key.ID == data.nextFID).Value;
-        if (fNextElement != null)
+        if (data.nextFID != 0)
         {
+            AUMLElement fNextElement = elements.FirstOrDefault(e => e.Key.ID == data.nextFID).Value;
+            if (fNextElement != null)
+            {
+                return false;
+            }
             if (!createArrow.DrawArrowToElement(fNextElement.GetComponent<CreateArrow>(), false))
             {
                 return false;
