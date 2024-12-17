@@ -63,6 +63,9 @@ TagManager:
   - name: Deco
     uniqueID: 538026483
     locked: 0
+  - name: Grid
+    uniqueID: 3782475199
+    locked: 0
   - name: Collectable
     uniqueID: 2239571101
     locked: 0
