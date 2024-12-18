@@ -804,6 +804,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8246545484919291243, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
   m_PrefabInstance: {fileID: 255670567}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &255670569 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5251981355361148667, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
+  m_PrefabInstance: {fileID: 255670567}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec61131e79abc444791484d4d9883d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &316454462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1314,6 +1325,10 @@ PrefabInstance:
     - target: {fileID: 1435885268814223783, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 255670569}
+    - target: {fileID: 1435885268814223783, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DisplayPrevTutorial
       objectReference: {fileID: 0}
     - target: {fileID: 2319411815003241576, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
       propertyPath: m_IsActive
@@ -1322,6 +1337,10 @@ PrefabInstance:
     - target: {fileID: 4735646756012408449, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 255670569}
+    - target: {fileID: 4735646756012408449, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DisplayNextTutorial
       objectReference: {fileID: 0}
     - target: {fileID: 4844636806452901580, guid: d8a69bbc3eb4cac49b4b2810c5524577, type: 3}
       propertyPath: m_SizeDelta.x
