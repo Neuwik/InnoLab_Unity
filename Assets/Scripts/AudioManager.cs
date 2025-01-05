@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip fireDamageSound;
     public AudioClip waterSplashSound;
     public AudioClip garbageCollectSound;
+    public AudioClip enemyDamageSound;
     void Awake()
     {
         //Singleton
@@ -27,6 +28,12 @@ public class AudioManager : MonoBehaviour
     {
         //PlayerHealth.cs line 95
         soundEffectAudioSource.PlayOneShot(fireDamageSound);
+    }
+
+    public void PlayEnemyDamageSound()
+    {
+        //PlayerHealth.cs line 95
+        soundEffectAudioSource.PlayOneShot(enemyDamageSound);
     }
 
     public void PlayWaterSplashSound()

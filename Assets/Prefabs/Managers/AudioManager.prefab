@@ -48,3 +48,4 @@ MonoBehaviour:
   fireDamageSound: {fileID: 8300000, guid: eefbe48eed1e750499a3670f0daa054c, type: 3}
   waterSplashSound: {fileID: 8300000, guid: 9a1e8d04c6d73b74f8f677b59c2912dd, type: 3}
   garbageCollectSound: {fileID: 8300000, guid: 146210d4130465d419ba3b7387b7705e, type: 3}
+  enemyDamageSound: {fileID: 8300000, guid: 479f864b97b7dfe44b9380b764807cfd, type: 3}

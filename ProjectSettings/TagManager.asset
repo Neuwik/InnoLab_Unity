@@ -17,6 +17,7 @@ TagManager:
   - btn_UMLStop
   - btn_UMLStart
   - UMLContent
+  - Enemy
   layers:
   - Default
   - TransparentFX

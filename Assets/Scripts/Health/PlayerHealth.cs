@@ -86,8 +86,12 @@ public class PlayerHealth : Health, ILooseCondition, IResetable
                 AudioManager.instance.PlayWaterSplashSound();
                 GetComponent<VFXController>()?.PlayWAterSplash();
             }
-
-            else
+            else if (collision.gameObject.CompareTag("Enemy"))
+            {
+                TakeDamage(ds.damage);
+                AudioManager.instance.PlayEnemyDamageSound();
+            }
+            else if (collision.gameObject.CompareTag("Fire"))
             {
                 TakeDamage(ds.damage);
                 AudioManager.instance.PlayFireDamageSound();
