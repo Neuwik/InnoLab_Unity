@@ -5,7 +5,9 @@ public class ConsoleManager : MonoBehaviour
 {
     public GameObject consoleTextObject;
     public Transform consoleContent;
+    public TMP_Text errorCounterText;
 
+    private int errorCount = 0;
     private TMP_Text LogCreation(string status, string sender, string message)
     {
         if (consoleTextObject == null || consoleContent == null)
@@ -45,6 +47,28 @@ public class ConsoleManager : MonoBehaviour
     {
         TMP_Text textComponent = LogCreation(status, sender, message);
         textComponent.color = Color.red;
+
+        errorCount++;
+        UpdateErrorCounterUI();
+    }
+
+    private void UpdateErrorCounterUI()
+    {
+        if (errorCounterText != null)
+        {
+            if (errorCount > 0)
+            {
+                errorCounterText.text = $"<color=red>Error: {errorCount}</color>";
+            }
+            else
+            {
+                errorCounterText.text = "";
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Error counter text is not assigned.");
+        }
     }
 
     public void ClearConsole()
@@ -53,6 +77,9 @@ public class ConsoleManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        errorCount = 0;
+        UpdateErrorCounterUI();
     }
 
     public void OnDestroy()
