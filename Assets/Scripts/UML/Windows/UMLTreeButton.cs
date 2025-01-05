@@ -7,7 +7,10 @@ public class UMLTreeButton : MonoBehaviour
     private UMLTree tree;
 
     [SerializeField]
-    private TMP_Text text;
+    private TMP_InputField text;
+
+    [SerializeField]
+    private Button renameButton;
 
     [SerializeField]
     private Color highlightColor = Color.red;
@@ -16,17 +19,24 @@ public class UMLTreeButton : MonoBehaviour
     [SerializeField]
     private Image image;
 
-    private bool isHighlighted = false;
+    private static UMLTreeButton currentlyHighlightedButton;
 
     private void Awake()
     {
+        text.interactable = false;
         baseColor = image.color;
-        UMLManager.Instance.OnCurrentTreeChanged.AddListener(OnSelectedTreeChanged);
+
+        text.onEndEdit.AddListener(OnNameEditEnd);
+
+        renameButton.onClick.AddListener(OnRenameButtonClick);
     }
 
     private void OnDestroy()
     {
-        tree.OnDestroyEvent.RemoveListener(OnDestroy);
+        if (tree != null)
+        {
+            tree.OnDestroyEvent.RemoveListener(OnDestroy);
+        }
     }
 
     public void SetTree(UMLTree tree)
@@ -35,59 +45,77 @@ public class UMLTreeButton : MonoBehaviour
         text.text = tree.TreeName;
         name = "btn_" + tree.UTreeName;
 
-        tree.OnDestroyEvent.AddListener(() => Destroy(gameObject));
+        if (tree != null)
+        {
+            tree.OnDestroyEvent.AddListener(() => Destroy(gameObject));
+        }
     }
 
     public void OnButtonClick()
+{
+    if (tree == null)
     {
-        if (tree == null)
+        Destroy(gameObject);
+    }
+    else
+    {
+        if (Input.GetMouseButtonDown(2))
         {
-            Destroy(gameObject);
+            // NOT WORKING ---> TODO
+            // Middle Mouse Button -> delete
+            UMLManager.Instance.RemoveTree(tree); 
+            Destroy(gameObject); 
         }
         else
         {
-            if (Input.GetMouseButtonDown(2))
-            {
-                // NOT WORKING ---> TODO
-                // Middle Mouse Button -> delete
-                UMLManager.Instance.RemoveTree(tree);
-                Destroy(gameObject);
-            }
-            else
-            {
-                // NOT Middke Mouse Button -> select
-
-                if (!UMLManager.Instance.SetTreeAsCurrentTree(tree))
-                {
-                    // Tree is not in UML Manager
-                    Destroy(tree.gameObject);
-                    Destroy(gameObject);
-                }
-                else
-                {
-                    Highlight();
-                }
-            }
+            SelectTree();
         }
     }
+}
 
-    private void OnSelectedTreeChanged(UMLTree selectedTree)
+    private void SelectTree()
     {
-        if (isHighlighted && selectedTree.ID != tree.ID)
+        if (tree == null) return;
+
+        if (currentlyHighlightedButton != null && currentlyHighlightedButton != this)
         {
-            StopHighlight();
+            currentlyHighlightedButton.StopHighlight();
         }
+
+        Highlight();
+        currentlyHighlightedButton = this;
+
+        UMLManager.Instance.SetTreeAsCurrentTree(tree);
     }
 
-    public void Highlight()
+    private void Highlight()
     {
-        isHighlighted = true;
         image.color = highlightColor;
     }
 
     private void StopHighlight()
     {
-        isHighlighted = false;
         image.color = baseColor;
+    }
+
+    private void OnNameEditEnd(string newName)
+    {
+        if (string.IsNullOrEmpty(newName))
+        {
+            text.text = tree.TreeName;
+        }
+        else
+        {
+            UMLManager.Instance.RenameTree(tree, newName);
+            tree.TreeName = newName;
+        }
+
+        text.interactable = false;
+    }
+
+    private void OnRenameButtonClick()
+    {
+        text.interactable = true;
+        text.ActivateInputField();
     }
 }

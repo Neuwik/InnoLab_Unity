@@ -312,4 +312,15 @@ public class UMLManager : MonoBehaviour
 
         return newTrees.Count;
     }
+    public void RenameTree(UMLTree tree, string newName)
+    {
+        if (tree == null || string.IsNullOrEmpty(newName))
+        {
+            Debug.LogWarning("Invalid tree or name");
+            return;
+        }
+
+        tree.TreeName = newName;
+        OnTreesChanged.Invoke(trees);
+    }
 }
