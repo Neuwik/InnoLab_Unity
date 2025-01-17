@@ -30,6 +30,8 @@ public class UMLTreeButton : MonoBehaviour
 
         UMLManager.Instance.OnCurrentTreeChanged.AddListener(OnCurrentTreeChanged);
         renameButton.onClick.AddListener(OnRenameButtonClick);
+
+        OnCurrentTreeChanged(UMLManager.Instance.CurrentTree.ID);
     }
 
     private void OnDestroy()
@@ -44,7 +46,7 @@ public class UMLTreeButton : MonoBehaviour
 
     private void OnCurrentTreeChanged(long id)
     {
-        if (tree.ID == id)
+        if (tree != null && tree.ID == id)
         {
             Highlight();
         }
