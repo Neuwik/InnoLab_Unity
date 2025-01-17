@@ -34,7 +34,7 @@ public class LevelSelect : MonoBehaviour
 
     private void Start()
     {
-        LevelPrefabs = FindObjectsOfType<LevelSelectPrefab>().OrderBy(l => l.index).ToList();
+        LevelPrefabs = FindObjectsOfType<LevelSelectPrefab>(true).OrderBy(l => l.index).ToList();
 
         LoadAndSetLevelData();
     }

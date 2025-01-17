@@ -323,4 +323,41 @@ public class UMLManager : MonoBehaviour
         tree.TreeName = newName;
         OnTreesChanged.Invoke(trees);
     }
+
+    public bool DeleteTree(long treeID)
+    {
+        if (!treesDict.ContainsKey(treeID))
+        {
+            Debug.LogWarning("Invalid tree id");
+            return false;
+        }
+
+        UMLTree tree = treesDict[treeID];
+
+        if (!treesDict.Remove(treeID))
+        {
+            Debug.LogError("Could not remove Tree");
+            return false;
+        }
+
+        if (treesDict.Count < 1)
+        {
+            CreateNewTree();
+        }
+
+        if (treeID == CurrentTree.ID)
+        {
+            CurrentTree = treesDict.First().Value;
+        }
+
+        Destroy(tree.gameObject);
+
+        OnTreesChanged.Invoke(trees);
+        return true;
+    }
+
+    public bool DeleteCurrentTree()
+    {
+        return DeleteTree(CurrentTree.ID);
+    }
 }
