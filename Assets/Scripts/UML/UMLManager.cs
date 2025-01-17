@@ -61,7 +61,7 @@ public class UMLManager : MonoBehaviour
                 {
                     _currentTree = treesDict.First().Value;
                     _currentTree.gameObject.SetActive(true);
-                    OnCurrentTreeChanged.Invoke(_currentTree);
+                    OnCurrentTreeChanged.Invoke(_currentTree.ID);
                 }
                 else
                 {
@@ -95,12 +95,12 @@ public class UMLManager : MonoBehaviour
                 _currentTree?.gameObject?.SetActive(false);
                 _currentTree = value;
                 _currentTree.gameObject.SetActive(true);
-                OnCurrentTreeChanged.Invoke(_currentTree);
+                OnCurrentTreeChanged.Invoke(_currentTree.ID);
             }
         }
     }
 
-    public UnityEvent<UMLTree> OnCurrentTreeChanged;
+    public UnityEvent<long> OnCurrentTreeChanged;
     public UnityEvent<List<UMLTree>> OnTreesChanged;
 
     private void Awake()
@@ -238,24 +238,6 @@ public class UMLManager : MonoBehaviour
         return treesDict[id];
     }
 
-    public void RemoveTree(UMLTree tree)
-    {
-        if (tree != null)
-        {
-            if (treesDict.Remove(tree.ID))
-            {
-                if (tree.ID == CurrentTree.ID)
-                {
-                    CurrentTree = trees.FirstOrDefault();
-                }
-
-                Destroy(tree.gameObject);
-
-                OnTreesChanged.Invoke(trees);
-            }
-        }
-    }
-
     private void SaveTrees()
     {
         if (treesDict == null)
@@ -306,7 +288,7 @@ public class UMLManager : MonoBehaviour
             if (!item.Value.ApplyElementData(item.Key))
             {
                 Debug.LogWarning("UML Manager: Could not load Tree " + item.Key.ID + " - " + item.Key.TreeName);
-                RemoveTree(item.Value);
+                DeleteTree(item.Value.ID);
             }
         }
 

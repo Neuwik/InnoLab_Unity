@@ -28,14 +28,29 @@ public class UMLTreeButton : MonoBehaviour
 
         text.onEndEdit.AddListener(OnNameEditEnd);
 
+        UMLManager.Instance.OnCurrentTreeChanged.AddListener(OnCurrentTreeChanged);
         renameButton.onClick.AddListener(OnRenameButtonClick);
     }
 
     private void OnDestroy()
     {
+        UMLManager.Instance.OnCurrentTreeChanged.RemoveListener(OnCurrentTreeChanged);
+
         if (tree != null)
         {
             tree.OnDestroyEvent.RemoveListener(OnDestroy);
+        }
+    }
+
+    private void OnCurrentTreeChanged(long id)
+    {
+        if (tree.ID == id)
+        {
+            Highlight();
+        }
+        else
+        {
+            StopHighlight();
         }
     }
 
@@ -52,38 +67,20 @@ public class UMLTreeButton : MonoBehaviour
     }
 
     public void OnButtonClick()
-{
-    if (tree == null)
     {
-        Destroy(gameObject);
-    }
-    else
-    {
-        if (Input.GetMouseButtonDown(2))
+        if (tree == null)
         {
-            // NOT WORKING ---> TODO
-            // Middle Mouse Button -> delete
-            UMLManager.Instance.RemoveTree(tree); 
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
         else
         {
             SelectTree();
         }
     }
-}
 
     private void SelectTree()
     {
         if (tree == null) return;
-
-        if (currentlyHighlightedButton != null && currentlyHighlightedButton != this)
-        {
-            currentlyHighlightedButton.StopHighlight();
-        }
-
-        Highlight();
-        currentlyHighlightedButton = this;
 
         UMLManager.Instance.SetTreeAsCurrentTree(tree);
     }
