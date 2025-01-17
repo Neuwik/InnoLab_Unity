@@ -32,6 +32,9 @@ public class UMLTree : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    public string InitialName = "Tree";
+
     private string _treeName;
     public string TreeName
     {
@@ -39,7 +42,7 @@ public class UMLTree : MonoBehaviour
         {
             if ((String.IsNullOrEmpty(_treeName)))
             {
-                TreeName = "Tree";
+                TreeName = InitialName;
             }
             return _treeName;
         }

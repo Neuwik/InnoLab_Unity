@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -40,6 +41,21 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
     [SerializeField]
     private bool _isDeleteable = true;
+
+    public CreateArrow initialConnection = null;
+    public CreateArrow initialFalseConnection = null;
+
+    private void Start()
+    {
+        if (initialConnection != null)
+        {
+            DrawArrowToElement(initialConnection);
+        }
+        if (initialFalseConnection != null && _maxArrowCount > 1)
+        {
+            DrawArrowToElement(initialFalseConnection, false);
+        }
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -127,6 +143,11 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
     public bool DrawArrowToElement(CreateArrow target, bool condition = true)
     {
+        if (target == null)
+        {
+            return false;
+        }
+
         if (_arrows.Count < getMaxArrowCount())
         {
             ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);

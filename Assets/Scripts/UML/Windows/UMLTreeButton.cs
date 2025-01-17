@@ -19,8 +19,6 @@ public class UMLTreeButton : MonoBehaviour
     [SerializeField]
     private Image image;
 
-    private static UMLTreeButton currentlyHighlightedButton;
-
     private void Awake()
     {
         text.interactable = false;
