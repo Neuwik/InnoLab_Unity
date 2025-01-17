@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class UMLTree : MonoBehaviour
 {
@@ -32,9 +33,6 @@ public class UMLTree : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    public string InitialName = "Tree";
-
     private string _treeName;
     public string TreeName
     {
@@ -42,7 +40,7 @@ public class UMLTree : MonoBehaviour
         {
             if ((String.IsNullOrEmpty(_treeName)))
             {
-                TreeName = InitialName;
+                TreeName = SceneManager.GetActiveScene().name;
             }
             return _treeName;
         }
