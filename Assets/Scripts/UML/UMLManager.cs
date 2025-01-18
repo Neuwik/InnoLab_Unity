@@ -67,17 +67,6 @@ public class UMLManager : MonoBehaviour
                 {
                     Debug.LogWarning("Trees not loaded yet.");
                     return null;
-                    /*
-                    // Causes Bug because the trees are reloaded twice at the same time (on startup)
-                    if (ReloadAllTrees() > 0)
-                    {
-                        _currentTree = treesDict.First().Value;
-                    }
-                    else
-                    {
-                        CreateNewTree("First Tree");
-                    }
-                    */
                 }
             }
             return _currentTree;
@@ -265,6 +254,8 @@ public class UMLManager : MonoBehaviour
         count += LoadTreesFrommSave();
 
         OnTreesChanged.Invoke(trees);
+
+        CurrentTree = treesDict.First().Value;
 
         return count;
     }
