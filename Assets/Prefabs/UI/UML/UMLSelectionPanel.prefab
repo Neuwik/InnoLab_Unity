@@ -482,6 +482,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6508966534499720433}
     m_Modifications:
+    - target: {fileID: 3465973122167594777, guid: c94113463c2a4d84eba241bdc85a9571, type: 3}
+      propertyPath: CanDraw
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465973122167594777, guid: c94113463c2a4d84eba241bdc85a9571, type: 3}
+      propertyPath: _isDeleteable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4290903654985495056, guid: c94113463c2a4d84eba241bdc85a9571, type: 3}
       propertyPath: m_Name
       value: TreeAction
@@ -604,6 +612,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6508966534499720433}
     m_Modifications:
+    - target: {fileID: 3465973122167594777, guid: efbba2d15c52a014bb7b69bfb045417a, type: 3}
+      propertyPath: CanDraw
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465973122167594777, guid: efbba2d15c52a014bb7b69bfb045417a, type: 3}
+      propertyPath: _isDeleteable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4290903654985495056, guid: efbba2d15c52a014bb7b69bfb045417a, type: 3}
       propertyPath: m_Name
       value: Action
@@ -709,6 +725,14 @@ PrefabInstance:
     - target: {fileID: 3839276232391042637, guid: 0ef209f50455ae44089001a69a5bb7fe, type: 3}
       propertyPath: m_Name
       value: Condition
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291391651229453082, guid: 0ef209f50455ae44089001a69a5bb7fe, type: 3}
+      propertyPath: CanDraw
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291391651229453082, guid: 0ef209f50455ae44089001a69a5bb7fe, type: 3}
+      propertyPath: _isDeleteable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7413525411617059751, guid: 0ef209f50455ae44089001a69a5bb7fe, type: 3}
       propertyPath: m_Pivot.x
@@ -816,6 +840,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6508966534499720433}
     m_Modifications:
+    - target: {fileID: 395749151602979429, guid: b880114a9f9e99d498a33f03aeba0bcc, type: 3}
+      propertyPath: CanDraw
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 395749151602979429, guid: b880114a9f9e99d498a33f03aeba0bcc, type: 3}
+      propertyPath: _isDeleteable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1074176485469265772, guid: b880114a9f9e99d498a33f03aeba0bcc, type: 3}
       propertyPath: m_Name
       value: ForLoop

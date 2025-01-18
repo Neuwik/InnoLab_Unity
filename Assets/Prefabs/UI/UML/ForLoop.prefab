@@ -364,8 +364,10 @@ MonoBehaviour:
   OnDelete:
     m_PersistentCalls:
       m_Calls: []
-  CanDraw: 0
+  CanDraw: 1
   _isDeleteable: 1
+  initialConnection: {fileID: 0}
+  initialFalseConnection: {fileID: 0}
 --- !u!114 &-740125637844770881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,6 +388,7 @@ MonoBehaviour:
   trueNextAction: {fileID: 0}
   falseNextAction: {fileID: 0}
   Input: {fileID: 843621222261393742}
+  forMaxIndex: 3
 --- !u!1 &2230599025321548075
 GameObject:
   m_ObjectHideFlags: 0

@@ -726,8 +726,10 @@ MonoBehaviour:
   OnDelete:
     m_PersistentCalls:
       m_Calls: []
-  CanDraw: 0
+  CanDraw: 1
   _isDeleteable: 1
+  initialConnection: {fileID: 0}
+  initialFalseConnection: {fileID: 0}
 --- !u!114 &2539485637559265636
 MonoBehaviour:
   m_ObjectHideFlags: 0
