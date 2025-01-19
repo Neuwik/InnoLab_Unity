@@ -27,25 +27,38 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnBeginDrag");
-
-        //Place new Object
+        // Check if the parent matches the selection panel
         if (gameObject.transform.parent.CompareTag(_selectionPanel.tag))
         {
-            var newUMLElement = Instantiate(
-                gameObject,
-                new Vector3(
-                    transform.position.x,
-                    transform.position.y,
-                    transform.position.z),
-                Quaternion.identity
-            );
-            newUMLElement.transform.SetParent(_selectionPanel.transform);
-            gameObject.transform.SetParent(UMLManager.Instance.CurrentTree.transform);
-            GetComponent<CreateArrow>().CanDraw = true;
+            // Instantiate a clone of the current object
+            var newUMLElement = Instantiate(gameObject);
+
+            // Set the new object's parent to the selection panel
+            newUMLElement.transform.SetParent(_selectionPanel.transform, false);
+
+            // Copy local position and scale from the original object
+            newUMLElement.transform.localPosition = gameObject.transform.localPosition;
+            newUMLElement.transform.localScale = gameObject.transform.localScale;
+
+            // Reassign the current object's parent to the UML Manager's current tree
+            gameObject.transform.SetParent(UMLManager.Instance.CurrentTree.transform, false);
+
+            // Enable arrow drawing on the current object
+            var arrowCreator = GetComponent<CreateArrow>();
+            if (arrowCreator != null)
+            {
+                arrowCreator.CanDraw = true;
+            }
+            else
+            {
+                Debug.LogWarning("CreateArrow component is missing on the GameObject.");
+            }
         }
-        OnStartedMoving.Invoke();
+
+        // Invoke drag started event, if assigned
+        OnStartedMoving?.Invoke();
     }
+
 
     public void OnDrag(PointerEventData eventData)
     {
