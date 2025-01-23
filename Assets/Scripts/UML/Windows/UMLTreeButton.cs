@@ -19,17 +19,38 @@ public class UMLTreeButton : MonoBehaviour
     [SerializeField]
     private Image image;
 
+    private Button parentButton;
     private void Awake()
     {
+        parentButton = GetComponent<Button>();
+        if (parentButton != null)
+        {
+            parentButton.onClick.AddListener(OnButtonClick);
+        }
+
         text.interactable = false;
         baseColor = image.color;
 
         text.onEndEdit.AddListener(OnNameEditEnd);
+        text.GetComponentInChildren<TextMeshProUGUI>().raycastTarget = false;
 
         UMLManager.Instance.OnCurrentTreeChanged.AddListener(OnCurrentTreeChanged);
         renameButton.onClick.AddListener(OnRenameButtonClick);
 
         OnCurrentTreeChanged(UMLManager.Instance.CurrentTree.ID);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePosition = Input.mousePosition;
+            RectTransform rectTransform = text.GetComponent<RectTransform>();
+            if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, mousePosition))
+            {
+                parentButton?.onClick.Invoke();
+            }
+        }
     }
 
     private void OnDestroy()
@@ -108,11 +129,13 @@ public class UMLTreeButton : MonoBehaviour
         }
 
         text.interactable = false;
+        text.GetComponentInChildren<TextMeshProUGUI>().raycastTarget = false;
     }
 
     private void OnRenameButtonClick()
     {
         text.interactable = true;
+        text.GetComponentInChildren<TextMeshProUGUI>().raycastTarget = true;
         text.ActivateInputField();
     }
 }
