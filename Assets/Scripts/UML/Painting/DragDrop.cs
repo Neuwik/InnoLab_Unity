@@ -41,7 +41,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             newUMLElement.transform.localScale = gameObject.transform.localScale;
 
             // Reassign the current object's parent to the UML Manager's current tree
-            gameObject.transform.SetParent(UMLManager.Instance.CurrentTree.transform, false);
+            gameObject.transform.SetParent(UMLManager.Instance.CurrentTree.transform, true);
 
             // Enable arrow drawing on the current object
             var arrowCreator = GetComponent<CreateArrow>();
