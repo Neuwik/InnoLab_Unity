@@ -11505,11 +11505,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3418232406574656613, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3418232406574656613, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
       propertyPath: m_SortingLayerID
-      value: 538026483
+      value: -1926462709
       objectReference: {fileID: 0}
     - target: {fileID: 3496673621325432967, guid: 160fc3d736a52b24e963db33749aaccb, type: 3}
       propertyPath: m_AnchorMax.x
