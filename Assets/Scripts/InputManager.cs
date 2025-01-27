@@ -20,18 +20,22 @@ public class InputManager : MonoBehaviour
         // Toggle the pause menu with the Escape key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (PauseMenuPrefab.activeSelf)
-            {
-                // Hide the menu and resume the game
-                PauseMenuPrefab.SetActive(false);
-                _pauseMenu.ResumeGame();
-            }
-            else
-            {
-                // Show the menu and pause the game
-                PauseMenuPrefab.SetActive(true);
-                _pauseMenu.PauseGame();
-            }
+            TogglePauseMenu();
         }
+    }
+
+    public void TogglePauseMenu()
+    {
+        if (PauseMenuPrefab.activeSelf)
+        {
+            // Hide the menu and resume the game
+            PauseMenuPrefab.SetActive(false);
+            _pauseMenu.ResumeGame();
+            return;
+        }
+
+        // Show the menu and pause the game
+        PauseMenuPrefab.SetActive(true);
+        _pauseMenu.PauseGame();
     }
 }
