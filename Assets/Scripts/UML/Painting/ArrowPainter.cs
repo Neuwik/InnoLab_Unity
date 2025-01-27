@@ -286,7 +286,7 @@ public class ArrowPainter : MonoBehaviour
 
     private void ChangeArrowColor(Color color)
     {
-        foreach (var arrowPart in GetComponentsInChildren<Image>())
+        foreach (var arrowPart in GetComponentsInChildren<Image>(true))
         {
             arrowPart.color = color;
         }

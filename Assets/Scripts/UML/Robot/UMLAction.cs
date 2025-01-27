@@ -85,6 +85,7 @@ public class UMLAction : AUMLElement
         }
         dropDown.AddOptions(options);
 
+        SetElementLongValue((long)ActionType);
     }
 
     public override long GetElementLongValue()

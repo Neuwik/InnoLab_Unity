@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class UMLTree : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class UMLTree : MonoBehaviour
         {
             if ((String.IsNullOrEmpty(_treeName)))
             {
-                TreeName = "Tree";
+                TreeName = SceneManager.GetActiveScene().name;
             }
             return _treeName;
         }

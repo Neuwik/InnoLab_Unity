@@ -114,6 +114,8 @@ public class UMLCondition : AUMLElementTrueFalse
             options.Add(new TMP_Dropdown.OptionData(Converters.SplitCamelCase(item.ToString())));
         }
         dropDown.AddOptions(options);
+
+        SetElementLongValue((long)ConditionType);
     }
 
     public override long GetElementLongValue()

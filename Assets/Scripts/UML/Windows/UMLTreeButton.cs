@@ -19,23 +19,59 @@ public class UMLTreeButton : MonoBehaviour
     [SerializeField]
     private Image image;
 
-    private static UMLTreeButton currentlyHighlightedButton;
-
+    private Button parentButton;
     private void Awake()
     {
+        parentButton = GetComponent<Button>();
+        if (parentButton != null)
+        {
+            parentButton.onClick.AddListener(OnButtonClick);
+        }
+
         text.interactable = false;
         baseColor = image.color;
 
         text.onEndEdit.AddListener(OnNameEditEnd);
+        text.GetComponentInChildren<TextMeshProUGUI>().raycastTarget = false;
 
+        UMLManager.Instance.OnCurrentTreeChanged.AddListener(OnCurrentTreeChanged);
         renameButton.onClick.AddListener(OnRenameButtonClick);
+
+        OnCurrentTreeChanged(UMLManager.Instance.CurrentTree.ID);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePosition = Input.mousePosition;
+            RectTransform rectTransform = text.GetComponent<RectTransform>();
+            if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, mousePosition))
+            {
+                parentButton?.onClick.Invoke();
+            }
+        }
     }
 
     private void OnDestroy()
     {
+        UMLManager.Instance.OnCurrentTreeChanged.RemoveListener(OnCurrentTreeChanged);
+
         if (tree != null)
         {
             tree.OnDestroyEvent.RemoveListener(OnDestroy);
+        }
+    }
+
+    private void OnCurrentTreeChanged(long id)
+    {
+        if (tree != null && tree.ID == id)
+        {
+            Highlight();
+        }
+        else
+        {
+            StopHighlight();
         }
     }
 
@@ -52,38 +88,20 @@ public class UMLTreeButton : MonoBehaviour
     }
 
     public void OnButtonClick()
-{
-    if (tree == null)
     {
-        Destroy(gameObject);
-    }
-    else
-    {
-        if (Input.GetMouseButtonDown(2))
+        if (tree == null)
         {
-            // NOT WORKING ---> TODO
-            // Middle Mouse Button -> delete
-            UMLManager.Instance.RemoveTree(tree); 
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
         else
         {
             SelectTree();
         }
     }
-}
 
     private void SelectTree()
     {
         if (tree == null) return;
-
-        if (currentlyHighlightedButton != null && currentlyHighlightedButton != this)
-        {
-            currentlyHighlightedButton.StopHighlight();
-        }
-
-        Highlight();
-        currentlyHighlightedButton = this;
 
         UMLManager.Instance.SetTreeAsCurrentTree(tree);
     }
@@ -111,11 +129,13 @@ public class UMLTreeButton : MonoBehaviour
         }
 
         text.interactable = false;
+        text.GetComponentInChildren<TextMeshProUGUI>().raycastTarget = false;
     }
 
     private void OnRenameButtonClick()
     {
         text.interactable = true;
+        text.GetComponentInChildren<TextMeshProUGUI>().raycastTarget = true;
         text.ActivateInputField();
     }
 }

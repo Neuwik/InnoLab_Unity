@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 
 public class UMLForLoop : AUMLElementTrueFalse
 {
@@ -20,6 +21,8 @@ public class UMLForLoop : AUMLElementTrueFalse
     }
 
     public TMP_InputField Input;
+
+    [SerializeField]
     private int forMaxIndex = 3;
     private int forCurrentIndex;
 
