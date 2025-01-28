@@ -144,7 +144,7 @@ public class ArrowPainter : MonoBehaviour
         if (!targetIsMouse)
         {
             targetPos = _targetRect.position;
-            targetSize = _targetRect.sizeDelta;
+            targetSize = _targetRect.sizeDelta * _targetRect.lossyScale;
         }
         else
         {
@@ -154,7 +154,7 @@ public class ArrowPainter : MonoBehaviour
         }
 
         Vector2 parentPos = _parentRect.position;
-        Vector2 parentSize = _parentRect.sizeDelta;
+        Vector2 parentSize = _parentRect.sizeDelta * _parentRect.lossyScale;
 
         Vector2 direction = targetPos - parentPos;
 
