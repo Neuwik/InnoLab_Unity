@@ -67,7 +67,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             return;
         }
 
-        _rectT.anchoredPosition += eventData.delta;
+        _rectT.anchoredPosition += (eventData.delta / _rectT.lossyScale);
         //OnPossitionChanged.Invoke();
     }
 
