@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,12 +7,12 @@ public class TutorialButton : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<Button>().onClick.AddListener(ToggleTutorialBox); 
+        GetComponent<Button>().onClick.AddListener(ToggleTutorialBox);
     }
 
     public void ToggleTutorialBox()
     {
-        if(tutorialBoxPrefab.activeSelf)
+        if (tutorialBoxPrefab.activeSelf)
         {
             tutorialBoxPrefab.SetActive(false);
             return;

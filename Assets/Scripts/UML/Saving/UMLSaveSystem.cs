@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,7 +39,7 @@ public class UMLSaveSystem
 
         if (Directory.Exists(newFolderPath))
         {
-            Directory.Delete(newFolderPath,true);
+            Directory.Delete(newFolderPath, true);
         }
 
         Directory.Move(folderPath, newFolderPath);

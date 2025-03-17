@@ -34,11 +34,11 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             var newUMLElement = Instantiate(gameObject);
 
             // Set the new object's parent to the selection panel
-            newUMLElement.transform.SetParent(_selectionPanel.transform, false);
+            newUMLElement.transform.SetParent(gameObject.transform.parent, true);
 
             // Copy local position and scale from the original object
-            newUMLElement.transform.localPosition = gameObject.transform.localPosition;
             newUMLElement.transform.localScale = gameObject.transform.localScale;
+            newUMLElement.transform.localPosition = gameObject.transform.localPosition;
 
             // Reassign the current object's parent to the UML Manager's current tree
             gameObject.transform.SetParent(UMLManager.Instance.CurrentTree.transform, true);

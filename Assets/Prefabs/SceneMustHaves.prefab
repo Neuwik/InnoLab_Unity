@@ -501,7 +501,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1297858683724989867}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -529,7 +529,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ReferenceResolution: {x: 2340, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
@@ -1730,6 +1730,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1926489561087766001, guid: 14f8ca8eea2719a4e8578933ac2c7297, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000050411003
+      objectReference: {fileID: 0}
     - target: {fileID: 2901055731656227692, guid: 14f8ca8eea2719a4e8578933ac2c7297, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2141,7 +2145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6021515479837285399, guid: a95ef3e0be149824a9a4d667c887bdda, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000005543232
+      value: 0.000022891154
       objectReference: {fileID: 0}
     - target: {fileID: 9040734442800275263, guid: a95ef3e0be149824a9a4d667c887bdda, type: 3}
       propertyPath: m_IsActive

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,7 +9,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
     private int _maxArrowCount = 0;
     private int getMaxArrowCount()
     {
-        if(_maxArrowCount == 0)
+        if (_maxArrowCount == 0)
         {
             _maxArrowCount = TryGetComponent<AUMLElementTrueFalse>(out _) ? 2 : 1;
         }

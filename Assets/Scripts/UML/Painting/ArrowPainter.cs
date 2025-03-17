@@ -162,13 +162,13 @@ public class ArrowPainter : MonoBehaviour
 
         if (direction.y < 0 && direction.y * -1 > targetSize.y / 2 + parentSize.y / 2 + minHeight) // taget is under parent
         {
-            if(targetIsMouse)
+            if (targetIsMouse)
             {
                 targetPos.y += mouseOffset; // apply mouse offset, so that arrow won't be clicked when drawing
             }
-            else if(_isConditional)
+            else if (_isConditional)
             {
-                if(_condition) // move "true" arrow to the left
+                if (_condition) // move "true" arrow to the left
                 {
                     parentPos.x -= conditionOffset;
                     targetPos.x -= conditionOffset;

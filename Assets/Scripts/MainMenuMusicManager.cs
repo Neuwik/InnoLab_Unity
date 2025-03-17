@@ -38,7 +38,7 @@ public class MainMenuMusicManager : MonoBehaviour
             {
                 audioSource.Stop();
             }
-            else if(!audioSource.isPlaying)
+            else if (!audioSource.isPlaying)
             {
                 audioSource.Play();
             }
