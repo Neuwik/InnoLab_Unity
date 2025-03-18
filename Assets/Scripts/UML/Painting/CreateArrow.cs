@@ -66,7 +66,39 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left: // Attach Arrow -> happens on TargetObject
-                if (GameManager.Instance.ActiveArrow != null)
+                if (_arrows.Count == 2) // Swtich True and False Arrow
+                {
+                    foreach (ArrowPainter arrow in _arrows)
+                    {
+                        arrow.ToggleCondition();
+                    }
+
+                    gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
+
+                    return;
+                } 
+                else if (GameManager.Instance.ActiveArrow == null &&
+                         _arrows.Count < getMaxArrowCount())
+                {
+                    ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
+                    newArrow.transform.SetAsFirstSibling();
+
+                    AddArrow(newArrow);
+
+                    if (getMaxArrowCount() == 2) // => only Condition blocks
+                    {
+                        if (_arrows.Count > 1) // second arrow
+                        {
+                            newArrow.Condition = !(_arrows[0].Condition);
+                        }
+                        else // first arrow
+                        {
+                            newArrow.Condition = true;
+                        }
+                    }
+                    GameManager.Instance.ActiveArrow = newArrow;
+                }
+                else if (GameManager.Instance.ActiveArrow != null)
                 {
                     if (GameManager.Instance.ActiveArrow.TrySetTargetElem(this))
                     {
@@ -74,7 +106,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     }
                 }
                 return;
-
+            /*
             case PointerEventData.InputButton.Right:
 
                 if (_arrows.Count == 2) // Swtich True and False Arrow
@@ -111,6 +143,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     GameManager.Instance.ActiveArrow = newArrow;
                 }
                 return;
+            */
 
             case PointerEventData.InputButton.Middle: // Delete Block/Arrow
 
