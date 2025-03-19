@@ -39,7 +39,7 @@ public class LevelSelect : MonoBehaviour
         LoadAndSetLevelData();
     }
 
-    private void LoadAndSetLevelData()
+    public void LoadAndSetLevelData()
     {
         var saveDataList = SaveManager.Instance.LoadLevels();
 

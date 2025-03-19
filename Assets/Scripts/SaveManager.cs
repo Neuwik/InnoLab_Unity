@@ -5,13 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class LevelSaveData
 {
-    public int levelNumber;
-    public int starsEarned;
-    public int stepsTaken;
-    public int umlElementsUsed;
-    public float successQualityPercent;
-    public float percentHealth;
-    public float percentEnergy;
+    public int      levelNumber;
+    public int      starsEarned;
+    public int      stepsTaken;
+    public int      umlElementsUsed;
+    public float    successQualityPercent;
+    public float    percentHealth;
+    public float    percentEnergy;
 }
 
 [System.Serializable]
@@ -40,13 +40,9 @@ public class SaveManager : MonoBehaviour
             Init();
         }
     }
-
-    #endregion
-
     private string saveFilePath;
     private LevelSaveDataList levelSaveDataList = new LevelSaveDataList();
-
-    private void Init()
+    public void Init()
     {
         try
         {
@@ -68,6 +64,10 @@ public class SaveManager : MonoBehaviour
             Debug.LogError("Failed to initialize save directory: " + ex.Message);
         }
     }
+
+    #endregion
+
+    
 
     #region SAVE and LOAD LEVELS
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,8 +23,8 @@ public class UMLSaveSystem
         formatter.Serialize(stream, data);
         stream.Close();
     }
-
-    public static void DeleteSaves()
+    
+    public static void DeleteSaves(string timestamp = "")
     {
         string folderPath = Path.Combine(Application.persistentDataPath, folderName);
 
@@ -31,11 +32,14 @@ public class UMLSaveSystem
         {
             return;
         }
+
+        if (String.IsNullOrEmpty(timestamp)) timestamp = $"{DateTime.UtcNow}";
+
         // Save a new Backup every time
-        // string newFolderPath = Path.Combine(Application.persistentDataPath, $"{folderName}_{DateTime.UtcNow.ToBinary()}");
+        string newFolderPath = Path.Combine(Application.persistentDataPath, $"{folderName}_{timestamp}");
 
         // Only save latest Backup
-        string newFolderPath = Path.Combine(Application.persistentDataPath, $"{folderName}_prev");
+        // string newFolderPath = Path.Combine(Application.persistentDataPath, $"{folderName}_prev");
 
         if (Directory.Exists(newFolderPath))
         {

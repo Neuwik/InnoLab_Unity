@@ -1,10 +1,10 @@
 public struct StarCalculationValues
 {
-    public float percentHealth;
-    public float percentEnergy;
-    public bool allAlife;
-    public int maxTrashCount;
-    public int collectedTrash;
+    public float    percentHealth;
+    public float    percentEnergy;
+    public bool     allAlife;
+    public int      maxTrashCount;
+    public int      collectedTrash;
 
     public float SuccessQualityPercent
     {
