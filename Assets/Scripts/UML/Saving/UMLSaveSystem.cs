@@ -33,7 +33,7 @@ public class UMLSaveSystem
             return;
         }
 
-        if (String.IsNullOrEmpty(timestamp)) timestamp = $"{DateTime.UtcNow}";
+        if (String.IsNullOrEmpty(timestamp)) timestamp = $"{DateTime.Now.ToString("yyyyMMdd_HHmmss_fff")}";
 
         // Save a new Backup every time
         string newFolderPath = Path.Combine(Application.persistentDataPath, $"{folderName}_{timestamp}");

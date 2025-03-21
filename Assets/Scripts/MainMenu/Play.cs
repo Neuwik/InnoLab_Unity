@@ -22,7 +22,7 @@ public class Play : MonoBehaviour
 
     public void OnClickResetButton() 
     {
-        string timestamp = $"{DateTime.UtcNow.ToBinary()}_END";
+        string timestamp = $"{DateTime.Now.ToString("yyyyMMdd_HHmmss_fff")}_END";
 
         //LevelSelect.Instance.LoadAndSetLevelData();
         UMLSaveSystem.DeleteSaves(timestamp);
