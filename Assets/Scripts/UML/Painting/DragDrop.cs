@@ -44,15 +44,15 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             gameObject.transform.SetParent(UMLManager.Instance.CurrentTree.transform, true);
 
             // Enable arrow drawing on the current object
-            var arrowCreator = GetComponent<CreateArrow>();
-            if (arrowCreator != null)
-            {
-                arrowCreator.CanDraw = true;
-            }
-            else
-            {
-                Debug.LogWarning("CreateArrow component is missing on the GameObject.");
-            }
+            //var arrowCreator = GetComponent<CreateArrow>();
+            //if (arrowCreator != null)
+            //{
+            //    arrowCreator.CanDraw = true;
+            //}
+            //else
+            //{
+            //    Debug.LogWarning("CreateArrow component is missing on the GameObject.");
+            //}
         }
 
         // Invoke drag started event, if assigned
@@ -80,15 +80,31 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (Mathf.Abs(gameObject.transform.localPosition.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
             Mathf.Abs(gameObject.transform.localPosition.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2 )  // right, left bordercheck
         */
+        // Enable arrow drawing on the current object
+        var arrowCreator = GetComponent<CreateArrow>();
+        if (arrowCreator != null)
+        {
+            arrowCreator.CanDraw = true;
+        }
+        else
+        {
+            Debug.LogWarning("CreateArrow component is missing on the GameObject.");
+        }
 
         if (Mathf.Abs(posInUml.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
             Mathf.Abs(posInUml.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2)  // right, left bordercheck
         {
             //TODO???: gameObject.GetComponent<CreateArrow>().ReduceTargetAmount();
-            OnDelete.Invoke();
-            Destroy(gameObject);
+            //OnDelete.Invoke();
+            //Destroy(gameObject);
+            DestroyElement();
         }
 
         //Debug.Log("OnEndDrag");
+    }
+    public void DestroyElement()
+    {
+        OnDelete.Invoke();
+        Destroy(gameObject);
     }
 }

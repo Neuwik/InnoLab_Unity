@@ -712,6 +712,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneMustHaves
       objectReference: {fileID: 0}
+    - target: {fileID: 4541667650781695652, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 83.473
+      objectReference: {fileID: 0}
     - target: {fileID: 4546784538789672774, guid: 192481fd03b670e44a91b25e081b82be, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
