@@ -10,7 +10,7 @@ public class ArrowPainter : MonoBehaviour
     private float conditionOffset = 10f;
 
     [SerializeField]
-    private float minHeight = 10;
+    private float minHeight = 10f;
 
     private bool _conditionOutcome;
     public bool ConditionOutcome { get { return _conditionOutcome; } set { _conditionOutcome = value; } }
@@ -65,12 +65,17 @@ public class ArrowPainter : MonoBehaviour
     private TMP_Text _textField;
     private bool _isConditional = false;
     private bool _condition = true;
+    private string _conditionalTrueText = "";
+    private string _conditionalFalseText = "";
+    Vector2 _textsizeOffset = new Vector2(20, 15);
+
     public bool Condition
     {
         get { return _condition; }
         set
         {
             _isConditional = true;
+            
             _textField.gameObject.SetActive(_isConditional);
             ChangeArrowColor(_trueColor);
             if (_condition != value)
@@ -86,13 +91,13 @@ public class ArrowPainter : MonoBehaviour
         {
             if (_condition)
             {
-                _textField.text = "false";
+                _textField.text = _conditionalFalseText;
                 ChangeArrowColor(_falseColor);
                 _condition = false;
             }
             else
             {
-                _textField.text = "true";
+                _textField.text = _conditionalTrueText;
                 ChangeArrowColor(_trueColor);
                 _condition = true;
             }
@@ -115,10 +120,22 @@ public class ArrowPainter : MonoBehaviour
         _rect = GetComponent<RectTransform>();
         _parentElem = gameObject.transform.parent.GetComponent<CreateArrow>();
         _parentRect = _parentElem.GetComponent<RectTransform>();
-
+        
         // ? because Start Point has no DragDrop
         _parentElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
         _parentElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
+        if (gameObject.transform.parent.name == "ForLoop")
+        {
+            _conditionalFalseText = "afterwards";
+            _conditionalTrueText = "do while";
+        } else {
+            _conditionalFalseText = "false";
+            _conditionalTrueText = "true";
+        }
+        if (_isConditional)
+        { 
+            _textField.text = _condition ? _conditionalTrueText : _conditionalFalseText;
+        }
     }
 
     void Update()
@@ -155,12 +172,14 @@ public class ArrowPainter : MonoBehaviour
 
         Vector2 parentPos = _parentRect.position;
         Vector2 parentSize = _parentRect.sizeDelta * _parentRect.lossyScale;
+        Vector2 conditionalTextOffset = new Vector2(0, 0) ;
 
         Vector2 direction = targetPos - parentPos;
+        
 
         //Debug.Log(parentPos + " -> " + targetPos + " / " + direction);
 
-        if (direction.y < 0 && direction.y * -1 > targetSize.y / 2 + parentSize.y / 2 + minHeight) // taget is under parent
+        if (direction.y < 0 && direction.y * -1 > targetSize.y / 2 + parentSize.y / 2 + minHeight) // target is under parent
         {
             if (targetIsMouse)
             {
@@ -170,11 +189,14 @@ public class ArrowPainter : MonoBehaviour
             {
                 if (_condition) // move "true" arrow to the left
                 {
+                    conditionalTextOffset = new Vector2(-(conditionOffset + _textsizeOffset.x), -_textsizeOffset.y);
                     parentPos.x -= conditionOffset;
                     targetPos.x -= conditionOffset;
                 }
                 else // move "false" arrow to the right
                 {
+                    
+                    conditionalTextOffset = new Vector2(conditionOffset + _textsizeOffset.x, -_textsizeOffset.y);
                     parentPos.x += conditionOffset;
                     targetPos.x += conditionOffset;
                 }
@@ -183,6 +205,7 @@ public class ArrowPainter : MonoBehaviour
             DrawArrow(
                 parentPos - new Vector2(0, parentSize.y / 2),
                 targetPos + new Vector2(0, targetSize.y / 2),
+                conditionalTextOffset,
                 180
             );
         }
@@ -196,11 +219,13 @@ public class ArrowPainter : MonoBehaviour
             {
                 if (_condition) // move "true" arrow to the left
                 {
+                    conditionalTextOffset = new Vector2(-(conditionOffset + _textsizeOffset.x), _textsizeOffset.y);
                     parentPos.x -= conditionOffset;
                     targetPos.x -= conditionOffset;
                 }
                 else // move "false" arrow to the right
                 {
+                    conditionalTextOffset  = new Vector2(conditionOffset + _textsizeOffset.x, _textsizeOffset.y);
                     parentPos.x += conditionOffset;
                     targetPos.x += conditionOffset;
                 }
@@ -209,6 +234,7 @@ public class ArrowPainter : MonoBehaviour
             DrawArrow(
                 parentPos + new Vector2(0, parentSize.y / 2),
                 targetPos - new Vector2(0, targetSize.y / 2),
+                conditionalTextOffset,
                 0
             );
         }
@@ -222,11 +248,13 @@ public class ArrowPainter : MonoBehaviour
             {
                 if (_condition) // move "true" arrow to the up
                 {
+                    conditionalTextOffset = new Vector2(-_textsizeOffset.x, conditionOffset + _textsizeOffset.y);
                     parentPos.y += conditionOffset;
                     targetPos.y += conditionOffset;
                 }
                 else // move "false" arrow to the down
                 {
+                    conditionalTextOffset = new Vector2(-_textsizeOffset.x, -(conditionOffset + _textsizeOffset.y));
                     parentPos.y -= conditionOffset;
                     targetPos.y -= conditionOffset;
                 }
@@ -235,10 +263,11 @@ public class ArrowPainter : MonoBehaviour
             DrawArrow(
                 parentPos - new Vector2(parentSize.x / 2, 0),
                 targetPos + new Vector2(targetSize.x / 2, 0),
+                conditionalTextOffset,
                 90
             );
         }
-        else if (direction.x > 0 && direction.x > targetSize.x / 2 + parentSize.x / 2 + minHeight) // taget is right of parent
+        else if (direction.x > 0 && direction.x > targetSize.x / 2 + parentSize.x / 2 + minHeight) // target is right of parent
         {
             if (targetIsMouse)
             {
@@ -248,19 +277,21 @@ public class ArrowPainter : MonoBehaviour
             {
                 if (_condition) // move "true" arrow to the up
                 {
+                    conditionalTextOffset = new Vector2(_textsizeOffset.x, conditionOffset + _textsizeOffset.y);
                     parentPos.y += conditionOffset;
                     targetPos.y += conditionOffset;
                 }
                 else // move "false" arrow to the down
                 {
+                    conditionalTextOffset = new Vector2(_textsizeOffset.x, -(conditionOffset + _textsizeOffset.y));
                     parentPos.y -= conditionOffset;
                     targetPos.y -= conditionOffset;
                 }
             }
-
             DrawArrow(
                 parentPos + new Vector2(parentSize.x / 2, 0),
                 targetPos - new Vector2(targetSize.x / 2, 0),
+                conditionalTextOffset,
                 -90
             );
         }
@@ -271,12 +302,13 @@ public class ArrowPainter : MonoBehaviour
         }
     }
 
-    private void DrawArrow(Vector2 startPoint, Vector2 endPoint, float rotation = 0)
+    private void DrawArrow(Vector2 startPoint, Vector2 endPoint, Vector2 conditionalTextOffset, float rotation = 0)
     {
         _visualRect.gameObject.SetActive(true);
         _rect.position = startPoint;
         _rect.localRotation = Quaternion.Euler(0, 0, rotation);
         _textField.gameObject.transform.localRotation = Quaternion.Euler(0, 0, rotation * -1);
+        _textField.gameObject.GetComponent<RectTransform>().position = startPoint + conditionalTextOffset;
 
         Vector2 size = endPoint - startPoint;
         size = _rect.InverseTransformVector(size);

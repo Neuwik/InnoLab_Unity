@@ -66,18 +66,8 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left: // Attach Arrow -> happens on TargetObject
-                if (_arrows.Count == 2) // Swtich True and False Arrow
-                {
-                    foreach (ArrowPainter arrow in _arrows)
-                    {
-                        arrow.ToggleCondition();
-                    }
 
-                    gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
-
-                    return;
-                } 
-                else if (GameManager.Instance.ActiveArrow == null &&
+                if (GameManager.Instance.ActiveArrow == null &&
                          _arrows.Count < getMaxArrowCount())
                 {
                     ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
@@ -104,6 +94,17 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     {
                         GameManager.Instance.ActiveArrow = null;
                     }
+                }
+                else if (_arrows.Count == 2) // Switch True and False Arrow
+                {
+                    foreach (ArrowPainter arrow in _arrows)
+                    {
+                        arrow.ToggleCondition();
+                    }
+
+                    gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
+
+                    return;
                 }
                 return;
             /*
