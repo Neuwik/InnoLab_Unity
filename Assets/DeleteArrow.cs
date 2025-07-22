@@ -12,8 +12,8 @@ public class DeleteArrow : MonoBehaviour
     {
         _arrowCreator = gameObject.transform.parent.GetComponent<CreateArrow>();
     }
-    public void ArrowClick(PointerEventData eventData)
-    { 
+    public void OnPointerClick(PointerEventData eventData)
+    {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             _arrowCreator.DeleteArrow();
