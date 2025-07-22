@@ -124,16 +124,17 @@ public class ArrowPainter : MonoBehaviour
         // ? because Start Point has no DragDrop
         _parentElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
         _parentElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
-        if (gameObject.transform.parent.name == "ForLoop")
-        {
-            _conditionalFalseText = "afterwards";
-            _conditionalTrueText = "do while";
-        } else {
-            _conditionalFalseText = "false";
-            _conditionalTrueText = "true";
-        }
+
         if (_isConditional)
         { 
+            if (gameObject.transform.parent.name == "ForLoop")
+            {
+                _conditionalFalseText = "afterwards";
+                _conditionalTrueText = "do while";
+            } else {
+                _conditionalFalseText = "false";
+                _conditionalTrueText = "true";
+            }
             _textField.text = _condition ? _conditionalTrueText : _conditionalFalseText;
         }
     }

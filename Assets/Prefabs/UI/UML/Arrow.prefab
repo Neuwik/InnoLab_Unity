@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1379909003356406304}
   - component: {fileID: 3532675991438122460}
+  - component: {fileID: 1859235196694098703}
   m_Layer: 10
   m_Name: Arrow
   m_TagString: Arrow
@@ -55,6 +56,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _textField: {fileID: 7017774030946300950}
+--- !u!114 &1859235196694098703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133962267425589854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a2f124eeb061f4c8add6bdb0f87e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2047797054703446293
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,7 +103,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.4}
   m_AnchorMax: {x: 0, y: 0.4}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 4}
+  m_SizeDelta: {x: 0, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6089756098044087148
 CanvasRenderer:
@@ -165,7 +178,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.4}
   m_AnchorMax: {x: 1, y: 0.4}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 4}
+  m_SizeDelta: {x: 0, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2180546863713133664
 CanvasRenderer:
@@ -566,7 +579,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.4}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -4.5}
-  m_SizeDelta: {x: 4, y: -5}
+  m_SizeDelta: {x: 5, y: -5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3003311814886001284
 CanvasRenderer:
@@ -641,7 +654,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0.4}
   m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 4, y: 2}
+  m_SizeDelta: {x: 5, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4111284034508170544
 CanvasRenderer:

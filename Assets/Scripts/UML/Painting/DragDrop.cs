@@ -10,6 +10,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private GameObject _umlPanel;
     private RectTransform _umlRectT;
     private GameObject _selectionPanel;
+    private CreateArrow _arrowCreator;
 
     public UnityEvent OnPossitionChanged; // not used
     public UnityEvent OnStartedMoving;
@@ -81,10 +82,10 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             Mathf.Abs(gameObject.transform.localPosition.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2 )  // right, left bordercheck
         */
         // Enable arrow drawing on the current object
-        var arrowCreator = GetComponent<CreateArrow>();
-        if (arrowCreator != null)
+        _arrowCreator = GetComponent<CreateArrow>();
+        if (_arrowCreator != null)
         {
-            arrowCreator.CanDraw = true;
+            _arrowCreator.CanDraw = true;
         }
         else
         {
@@ -104,7 +105,10 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     }
     public void DestroyElement()
     {
-        OnDelete.Invoke();
-        Destroy(gameObject);
+        if (_arrowCreator.CanDraw)
+        {
+            OnDelete.Invoke();
+            Destroy(gameObject);
+        }
     }
 }

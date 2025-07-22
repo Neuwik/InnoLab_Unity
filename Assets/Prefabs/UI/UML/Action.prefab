@@ -685,7 +685,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 155, y: 60}
+  m_SizeDelta: {x: 150, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1703945932807963708
 MonoBehaviour:
@@ -1270,10 +1270,10 @@ RectTransform:
   - {fileID: 1086267118422478181}
   m_Father: {fileID: 7347402078233651009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -32, y: -26}
+  m_SizeDelta: {x: -32, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4900608002194679725
 CanvasRenderer:
@@ -1782,7 +1782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1847914762716473130, guid: 76f146609dadbf744928f3f66f306bb7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 24.5
+      value: 30.7
       objectReference: {fileID: 0}
     - target: {fileID: 1847914762716473130, guid: 76f146609dadbf744928f3f66f306bb7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1800,6 +1800,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1703945932807963708}
+    - target: {fileID: 4718745386559564797, guid: 76f146609dadbf744928f3f66f306bb7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DestroyElement
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

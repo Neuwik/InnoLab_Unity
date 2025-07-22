@@ -148,32 +148,35 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
             case PointerEventData.InputButton.Middle: // Delete Block/Arrow
 
-                if (GameManager.Instance.UMLIsRunning) // disable deletion when UML is running
-                {
-                    return;
-                }
-
-                if (_arrows.Count > 0)
-                {
-                    ArrowPainter arrow = _arrows.Last();
-                    RemoveArrow(arrow);
-                    Destroy(arrow.gameObject);
-                }
-                else
-                {
-                    if (!_isDeleteable)
-                    {
-                        return;
-                    }
-
-                    OnDelete.Invoke();
-                    Destroy(gameObject);
-                    // needs to invoke onDelete on Arrow of previous action
-                }
+                DeleteArrow();
                 return;
         }
     }
+    public void DeleteArrow() 
+    {
+        if (GameManager.Instance.UMLIsRunning) // disable deletion when UML is running
+        {
+            return;
+        }
 
+        if (_arrows.Count > 0)
+        {
+            ArrowPainter arrow = _arrows.Last();
+            RemoveArrow(arrow);
+            Destroy(arrow.gameObject);
+        }
+        else
+        {
+            if (!_isDeleteable)
+            {
+                return;
+            }
+
+            OnDelete.Invoke();
+            Destroy(gameObject);
+            // needs to invoke onDelete on Arrow of previous action
+        }
+    }
     public bool DrawArrowToElement(CreateArrow target, bool condition = true)
     {
         if (target == null)
