@@ -6,7 +6,9 @@ using UnityEngine.EventSystems;
 
 public class CreateArrow : MonoBehaviour, IPointerClickHandler
 {
+    private bool _ignoreNextArrowDrawInput = false;
     private int _maxArrowCount = 0;
+    private GameObject _highlightBackground;
     private int getMaxArrowCount()
     {
         if (_maxArrowCount == 0)
@@ -62,6 +64,11 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             return;
         }
+        if (_ignoreNextArrowDrawInput)
+        {
+            _ignoreNextArrowDrawInput = false;
+            return;
+        }
 
         switch (eventData.button)
         {
@@ -92,8 +99,13 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 {
                     if (GameManager.Instance.ActiveArrow.TrySetTargetElem(this))
                     {
+
                         GameManager.Instance.ActiveArrow = null;
                     }
+                }
+                else if (eventData.clickCount >= 2)
+                {
+                    DeleteArrow();
                 }
                 else if (_arrows.Count == 2) // Switch True and False Arrow
                 {
@@ -152,6 +164,11 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 return;
         }
     }
+    public void IgnoreNextArrowDrawInput()
+    {
+        _ignoreNextArrowDrawInput = true;
+    }
+
     public void DeleteArrow() 
     {
         if (GameManager.Instance.UMLIsRunning) // disable deletion when UML is running

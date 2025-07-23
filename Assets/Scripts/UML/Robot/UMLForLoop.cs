@@ -1,4 +1,5 @@
 using TMPro;
+ using UnityEngine.UI;
 using UnityEngine;
 
 public class UMLForLoop : AUMLElementTrueFalse
@@ -19,9 +20,11 @@ public class UMLForLoop : AUMLElementTrueFalse
             }
         }
     }
+    
+    public Slider Input;
+    public TextMeshProUGUI LoopText;
 
-    public TMP_InputField Input;
-
+    
     [SerializeField]
     private int forMaxIndex = 3;
     private int forCurrentIndex;
@@ -42,25 +45,27 @@ public class UMLForLoop : AUMLElementTrueFalse
         Input.interactable = true;
     }
 
-    private void SynchronizeMaxIndex()
+    public void SynchronizeMaxIndex()
     {
-        if (string.IsNullOrEmpty(Input.text))
+        if (Input.value < 0)
         {
             OverrideInputWithCurrentMaxIndex();
             return;
         }
-        int newMaxIndex = int.Parse(Input.text);
+        int newMaxIndex = (int) Input.value;
         if (newMaxIndex <= 0)
         {
             OverrideInputWithCurrentMaxIndex();
             return;
         }
         forMaxIndex = newMaxIndex;
+        SetLoopText();
     }
 
     private void OverrideInputWithCurrentMaxIndex()
     {
-        Input.text = forMaxIndex.ToString();
+        Input.value = forMaxIndex;
+        SetLoopText();
     }
 
     public override bool Execute(UMLActor actor)
@@ -89,6 +94,7 @@ public class UMLForLoop : AUMLElementTrueFalse
         {
             NextElement = falseNextAction;
         }
+        SetLoopText();
         forCurrentIndex++;
         return true;
     }
@@ -108,5 +114,10 @@ public class UMLForLoop : AUMLElementTrueFalse
         OverrideInputWithCurrentMaxIndex();
 
         return true;
+    }
+    private void SetLoopText() 
+    {
+        int displayIndex = forMaxIndex - forCurrentIndex;
+        LoopText.SetText( displayIndex == 1 ? $"Repeat {displayIndex} time" : $"Repeat {displayIndex} times");
     }
 }
