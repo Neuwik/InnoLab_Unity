@@ -179,6 +179,12 @@ public class GameManager : MonoBehaviour
 
     public void RunUML()
     {
+        if (ActiveArrow != null) {
+            var CA = ActiveArrow.transform.parent.GetComponent<CreateArrow>();
+            CA.DeleteArrow();
+            CA.setUMLHighlightVisable(false);
+        }
+
         UMLIsRunning = true;
         TickManager.StartTicks();
         UMLActors.ForEach(a =>

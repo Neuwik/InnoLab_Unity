@@ -55,7 +55,7 @@ public class ArrowPainter : MonoBehaviour
         CA.OnDelete.AddListener(TargetDestroyed);
 
         _prevCreateArrow = _prev.GetComponent<CreateArrow>();
-
+        _prevCreateArrow.UMLHighlightswitch();
         _prev.ChangeNextElement(_targetElem.GetComponent<AUMLElement>(), Condition);
 
         return true;

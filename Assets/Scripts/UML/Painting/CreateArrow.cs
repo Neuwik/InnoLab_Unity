@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -56,11 +58,17 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             DrawArrowToElement(initialFalseConnection, false);
         }
+        //try {
+        _highlightBackground = gameObject.transform.Find("HighlightImage").gameObject;
+        //}
+        //catch (NullReferenceException){
+        //    _highlightBackground = null;
+        //}
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!CanDraw)
+        if (!CanDraw || eventData.button != PointerEventData.InputButton.Left)
         {
             return;
         }
@@ -70,6 +78,51 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             return;
         }
 
+        if (eventData.clickCount >= 2)
+        {
+            DeleteArrow();
+        }
+        else if (GameManager.Instance.ActiveArrow == null && _arrows.Count < getMaxArrowCount())
+        {
+            UMLHighlightswitch();
+            ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
+            newArrow.transform.SetAsFirstSibling();
+
+            AddArrow(newArrow);
+
+            if (getMaxArrowCount() == 2) // => only Condition blocks
+            {
+                if (_arrows.Count > 1) // second arrow
+                {
+                    newArrow.Condition = !(_arrows[0].Condition);
+                }
+                else // first arrow
+                {
+                    newArrow.Condition = true;
+                }
+            }
+            GameManager.Instance.ActiveArrow = newArrow;
+        }
+        else if (GameManager.Instance.ActiveArrow != null)
+        {
+            if (GameManager.Instance.ActiveArrow.TrySetTargetElem(this))
+            {
+                GameManager.Instance.ActiveArrow = null;
+            }
+        }
+        else if (_arrows.Count == 2) // Switch True and False Arrow
+        {
+            foreach (ArrowPainter arrow in _arrows)
+            {
+                arrow.ToggleCondition();
+            }
+
+            gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
+
+            return;
+        }
+        // mousecontrol + inbetween code moved to above
+        /*
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left: // Attach Arrow -> happens on TargetObject
@@ -77,6 +130,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 if (GameManager.Instance.ActiveArrow == null &&
                          _arrows.Count < getMaxArrowCount())
                 {
+                    UMLHighlightswitch();
                     ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
                     newArrow.transform.SetAsFirstSibling();
 
@@ -99,7 +153,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 {
                     if (GameManager.Instance.ActiveArrow.TrySetTargetElem(this))
                     {
-
                         GameManager.Instance.ActiveArrow = null;
                     }
                 }
@@ -119,7 +172,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     return;
                 }
                 return;
-            /*
+            
             case PointerEventData.InputButton.Right:
 
                 if (_arrows.Count == 2) // Swtich True and False Arrow
@@ -156,17 +209,29 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                     GameManager.Instance.ActiveArrow = newArrow;
                 }
                 return;
-            */
+            
 
             case PointerEventData.InputButton.Middle: // Delete Block/Arrow
-
+                
                 DeleteArrow();
                 return;
         }
+        */
     }
     public void IgnoreNextArrowDrawInput()
     {
         _ignoreNextArrowDrawInput = true;
+    }
+    public void UMLHighlightswitch()
+    {
+        if (_highlightBackground != null) 
+        {
+            _highlightBackground.SetActive(!_highlightBackground.activeSelf);
+        }
+    }
+    public void setUMLHighlightVisable(bool enabled)
+    {
+        _highlightBackground.SetActive(enabled);
     }
 
     public void DeleteArrow() 

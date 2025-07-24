@@ -8,7 +8,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private RectTransform _rectT;
 
     private GameObject _umlPanel;
-    private GameObject _highlightBackground; 
     private GameObject _selectionPanel;
     private CreateArrow _arrowCreator;
     private RectTransform _umlRectT;
@@ -25,7 +24,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         _umlPanel = GameManager.Instance.UMLWindow.BuildArea;
         _umlRectT = _umlPanel.GetComponent<RectTransform>();
         _rectT = GetComponent<RectTransform>();
-        _highlightBackground = gameObject.transform.Find("HighlightImage").gameObject;
         _arrowCreator = GetComponent<CreateArrow>();
     }
 
@@ -62,7 +60,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         // Invoke drag started event, if assigned
         OnStartedMoving?.Invoke();
         _arrowCreator.CanDraw = false;
-        _highlightBackground.SetActive(true);
+        _arrowCreator.UMLHighlightswitch();
     }
 
 
@@ -105,7 +103,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         }
 
         _arrowCreator.CanDraw = true;
-        _highlightBackground.SetActive(false);
+        _arrowCreator.UMLHighlightswitch();
         //Debug.Log("OnEndDrag");
     }
     public void DestroyElement()

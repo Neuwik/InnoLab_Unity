@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 
-public enum EUMLActionType { DoNothing = 0, MoveUp = 11, MoveDown = 12, MoveLeft = 13, MoveRight = 14, CollectGarbage = 1, CollectBattery = 2 }
+public enum EUMLActionType { DoNothing = 0, Move3Up = 11, Move3Down = 12, Move3Left = 13, Move3Right = 14, CollectGarbage = 1, CollectBattery = 2 }
 
 public class UMLAction : AUMLElement
 {
@@ -37,16 +37,16 @@ public class UMLAction : AUMLElement
             case EUMLActionType.DoNothing:
                 action = actor.DoNothing;
                 break;
-            case EUMLActionType.MoveUp:
+            case EUMLActionType.Move3Up:
                 action = actor.MoveUp;
                 break;
-            case EUMLActionType.MoveDown:
+            case EUMLActionType.Move3Down:
                 action = actor.MoveDown;
                 break;
-            case EUMLActionType.MoveLeft:
+            case EUMLActionType.Move3Left:
                 action = actor.MoveLeft;
                 break;
-            case EUMLActionType.MoveRight:
+            case EUMLActionType.Move3Right:
                 action = actor.MoveRight;
                 break;
             case EUMLActionType.CollectGarbage:

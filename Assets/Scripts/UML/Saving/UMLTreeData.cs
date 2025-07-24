@@ -16,37 +16,37 @@ public class UMLTreeData
         ID = tree.ID;
         TreeName = tree.TreeName;
         Start = new UMLElementData(tree.StartElement);
-        Dictionary<long, UMLElementData> elementDcit = GetBranchData(tree.StartElement.NextElement, new Dictionary<long, UMLElementData>());
-        elements = elementDcit.Values.ToArray();
+        Dictionary<long, UMLElementData> elementDict = GetBranchData(tree.StartElement.NextElement, new Dictionary<long, UMLElementData>());
+        elements = elementDict.Values.ToArray();
     }
 
-    private Dictionary<long, UMLElementData> GetBranchData(AUMLElement element, Dictionary<long, UMLElementData> elementDcit)
+    private Dictionary<long, UMLElementData> GetBranchData(AUMLElement element, Dictionary<long, UMLElementData> elementDict)
     {
         if (element == null)
         {
-            return elementDcit;
+            return elementDict;
         }
 
         UMLElementData elementData = new UMLElementData(element);
 
-        if (elementDcit.ContainsKey(elementData.ID))
+        if (elementDict.ContainsKey(elementData.ID))
         {
-            return elementDcit;
+            return elementDict;
         }
 
-        elementDcit.Add(elementData.ID, elementData);
+        elementDict.Add(elementData.ID, elementData);
 
         if (element.GetNextElement(false) != null)
         {
-            elementDcit = GetBranchData(element.GetNextElement(false), elementDcit);
+            elementDict = GetBranchData(element.GetNextElement(false), elementDict);
         }
 
         if (element.GetNextElement(true) != null)
         {
-            elementDcit = GetBranchData(element.GetNextElement(true), elementDcit);
+            elementDict = GetBranchData(element.GetNextElement(true), elementDict);
         }
 
-        return elementDcit;
+        return elementDict;
     }
 
     public bool IsValid()
