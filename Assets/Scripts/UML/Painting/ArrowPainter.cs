@@ -24,8 +24,6 @@ public class ArrowPainter : MonoBehaviour
 
     private AUMLElement _prev;
 
-    private CreateArrow _prevCreateArrow;
-
     private RectTransform _rect;
     [SerializeField]
     private RectTransform _visualRect;
@@ -38,9 +36,10 @@ public class ArrowPainter : MonoBehaviour
 
     public bool TrySetTargetElem(CreateArrow value)
     {
+        _parentElem.UMLHighlightswitch();
         if (_parentElem == value || _targetElem == value)
         {
-            return false;
+            return false; 
         }
 
         _targetElem = value;
@@ -51,11 +50,6 @@ public class ArrowPainter : MonoBehaviour
         _targetElem.GetComponent<DragDrop>()?.OnDelete.AddListener(TargetDestroyed);
 
         _prev = transform.parent.GetComponent<AUMLElement>();
-        CreateArrow CA = _targetElem.GetComponent<CreateArrow>();
-        CA.OnDelete.AddListener(TargetDestroyed);
-
-        _prevCreateArrow = _prev.GetComponent<CreateArrow>();
-        _prevCreateArrow.UMLHighlightswitch();
         _prev.ChangeNextElement(_targetElem.GetComponent<AUMLElement>(), Condition);
 
         return true;
@@ -157,9 +151,9 @@ public class ArrowPainter : MonoBehaviour
     {
         Vector2 targetSize = Vector2.zero;
         Vector2 targetPos = Vector2.zero;
-        bool targetIsMouse = _targetElem == null;
+        bool arrowGetsDragged = _targetElem == null;
 
-        if (!targetIsMouse)
+        if (!arrowGetsDragged)
         {
             targetPos = _targetRect.position;
             targetSize = _targetRect.sizeDelta * _targetRect.lossyScale;
@@ -182,7 +176,7 @@ public class ArrowPainter : MonoBehaviour
 
         if (direction.y < 0 && direction.y * -1 > targetSize.y / 2 + parentSize.y / 2 + minHeight) // target is under parent
         {
-            if (targetIsMouse)
+            if (arrowGetsDragged)
             {
                 targetPos.y += mouseOffset; // apply mouse offset, so that arrow won't be clicked when drawing
             }
@@ -212,7 +206,7 @@ public class ArrowPainter : MonoBehaviour
         }
         else if (direction.y > 0 && direction.y > targetSize.y / 2 + parentSize.y / 2 + minHeight) // taget is above parent
         {
-            if (targetIsMouse)
+            if (arrowGetsDragged)
             {
                 targetPos.y -= mouseOffset; // apply mouse offset, so that arrow won't be clicked when drawing
             }
@@ -241,7 +235,7 @@ public class ArrowPainter : MonoBehaviour
         }
         else if (direction.x < 0 && direction.x * -1 > targetSize.x / 2 + parentSize.x / 2 + minHeight) // taget is left of parent
         {
-            if (targetIsMouse)
+            if (arrowGetsDragged)
             {
                 targetPos.x += mouseOffset; // apply mouse offset, so that arrow won't be clicked when drawing
             }
@@ -270,7 +264,7 @@ public class ArrowPainter : MonoBehaviour
         }
         else if (direction.x > 0 && direction.x > targetSize.x / 2 + parentSize.x / 2 + minHeight) // target is right of parent
         {
-            if (targetIsMouse)
+            if (arrowGetsDragged)
             {
                 targetPos.x -= mouseOffset; // apply mouse offset, so that arrow won't be clicked when drawing
             }
@@ -296,7 +290,7 @@ public class ArrowPainter : MonoBehaviour
                 -90
             );
         }
-        else // taget is inside of parent
+        else // target is inside of parent
         {
             _visualRect.gameObject.SetActive(false);
             //Debug.LogWarning("Can't redraw arrow");

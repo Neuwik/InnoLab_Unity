@@ -78,11 +78,8 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        if (eventData.clickCount >= 2)
-        {
-            DeleteArrow();
-        }
-        else if (GameManager.Instance.ActiveArrow == null && _arrows.Count < getMaxArrowCount())
+       
+        if (GameManager.Instance.ActiveArrow == null && _arrows.Count < getMaxArrowCount())
         {
             UMLHighlightswitch();
             ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
@@ -102,13 +99,17 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 }
             }
             GameManager.Instance.ActiveArrow = newArrow;
+            return;
         }
         else if (GameManager.Instance.ActiveArrow != null)
         {
             if (GameManager.Instance.ActiveArrow.TrySetTargetElem(this))
             {
                 GameManager.Instance.ActiveArrow = null;
+                return;
             }
+            GameManager.Instance.ActiveArrow.transform.parent.GetComponent<CreateArrow>().DeleteArrow();
+            return;
         }
         else if (_arrows.Count == 2) // Switch True and False Arrow
         {
@@ -121,7 +122,9 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
             return;
         }
-        // mousecontrol + inbetween code moved to above
+        
+        
+        // below mousecontrol + inbetween code - Touchscreen code moved to above
         /*
         switch (eventData.button)
         {
@@ -234,16 +237,22 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         _highlightBackground.SetActive(enabled);
     }
 
-    public void DeleteArrow() 
+    public void DeleteArrow(ArrowPainter arrow = null) 
     {
+
         if (GameManager.Instance.UMLIsRunning) // disable deletion when UML is running
         {
             return;
         }
 
-        if (_arrows.Count > 0)
+        if (arrow != null) 
         {
-            ArrowPainter arrow = _arrows.Last();
+            RemoveArrow(arrow);
+            Destroy(arrow.gameObject);
+        }
+        else if (_arrows.Count > 0)
+        {
+            arrow = _arrows.Last();
             RemoveArrow(arrow);
             Destroy(arrow.gameObject);
         }
