@@ -77,11 +77,11 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             _ignoreNextArrowDrawInput = false;
             return;
         }
-
        
+        
         if (GameManager.Instance.ActiveArrow == null && _arrows.Count < getMaxArrowCount())
         {
-            UMLHighlightswitch();
+            
             ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
             newArrow.transform.SetAsFirstSibling();
 
@@ -99,7 +99,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 }
             }
             GameManager.Instance.ActiveArrow = newArrow;
-            return;
         }
         else if (GameManager.Instance.ActiveArrow != null)
         {
@@ -122,8 +121,9 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
             return;
         }
-        
-        
+        UMLHighlightswitch();
+
+
         // below mousecontrol + inbetween code - Touchscreen code moved to above
         /*
         switch (eventData.button)
@@ -229,12 +229,19 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
     {
         if (_highlightBackground != null) 
         {
-            _highlightBackground.SetActive(!_highlightBackground.activeSelf);
+            setUMLActivity(!_highlightBackground.activeSelf);
         }
     }
-    public void setUMLHighlightVisable(bool enabled)
+    public void setUMLActivity(bool active)
     {
-        _highlightBackground.SetActive(enabled);
+        _highlightBackground.SetActive(active);
+        if (GameManager.Instance.ActiveArrow == null)
+        {
+            foreach (ArrowPainter arrow in _arrows)
+            {
+                arrow.DeleteButton.SetActive(active);
+            }
+        }
     }
 
     public void DeleteArrow(ArrowPainter arrow = null) 

@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
         if (ActiveArrow != null) {
             var CA = ActiveArrow.transform.parent.GetComponent<CreateArrow>();
             CA.DeleteArrow();
-            CA.setUMLHighlightVisable(false);
+            CA.setUMLActivity(false);
         }
 
         UMLIsRunning = true;

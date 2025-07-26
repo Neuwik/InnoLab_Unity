@@ -55,6 +55,7 @@ MonoBehaviour:
   OnDelete:
     m_PersistentCalls:
       m_Calls: []
+  DeleteButton: {fileID: 4654041877423148945}
   _textField: {fileID: 7017774030946300950}
 --- !u!114 &5080589875303687948
 MonoBehaviour:
@@ -559,12 +560,12 @@ GameObject:
   - component: {fileID: 6295177339000632650}
   - component: {fileID: 1215473262677899223}
   m_Layer: 10
-  m_Name: Button
+  m_Name: DeleteButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4249806173070256314
 RectTransform:
   m_ObjectHideFlags: 0

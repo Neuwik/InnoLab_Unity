@@ -29,6 +29,7 @@ public class ArrowPainter : MonoBehaviour
     private RectTransform _visualRect;
 
     public UnityEvent<ArrowPainter> OnDelete;
+    public GameObject DeleteButton;
 
     private Color _baseColor = Color.gray;
     private static Color _trueColor = Color.green * 0.8f;
@@ -316,6 +317,7 @@ public class ArrowPainter : MonoBehaviour
         foreach (var arrowPart in GetComponentsInChildren<Image>(true))
         {
             arrowPart.color = color;
+            _textField.color = color;
         }
     }
 }
