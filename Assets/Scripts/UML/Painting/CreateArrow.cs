@@ -11,6 +11,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
     private bool _ignoreNextArrowDrawInput = false;
     private int _maxArrowCount = 0;
     private GameObject _highlightBackground;
+    
     private int getMaxArrowCount()
     {
         if (_maxArrowCount == 0)
@@ -47,6 +48,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
     public CreateArrow initialConnection = null;
     public CreateArrow initialFalseConnection = null;
+    private bool _switchCondition = false;
 
     private void Start()
     {
@@ -77,11 +79,11 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             _ignoreNextArrowDrawInput = false;
             return;
         }
-       
-        
+
+        // Create Arrow
         if (GameManager.Instance.ActiveArrow == null && _arrows.Count < getMaxArrowCount())
         {
-            
+
             ArrowPainter newArrow = Instantiate(ArrowPrefab, gameObject.transform);
             newArrow.transform.SetAsFirstSibling();
 
@@ -100,6 +102,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             }
             GameManager.Instance.ActiveArrow = newArrow;
         }
+        // Attach Target to diffrent CreateArrow than previously clicked
         else if (GameManager.Instance.ActiveArrow != null)
         {
             if (GameManager.Instance.ActiveArrow.TrySetTargetElem(this))
@@ -110,16 +113,22 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             GameManager.Instance.ActiveArrow.transform.parent.GetComponent<CreateArrow>().DeleteArrow();
             return;
         }
-        else if (_arrows.Count == 2) // Switch True and False Arrow
+        // Change Condition of Arrows
+        else if (_arrows.Count == 2) 
         {
+            if (_switchCondition) { // set it to unhighlighted if it was already activated 
+                _switchCondition = false;
+                UMLHighlightswitch();
+                return;
+            }
+
             foreach (ArrowPainter arrow in _arrows)
             {
                 arrow.ToggleCondition();
             }
 
             gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
-
-            return;
+            _switchCondition = true;
         }
         UMLHighlightswitch();
 
@@ -225,17 +234,17 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
     {
         _ignoreNextArrowDrawInput = true;
     }
-    public void UMLHighlightswitch()
+    public void UMLHighlightswitch(bool highlightWithButton = true)
     {
         if (_highlightBackground != null) 
         {
-            setUMLActivity(!_highlightBackground.activeSelf);
+            setUMLActivity(!_highlightBackground.activeSelf, highlightWithButton);
         }
     }
-    public void setUMLActivity(bool active)
+    public void setUMLActivity(bool active, bool highlightWithButton = true)
     {
         _highlightBackground.SetActive(active);
-        if (GameManager.Instance.ActiveArrow == null)
+        if (GameManager.Instance.ActiveArrow == null && highlightWithButton)
         {
             foreach (ArrowPainter arrow in _arrows)
             {

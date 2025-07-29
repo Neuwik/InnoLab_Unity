@@ -44,6 +44,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
             // Reassign the current object's parent to the UML Manager's current tree
             gameObject.transform.SetParent(UMLManager.Instance.CurrentTree.transform, true);
+            
 
             // Enable arrow drawing on the current object
             //var arrowCreator = GetComponent<CreateArrow>();
@@ -60,7 +61,8 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         // Invoke drag started event, if assigned
         OnStartedMoving?.Invoke();
         _arrowCreator.CanDraw = false;
-        _arrowCreator.UMLHighlightswitch();
+        _arrowCreator.UMLHighlightswitch(false);
+
     }
 
 
@@ -103,7 +105,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         }
 
         _arrowCreator.CanDraw = true;
-        _arrowCreator.UMLHighlightswitch();
+        _arrowCreator.UMLHighlightswitch(false);
         //Debug.Log("OnEndDrag");
     }
     public void DestroyElement()

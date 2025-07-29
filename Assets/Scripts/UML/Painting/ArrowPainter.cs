@@ -37,7 +37,10 @@ public class ArrowPainter : MonoBehaviour
 
     public bool TrySetTargetElem(CreateArrow value)
     {
-        _parentElem.UMLHighlightswitch();
+        if (_parentElem != null)
+        {
+            _parentElem.UMLHighlightswitch();
+        }
         if (_parentElem == value || _targetElem == value)
         {
             return false; 
