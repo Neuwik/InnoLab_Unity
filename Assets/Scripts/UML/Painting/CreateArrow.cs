@@ -22,21 +22,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
     }
 
     private List<ArrowPainter> _arrows = new List<ArrowPainter>();
-    private void AddArrow(ArrowPainter arrow)
-    {
-        arrow.OnDelete.AddListener(RemoveArrow);
-        _arrows.Add(arrow);
-        if (arrow.GetTargetElm != null)
-        {
-            GetComponent<AUMLElement>().ChangeNextElement(arrow.GetTargetElm.GetComponent<AUMLElement>(), arrow.Condition);
-        }
-    }
-    private void RemoveArrow(ArrowPainter arrow)
-    {
-        _arrows.Remove(arrow);
-        arrow?.OnDelete.RemoveListener(RemoveArrow);
-        GetComponent<AUMLElement>().ChangeNextElement(null, arrow.Condition);
-    }
 
     public ArrowPainter ArrowPrefab;
 
@@ -252,6 +237,15 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             }
         }
     }
+    private void AddArrow(ArrowPainter arrow)
+    {
+        arrow.OnDelete.AddListener(RemoveArrow);
+        _arrows.Add(arrow);
+        if (arrow.GetTargetElm != null)
+        {
+            GetComponent<AUMLElement>().ChangeNextElement(arrow.GetTargetElm.GetComponent<AUMLElement>(), arrow.Condition);
+        }
+    }
 
     public void DeleteArrow(ArrowPainter arrow = null) 
     {
@@ -283,6 +277,15 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             Destroy(gameObject);
             // needs to invoke onDelete on Arrow of previous action
         }
+        
+    }
+    
+    private void RemoveArrow(ArrowPainter arrow)
+    {
+        _arrows.Remove(arrow);
+        arrow?.OnDelete.RemoveListener(RemoveArrow);
+        GetComponent<AUMLElement>().ChangeNextElement(null, arrow.Condition);
+        GameManager.Instance.btn_Delete_Arrow.GetComponent<ActiveArrowDelete>()?.OnArrowDelete.Invoke();
     }
     public bool DrawArrowToElement(CreateArrow target, bool condition = true)
     {

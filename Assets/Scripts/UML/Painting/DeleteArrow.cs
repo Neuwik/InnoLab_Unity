@@ -13,6 +13,5 @@ public class DeleteArrow : MonoBehaviour
     {
         _CreateArrow.DeleteArrow(transform.GetComponent<ArrowPainter>());
         _CreateArrow.setUMLActivity(false);
-
     }
 }

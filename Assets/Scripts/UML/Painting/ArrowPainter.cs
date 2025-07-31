@@ -15,7 +15,7 @@ public class ArrowPainter : MonoBehaviour
     private bool _conditionOutcome;
     public bool ConditionOutcome { get { return _conditionOutcome; } set { _conditionOutcome = value; } }
 
-    private CreateArrow _parentElem;
+    public CreateArrow ParentElem;
     private RectTransform _parentRect;
 
     private CreateArrow _targetElem;
@@ -37,11 +37,11 @@ public class ArrowPainter : MonoBehaviour
 
     public bool TrySetTargetElem(CreateArrow value)
     {
-        if (_parentElem != null)
+        if (ParentElem != null)
         {
-            _parentElem.UMLHighlightswitch();
+            ParentElem.UMLHighlightswitch();
         }
-        if (_parentElem == value || _targetElem == value)
+        if (ParentElem == value || _targetElem == value)
         {
             return false; 
         }
@@ -116,12 +116,12 @@ public class ArrowPainter : MonoBehaviour
     void Start()
     {
         _rect = GetComponent<RectTransform>();
-        _parentElem = gameObject.transform.parent.GetComponent<CreateArrow>();
-        _parentRect = _parentElem.GetComponent<RectTransform>();
+        ParentElem = gameObject.transform.parent.GetComponent<CreateArrow>();
+        _parentRect = ParentElem.GetComponent<RectTransform>();
         
         // ? because Start Point has no DragDrop
-        _parentElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
-        _parentElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
+        ParentElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
+        ParentElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
 
         if (_isConditional)
         { 

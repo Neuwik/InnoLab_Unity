@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -91,6 +94,8 @@ public class GameManager : MonoBehaviour
         }
         btn_UMLStart?.onClick.AddListener(RunUML);
         btn_UMLStop?.onClick.AddListener(StopUML);
+        btn_Delete_Arrow = GameObject.FindGameObjectWithTag("btn_Arrow_Delete");
+        btn_Delete_Arrow.SetActive(false);
     }
 
     public ConsoleManager Console;
@@ -109,6 +114,7 @@ public class GameManager : MonoBehaviour
     public List<GarbageCollector> GarbageCollectors;
     public Button btn_UMLStart;
     public Button btn_UMLStop;
+    public GameObject btn_Delete_Arrow;
     public TickManager TickManager;
     public bool UMLIsRunning = false;
     public UMLTree CurrentTree { get { return UMLManager.Instance.CurrentTree; } }
@@ -170,10 +176,31 @@ public class GameManager : MonoBehaviour
             return _uml_panel;
         }
     }
-
+    private ArrowPainter _activeArrow;
     //drawing arrows
     [HideInInspector]
-    public ArrowPainter ActiveArrow;
+    public ArrowPainter ActiveArrow {
+        get 
+        { 
+            return _activeArrow; 
+        }
+        set
+        {
+            _activeArrow = value;
+            btn_Delete_Arrow.SetActive(!btn_Delete_Arrow.activeSelf);
+            var AAD = btn_Delete_Arrow.GetComponent<ActiveArrowDelete>();
+            Debug.Log("AAD : ");
+            Debug.Log(AAD);
+            if (_activeArrow != null)
+            {
+
+                AAD.OnArrowDelete.AddListener(AAD.DeactivateButton);
+                return;
+            }
+            AAD.OnArrowDelete?.RemoveListener(AAD.DeactivateButton);
+        }
+    }
+
     [HideInInspector]
     public bool ReDrawArrow; // USELESS???
 
