@@ -10,6 +10,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private GameObject _umlPanel;
     private GameObject _selectionPanel;
     private CreateArrow _arrowCreator;
+    private UMLHighlighter _umlConf;
     private RectTransform _umlRectT;
 
     public UnityEvent OnPossitionChanged; // not used
@@ -25,10 +26,12 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         _umlRectT = _umlPanel.GetComponent<RectTransform>();
         _rectT = GetComponent<RectTransform>();
         _arrowCreator = GetComponent<CreateArrow>();
+        _umlConf = GetComponent<UMLHighlighter>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        _arrowCreator.CanDraw = false;
         // Check if the parent matches the selection panel
         if (gameObject.transform.parent.CompareTag(_selectionPanel.tag))
         {
@@ -60,9 +63,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
         // Invoke drag started event, if assigned
         OnStartedMoving?.Invoke();
-        _arrowCreator.CanDraw = false;
-        _arrowCreator.UMLHighlightswitch(false);
-
+        _umlConf.StartHighlightMode();
     }
 
 
@@ -105,7 +106,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         }
 
         _arrowCreator.CanDraw = true;
-        _arrowCreator.UMLHighlightswitch(false);
+        _umlConf.EndHighlightMode();
         //Debug.Log("OnEndDrag");
     }
     public void DestroyElement()

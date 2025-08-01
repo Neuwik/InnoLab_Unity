@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ public class ArrowPainter : MonoBehaviour
     private bool _conditionOutcome;
     public bool ConditionOutcome { get { return _conditionOutcome; } set { _conditionOutcome = value; } }
 
-    public CreateArrow ParentElem;
+    private CreateArrow _parentElem;
     private RectTransform _parentRect;
 
     private CreateArrow _targetElem;
@@ -27,6 +28,10 @@ public class ArrowPainter : MonoBehaviour
     private RectTransform _rect;
     [SerializeField]
     private RectTransform _visualRect;
+    [SerializeField]
+    private RectTransform _trueVisual;
+    [SerializeField]
+    private RectTransform _falseVisual;
 
     public UnityEvent<ArrowPainter> OnDelete;
     public GameObject DeleteButton;
@@ -35,15 +40,25 @@ public class ArrowPainter : MonoBehaviour
     private static Color _trueColor = Color.green * 0.8f;
     private static Color _falseColor = Color.red * 0.9f;
 
+    [SerializeField]
+    private TMP_Text _textField;
+    private bool _isConditional = false;
+    private bool _condition = true;
+    private string _conditionalTrueText = "";
+    private string _conditionalFalseText = "";
+    private string _conditionTypeTag = "Normal";
+    Vector2 _textsizeOffset = new Vector2(15, 10);
+
+
     public bool TrySetTargetElem(CreateArrow value)
     {
-        if (ParentElem != null)
+        if (_parentElem != null)
         {
-            ParentElem.UMLHighlightswitch();
+            _parentElem.GetComponent<UMLHighlighter>().HighlightSwitch();
         }
-        if (ParentElem == value || _targetElem == value)
+        if (_parentElem == value || _targetElem == value)
         {
-            return false; 
+            return false;
         }
 
         _targetElem = value;
@@ -55,31 +70,21 @@ public class ArrowPainter : MonoBehaviour
 
         _prev = transform.parent.GetComponent<AUMLElement>();
         _prev.ChangeNextElement(_targetElem.GetComponent<AUMLElement>(), Condition);
+        FindAndSetDeleteButton();
 
         return true;
     }
-
-    [SerializeField]
-    private TMP_Text _textField;
-    private bool _isConditional = false;
-    private bool _condition = true;
-    private string _conditionalTrueText = "";
-    private string _conditionalFalseText = "";
-    Vector2 _textsizeOffset = new Vector2(20, 15);
-
     public bool Condition
     {
         get { return _condition; }
         set
         {
             _isConditional = true;
-            
-            _textField.gameObject.SetActive(_isConditional);
-            ChangeArrowColor(_trueColor);
-            if (_condition != value)
-            {
-                ToggleCondition();
-            }
+            _condition = value;
+            _visualRect.gameObject.SetActive(false);
+            if (_condition) SetTrueArrow();
+            else            SetFalseArrow();
+            //_textField.gameObject.SetActive(_isConditional);
         }
     }
 
@@ -89,23 +94,68 @@ public class ArrowPainter : MonoBehaviour
         {
             if (_condition)
             {
-                _textField.text = _conditionalFalseText;
-                ChangeArrowColor(_falseColor);
-                _condition = false;
+                SetFalseArrow();
             }
             else
             {
-                _textField.text = _conditionalTrueText;
-                ChangeArrowColor(_trueColor);
-                _condition = true;
+                SetTrueArrow();
             }
         }
+    }
+    private void logRect(RectTransform rect)
+    {
+        Debug.Log($"{rect.name} \tPosition: {rect.position};\t LocalPosition: {rect.localPosition};");
+    }
+    private void SetTrueArrow()
+    {
+        _condition = true;
+
+        //logRect(_visualRect);
+        //logRect(_trueVisual);
+        //logRect(_falseVisual);
+        //_trueVisual.localPosition = _visualRect.localPosition;
+        _visualRect = _trueVisual;
+        _textField = _trueVisual.GetComponentInChildren<TextMeshProUGUI>();
+        _textField.text = _conditionalTrueText;
+        ChangeArrowColor(_trueColor);
+        SetTrueArrowVisable();
+        FindAndSetDeleteButton();
+    }
+    private void SetFalseArrow()
+    {
+        _condition = false;
+
+        //logRect(_visualRect);
+        //logRect(_trueVisual);
+        //logRect(_falseVisual);
+        //_falseVisual.GetComponentInChildren<Te> = _visualRect.localPosition;
+        _visualRect = _falseVisual;
+        _textField = _falseVisual.GetComponentInChildren<TextMeshProUGUI>();
+        _textField.text = _conditionalFalseText;
+        ChangeArrowColor(_falseColor);
+        SetFalseArrowVisable();
+        FindAndSetDeleteButton();
+    }
+    private void FindAndSetDeleteButton() 
+    {
+        DeleteButton = _visualRect.Find("UpperHorizontalShaft").GetComponentInChildren<Button>(true).gameObject;
+    }
+    private void SetFalseArrowVisable()
+    {
+        _visualRect.gameObject.SetActive(false);
+        _trueVisual.gameObject.SetActive(false);
+        _falseVisual.gameObject.SetActive(true);
+    }
+    private void SetTrueArrowVisable()
+    {
+        _visualRect.gameObject.SetActive(false);
+        _falseVisual.gameObject.SetActive(false);
+        _trueVisual.gameObject.SetActive(true);
     }
 
     private void TargetDestroyed()
     {
         Destroy(gameObject);
-        OnDelete.Invoke(this);
     }
 
     private void Awake()
@@ -116,12 +166,12 @@ public class ArrowPainter : MonoBehaviour
     void Start()
     {
         _rect = GetComponent<RectTransform>();
-        ParentElem = gameObject.transform.parent.GetComponent<CreateArrow>();
-        _parentRect = ParentElem.GetComponent<RectTransform>();
+        _parentElem = gameObject.transform.parent.GetComponent<CreateArrow>();
+        _parentRect = _parentElem.GetComponent<RectTransform>();
         
         // ? because Start Point has no DragDrop
-        ParentElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
-        ParentElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
+        _parentElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
+        _parentElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
 
         if (_isConditional)
         { 
@@ -133,6 +183,7 @@ public class ArrowPainter : MonoBehaviour
                 _conditionalFalseText = "false";
                 _conditionalTrueText = "true";
             }
+
             _textField.text = _condition ? _conditionalTrueText : _conditionalFalseText;
         }
     }
@@ -317,7 +368,8 @@ public class ArrowPainter : MonoBehaviour
 
     private void ChangeArrowColor(Color color)
     {
-        foreach (var arrowPart in GetComponentsInChildren<Image>(true))
+ 
+        foreach (var arrowPart in _visualRect.gameObject.GetComponentsInChildren<Image>(true))
         {
             arrowPart.color = color;
             _textField.color = color;

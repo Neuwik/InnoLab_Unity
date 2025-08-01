@@ -12,6 +12,6 @@ public class DeleteArrow : MonoBehaviour
     public void DeleteThisArrow()
     {
         _CreateArrow.DeleteArrow(transform.GetComponent<ArrowPainter>());
-        _CreateArrow.setUMLActivity(false);
+        _CreateArrow.GetComponent<UMLHighlighter>().EndHighlightMode();
     }
 }

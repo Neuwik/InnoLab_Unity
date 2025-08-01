@@ -187,17 +187,14 @@ public class GameManager : MonoBehaviour
         set
         {
             _activeArrow = value;
-            btn_Delete_Arrow.SetActive(!btn_Delete_Arrow.activeSelf);
             var AAD = btn_Delete_Arrow.GetComponent<ActiveArrowDelete>();
-            Debug.Log("AAD : ");
-            Debug.Log(AAD);
+            AAD.ButtonActivitySwitch();
             if (_activeArrow != null)
             {
-
-                AAD.OnArrowDelete.AddListener(AAD.DeactivateButton);
+                AAD.OnArrowDelete.AddListener(AAD.ButtonActivitySwitch);
                 return;
             }
-            AAD.OnArrowDelete?.RemoveListener(AAD.DeactivateButton);
+            AAD.OnArrowDelete?.RemoveListener(AAD.ButtonActivitySwitch);
         }
     }
 
@@ -207,9 +204,9 @@ public class GameManager : MonoBehaviour
     public void RunUML()
     {
         if (ActiveArrow != null) {
-            var CA = ActiveArrow.transform.parent.GetComponent<CreateArrow>();
-            CA.DeleteArrow();
-            CA.setUMLActivity(false);
+            var AAP = ActiveArrow.transform.parent;
+            AAP.GetComponent<CreateArrow>().DeleteArrow();
+            AAP.GetComponent<UMLHighlighter>().EndHighlightMode();
         }
 
         UMLIsRunning = true;
