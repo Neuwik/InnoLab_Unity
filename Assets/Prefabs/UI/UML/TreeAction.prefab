@@ -839,6 +839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _highlightBackground: {fileID: 652458617949175967}
+  _destroyButton: {fileID: 6845807163841428579}
 --- !u!1 &4367250488028426081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1806,6 +1807,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DestroyButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1387820381012272381, guid: 76f146609dadbf744928f3f66f306bb7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1847914762716473130, guid: 76f146609dadbf744928f3f66f306bb7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1902,5 +1907,10 @@ PrefabInstance:
 --- !u!224 &6189822476276826036 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1847914762716473130, guid: 76f146609dadbf744928f3f66f306bb7, type: 3}
+  m_PrefabInstance: {fileID: 5495436153913809054}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6845807163841428579 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1387820381012272381, guid: 76f146609dadbf744928f3f66f306bb7, type: 3}
   m_PrefabInstance: {fileID: 5495436153913809054}
   m_PrefabAsset: {fileID: 0}

@@ -8,25 +8,32 @@ public class UMLHighlighter : MonoBehaviour
 {
     [SerializeField]
     private GameObject _highlightBackground;
+    [SerializeField]
+    private GameObject _destroyButton;
 
     private bool _InHighlightMode = false;
+    private CreateArrow _CA;
+    void Start()
+    {
+        _CA = GetComponent<CreateArrow>();
+    }
     private void SetHighlightMode(bool value)
     {
-        var CA = GetComponent<CreateArrow>();
+        _CA = GetComponent<CreateArrow>();
         _InHighlightMode = value;
         _highlightBackground.SetActive(_InHighlightMode);
-        if (GameManager.Instance.ActiveArrow == null && CA.Arrows.Count == CA.GetMaxArrowCount())
+        _destroyButton.SetActive(_InHighlightMode);
+        if (GameManager.Instance.ActiveArrow == null && _CA.Arrows.Count == _CA.GetMaxArrowCount())
         {
-            foreach (ArrowPainter arrow in CA.Arrows)
+            foreach (ArrowPainter arrow in _CA.Arrows)
             {
-                Debug.Log(arrow.DeleteButton.name + " = " + value);
                 arrow.DeleteButton.SetActive(value);
             }
         }
     }
     public bool GetHighlightMode()
     {
-        return _highlightBackground;
+        return _InHighlightMode;
     }
     public void StartHighlightMode()
     {

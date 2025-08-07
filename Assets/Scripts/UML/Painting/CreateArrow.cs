@@ -53,7 +53,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             return;
         }
-        Debug.Log("CLICK CanDraw = " + CanDraw);
 
         // Create Arrow
         if (GameManager.Instance.ActiveArrow == null && _arrows.Count < GetMaxArrowCount())
@@ -76,7 +75,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 }
             }
             GameManager.Instance.ActiveArrow = newArrow;
-            _umlConf.HighlightSwitch();
         }
         // Attach Target to diffrent CreateArrow than previously clicked
         else if (GameManager.Instance.ActiveArrow != null)
@@ -92,8 +90,8 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         // Change Condition of Arrows
         else if (_arrows.Count == 2) 
         {
-            if (!_umlConf.GetHighlightMode()) { 
-                _umlConf.HighlightSwitch();
+            if (!_umlConf.GetHighlightMode()) {
+                _umlConf.StartHighlightMode();
                 return;
             }
             foreach (ArrowPainter arrow in _arrows)
@@ -102,11 +100,13 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             }
 
             gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
-            gameObject.GetComponent<DragDrop>()?.OnStartedMoving.Invoke();
-            gameObject.GetComponent<DragDrop>()?.OnStoppedMoving.Invoke();
-            _umlConf.HighlightSwitch();
+            //gameObject.GetComponent<DragDrop>()?.OnStartedMoving.Invoke();
+            //gameObject.GetComponent<DragDrop>()?.OnStoppedMoving.Invoke();
+            _umlConf.EndHighlightMode();
+            
         }
-        
+        _umlConf.HighlightSwitch();
+
 
 
         // below mousecontrol + inbetween code - Touchscreen code moved to above
@@ -206,6 +206,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         }
         */
     }
+
     private void AddArrow(ArrowPainter arrow)
     {
         arrow.OnDelete.AddListener(RemoveArrow);

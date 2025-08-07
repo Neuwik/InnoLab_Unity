@@ -5,7 +5,7 @@ using UnityEngine;
 public class DeleteArrow : MonoBehaviour
 {
     CreateArrow _CreateArrow;
-    public void Start()
+    void Start()
     {
         _CreateArrow = transform.parent.gameObject.GetComponent<CreateArrow>();
     }

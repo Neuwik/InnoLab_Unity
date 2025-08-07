@@ -26,12 +26,14 @@ public class ArrowPainter : MonoBehaviour
     private AUMLElement _prev;
 
     private RectTransform _rect;
-    [SerializeField]
+
     private RectTransform _visualRect;
     [SerializeField]
-    private RectTransform _trueVisual;
+    private RectTransform _neutralRect;
     [SerializeField]
-    private RectTransform _falseVisual;
+    private RectTransform _trueRect;
+    [SerializeField]
+    private RectTransform _falseRect;
 
     public UnityEvent<ArrowPainter> OnDelete;
     public GameObject DeleteButton;
@@ -47,7 +49,7 @@ public class ArrowPainter : MonoBehaviour
     private string _conditionalTrueText = "";
     private string _conditionalFalseText = "";
     private string _conditionTypeTag = "Normal";
-    Vector2 _textsizeOffset = new Vector2(15, 10);
+    Vector2 _textsizeOffset = new Vector2(20, 15);
 
 
     public bool TrySetTargetElem(CreateArrow value)
@@ -60,9 +62,10 @@ public class ArrowPainter : MonoBehaviour
         {
             return false;
         }
-
+        
         _targetElem = value;
         _targetRect = _targetElem.GetComponent<RectTransform>();
+        
 
         _targetElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
         _targetElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
@@ -70,8 +73,10 @@ public class ArrowPainter : MonoBehaviour
 
         _prev = transform.parent.GetComponent<AUMLElement>();
         _prev.ChangeNextElement(_targetElem.GetComponent<AUMLElement>(), Condition);
-        FindAndSetDeleteButton();
-
+        if (_isConditional) 
+        { 
+            _textField.gameObject.SetActive(true); 
+        }
         return true;
     }
     public bool Condition
@@ -80,16 +85,16 @@ public class ArrowPainter : MonoBehaviour
         set
         {
             _isConditional = true;
-            _condition = value;
-            _visualRect.gameObject.SetActive(false);
-            if (_condition) SetTrueArrow();
-            else            SetFalseArrow();
+            _neutralRect.gameObject.SetActive(false);
+            if (value) SetTrueArrow();
+            else       SetFalseArrow();
             //_textField.gameObject.SetActive(_isConditional);
         }
     }
 
     public void ToggleCondition()
     {
+        enabled = true;
         if (_isConditional)
         {
             if (_condition)
@@ -101,24 +106,19 @@ public class ArrowPainter : MonoBehaviour
                 SetTrueArrow();
             }
         }
-    }
-    private void logRect(RectTransform rect)
-    {
-        Debug.Log($"{rect.name} \tPosition: {rect.position};\t LocalPosition: {rect.localPosition};");
+        enabled = false;
     }
     private void SetTrueArrow()
     {
         _condition = true;
 
         //logRect(_visualRect);
-        //logRect(_trueVisual);
-        //logRect(_falseVisual);
-        //_trueVisual.localPosition = _visualRect.localPosition;
-        _visualRect = _trueVisual;
-        _textField = _trueVisual.GetComponentInChildren<TextMeshProUGUI>();
+        //logRect(_trueRect);
+        //logRect(_falseRect);
+        _visualRect = _trueRect;
+        SetTrueArrowVisable();
         _textField.text = _conditionalTrueText;
         ChangeArrowColor(_trueColor);
-        SetTrueArrowVisable();
         FindAndSetDeleteButton();
     }
     private void SetFalseArrow()
@@ -126,14 +126,12 @@ public class ArrowPainter : MonoBehaviour
         _condition = false;
 
         //logRect(_visualRect);
-        //logRect(_trueVisual);
-        //logRect(_falseVisual);
-        //_falseVisual.GetComponentInChildren<Te> = _visualRect.localPosition;
-        _visualRect = _falseVisual;
-        _textField = _falseVisual.GetComponentInChildren<TextMeshProUGUI>();
+        //logRect(_trueRect);
+        //logRect(_falseRect);
+        _visualRect = _falseRect;
+        SetFalseArrowVisable();
         _textField.text = _conditionalFalseText;
         ChangeArrowColor(_falseColor);
-        SetFalseArrowVisable();
         FindAndSetDeleteButton();
     }
     private void FindAndSetDeleteButton() 
@@ -142,15 +140,15 @@ public class ArrowPainter : MonoBehaviour
     }
     private void SetFalseArrowVisable()
     {
-        _visualRect.gameObject.SetActive(false);
-        _trueVisual.gameObject.SetActive(false);
-        _falseVisual.gameObject.SetActive(true);
+        _neutralRect.gameObject.SetActive(false);
+        _trueRect.gameObject.SetActive(false);
+        _falseRect.gameObject.SetActive(true);
     }
     private void SetTrueArrowVisable()
     {
-        _visualRect.gameObject.SetActive(false);
-        _falseVisual.gameObject.SetActive(false);
-        _trueVisual.gameObject.SetActive(true);
+        _neutralRect.gameObject.SetActive(false);
+        _falseRect.gameObject.SetActive(false);
+        _trueRect.gameObject.SetActive(true);
     }
 
     private void TargetDestroyed()
@@ -172,10 +170,15 @@ public class ArrowPainter : MonoBehaviour
         // ? because Start Point has no DragDrop
         _parentElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
         _parentElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
+        _visualRect = _isConditional ? _condition ? _trueRect : _falseRect : _neutralRect;
+        FindAndSetDeleteButton();
 
+        _textField.gameObject.SetActive(false);
+        Debug.Log(gameObject.transform.parent.name + " : _isConditional = " + _isConditional);
         if (_isConditional)
-        { 
-            if (gameObject.transform.parent.name == "ForLoop")
+        {
+            _neutralRect.gameObject.SetActive(false);
+            if (gameObject.transform.parent.name.Contains("ForLoop"))
             {
                 _conditionalFalseText = "afterwards";
                 _conditionalTrueText = "do while";
@@ -183,9 +186,10 @@ public class ArrowPainter : MonoBehaviour
                 _conditionalFalseText = "false";
                 _conditionalTrueText = "true";
             }
-
             _textField.text = _condition ? _conditionalTrueText : _conditionalFalseText;
+            Debug.Log(gameObject.transform.parent.name + " : " + _textField.text);
         }
+        _textField.gameObject.SetActive(true);
     }
 
     void Update()
