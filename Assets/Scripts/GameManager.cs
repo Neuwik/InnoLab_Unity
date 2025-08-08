@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
     public Button btn_UMLStart;
     public Button btn_UMLStop;
     public GameObject btn_Delete_Arrow;
+    public bool allow_btn_Delete_Arrow = true;
     public TickManager TickManager;
     public bool UMLIsRunning = false;
     public UMLTree CurrentTree { get { return UMLManager.Instance.CurrentTree; } }
