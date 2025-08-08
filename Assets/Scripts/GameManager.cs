@@ -95,7 +95,10 @@ public class GameManager : MonoBehaviour
         btn_UMLStart?.onClick.AddListener(RunUML);
         btn_UMLStop?.onClick.AddListener(StopUML);
         btn_Delete_Arrow = GameObject.FindGameObjectWithTag("btn_Arrow_Delete");
-        btn_Delete_Arrow.SetActive(false);
+        if (btn_Delete_Arrow != null)
+        {
+            btn_Delete_Arrow.SetActive(false);
+        }
     }
 
     public ConsoleManager Console;
