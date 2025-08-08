@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 public class CreateArrow : MonoBehaviour, IPointerClickHandler
 {
     private int _maxArrowCount = 0;
-    private UMLHighlighter _umlConf;
+    private UMLHighlighter _umlHighlighter;
     
     public int GetMaxArrowCount()
     {
@@ -44,7 +44,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             DrawArrowToElement(initialFalseConnection, false);
         }
-        _umlConf = transform.GetComponent<UMLHighlighter>();
+        _umlHighlighter = transform.GetComponent<UMLHighlighter>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -81,6 +81,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             if (GameManager.Instance.ActiveArrow.TrySetTargetElem(this))
             {
+                Debug.Log("gameObject.Equals(GameManager.Instance.ActiveArrow.transform.parent.gameObject)");
                 GameManager.Instance.ActiveArrow = null;
                 return;
             }
@@ -90,8 +91,8 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         // Change Condition of Arrows
         else if (_arrows.Count == 2) 
         {
-            if (!_umlConf.GetHighlightMode()) {
-                _umlConf.StartHighlightMode();
+            if (!_umlHighlighter.GetHighlightMode()) {
+                _umlHighlighter.StartHighlightMode();
                 return;
             }
             foreach (ArrowPainter arrow in _arrows)
@@ -102,10 +103,10 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
             //gameObject.GetComponent<DragDrop>()?.OnStartedMoving.Invoke();
             //gameObject.GetComponent<DragDrop>()?.OnStoppedMoving.Invoke();
-            _umlConf.EndHighlightMode();
-            
+            _umlHighlighter.EndHighlightMode();
+            return;
         }
-        _umlConf.HighlightSwitch();
+        _umlHighlighter.HighlightSwitch();
 
 
 
@@ -224,8 +225,8 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             return;
         }
-
-        if (arrow != null) 
+        _umlHighlighter.EndHighlightMode();
+        if (arrow != null)  
         {
             RemoveArrow(arrow);
             Destroy(arrow.gameObject);
@@ -255,7 +256,11 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         _arrows.Remove(arrow);
         arrow?.OnDelete.RemoveListener(RemoveArrow);
         GetComponent<AUMLElement>().ChangeNextElement(null, arrow.Condition);
-        GameManager.Instance.btn_Delete_Arrow.GetComponent<ActiveArrowDelete>()?.OnArrowDelete.Invoke();
+        if (GameManager.Instance.ActiveArrow == null) return;
+        if (arrow.gameObject.Equals(GameManager.Instance.ActiveArrow.transform.parent.gameObject))
+        {
+            GameManager.Instance.btn_Delete_Arrow.GetComponent<ActiveArrowDelete>()?.OnArrowDelete.Invoke();
+        }
     }
     public bool DrawArrowToElement(CreateArrow target, bool condition = true)
     {

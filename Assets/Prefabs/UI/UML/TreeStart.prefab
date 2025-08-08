@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 1193716567900420639}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 9048641434267409063}
@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 1054328180862802943}
   - component: {fileID: 8411995895134717256}
   - component: {fileID: 5089680687075238619}
+  - component: {fileID: 124042311187974318}
   m_Layer: 5
   m_Name: TreeStart
   m_TagString: Untagged
@@ -268,6 +269,20 @@ MonoBehaviour:
   EnergyNeeded: 0
   dropDown: {fileID: 0}
   tree: {fileID: 0}
+--- !u!114 &124042311187974318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4908747819371574794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f99f41d4f70144b9d5b0b012459587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _highlightBackground: {fileID: 1429598559814813027}
+  _destroyButton: {fileID: 0}
 --- !u!1 &8566270072993724453
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,8 +375,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -396,7 +411,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 85.1513, y: 9.922731, z: 84.98897, w: 10.111125}
+  m_margin: {x: 80.15719, y: 9.922731, z: 80.350815, w: 10.111125}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

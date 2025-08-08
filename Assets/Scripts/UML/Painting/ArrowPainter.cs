@@ -56,13 +56,12 @@ public class ArrowPainter : MonoBehaviour
     {
         if (_parentElem != null)
         {
-            _parentElem.GetComponent<UMLHighlighter>().HighlightSwitch();
+            _parentElem.GetComponent<UMLHighlighter>().EndHighlightMode();
         }
         if (_parentElem == value || _targetElem == value)
         {
             return false;
         }
-        
         _targetElem = value;
         _targetRect = _targetElem.GetComponent<RectTransform>();
         
@@ -153,7 +152,7 @@ public class ArrowPainter : MonoBehaviour
 
     private void TargetDestroyed()
     {
-        Destroy(gameObject);
+        _parentElem.DeleteArrow(this);
     }
 
     private void Awake()
@@ -174,7 +173,6 @@ public class ArrowPainter : MonoBehaviour
         FindAndSetDeleteButton();
 
         _textField.gameObject.SetActive(false);
-        Debug.Log(gameObject.transform.parent.name + " : _isConditional = " + _isConditional);
         if (_isConditional)
         {
             _neutralRect.gameObject.SetActive(false);

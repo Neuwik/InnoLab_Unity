@@ -9,7 +9,7 @@ public class ActiveArrowDelete : MonoBehaviour
     public UnityEvent OnArrowDelete = new UnityEvent();
     public void ButtonActivitySwitch()
     {
-        gameObject.SetActive(!gameObject.activeSelf);
+        gameObject.SetActive(GameManager.Instance.ActiveArrow != null);
     }
     public void DeleteActiveArrow()
     {
