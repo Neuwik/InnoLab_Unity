@@ -97,11 +97,11 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             return;
         }
         // Change Condition of Arrows
-        else if (!GameManager.Instance.UseBtnActions && _arrows.Count != 2) 
+        else if (!GameManager.Instance.UseBtnActions && _arrows.Count == 2) 
         {
             SwitchArrows();
             return;
-        }
+        } 
         _umlHighlighter.HighlightSwitch();
 
 
@@ -203,16 +203,9 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         }
         */
     }
-    private bool _ignoreSwitch = false;
+
     public void SwitchArrows()
     {
-        if (_ignoreSwitch)
-        {
-            _ignoreSwitch = true;
-            return;
-        }
-        _ignoreSwitch = false;
-
         if (!_umlHighlighter.GetHighlightMode())
         {
             _umlHighlighter.StartHighlightMode();
