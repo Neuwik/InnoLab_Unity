@@ -23,7 +23,10 @@ public class UMLHighlighter : MonoBehaviour
     {
         _InHighlightMode = value;
         _highlightBackground.SetActive(_InHighlightMode);
-        _destroyButton.SetActive(_InHighlightMode);
+        if (_destroyButton != null) 
+        {
+            _destroyButton.SetActive(_InHighlightMode);
+        }
         
         if (GameManager.Instance.ActiveArrow == null && _CA.Arrows.Count == _CA.GetMaxArrowCount())
         {

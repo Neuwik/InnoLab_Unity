@@ -57,6 +57,7 @@ public class ArrowPainter : MonoBehaviour
 
     public bool TrySetTargetElem(CreateArrow value)
     {
+        
         if (_parentElem != null)
         {
             _parentElem.GetComponent<UMLHighlighter>().EndHighlightMode();
@@ -225,10 +226,9 @@ public class ArrowPainter : MonoBehaviour
         Vector2 conditionalTextOffset = new Vector2(0, 0) ;
 
         Vector2 direction = targetPos - parentPos;
-        
+
 
         //Debug.Log(parentPos + " -> " + targetPos + " / " + direction);
-
         if (direction.y < 0 && direction.y * -1 > targetSize.y / 2 + parentSize.y / 2 + minHeight) // target is under parent
         {
             if (arrowGetsDragged)
@@ -354,7 +354,6 @@ public class ArrowPainter : MonoBehaviour
         {
             _visualRect.gameObject.SetActive(false);
             //Debug.LogWarning("Can't redraw arrow");
-            _switchButton.anchoredPosition = -_switchButtonVerticleOffset;
         }
     }
 

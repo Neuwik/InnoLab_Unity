@@ -1,13 +1,15 @@
+using Assets.Scripts.Global;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Play : MonoBehaviour
 {
-    private static string _startStamp = "";
+    private static string START_STAMP = "";
     public void OnClickPlayButton()
     {
-        _startStamp = DateTime.Now.ToString("yyyyMMdd_HHmmss_fff");
+        START_STAMP = DateTime.Now.ToString("yyyyMMdd_HHmmss_fff");
         SceneManager.LoadScene("LevelSelect");
     }
 
@@ -21,6 +23,11 @@ public class Play : MonoBehaviour
         Application.Quit();
     }
 
+    public void OnClickChangeControllGroupButton()
+    {
+        ControlGroup.IS_CONTROLL_GROUP_B = !ControlGroup.IS_CONTROLL_GROUP_B;
+        transform.Find("ChangeControllGroupButton").GetComponentInChildren<TextMeshProUGUI>().text = ControlGroup.IS_CONTROLL_GROUP_B ? "B" : "C";
+    }
     public void OnClickResetButton() 
     {
         string timestamp = $"{DateTime.Now.ToString("yyyyMMdd_HHmmss_fff")}";
@@ -28,7 +35,7 @@ public class Play : MonoBehaviour
         UMLSaveSystem.DeleteSaves(timestamp);
         try
         {
-            System.IO.File.Move(Application.persistentDataPath + "/save.txt", Application.persistentDataPath + $"/save_{_startStamp}-{timestamp}_END.txt");
+            System.IO.File.Move(Application.persistentDataPath + "/save.txt", Application.persistentDataPath + $"/save_{START_STAMP}-{timestamp}_END.txt");
         }
         catch (Exception e) { }
         /*

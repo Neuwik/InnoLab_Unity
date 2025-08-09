@@ -114,6 +114,14 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (_arrowCreator.CanDraw)
         {
             OnDelete.Invoke();
+            
+            if (GameManager.Instance.ActiveArrow != null)
+            {
+                if (gameObject.Equals(GameManager.Instance.ActiveArrow.transform.parent.gameObject))
+                {
+                    GameManager.Instance.btn_Delete_Arrow.GetComponent<ActiveArrowDelete>().DeleteActiveArrow();
+                }
+            }
             Destroy(gameObject);
         }
     }
