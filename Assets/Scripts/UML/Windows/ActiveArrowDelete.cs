@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class ActiveArrowDelete : MonoBehaviour
 {
-    public UnityEvent OnArrowDelete = new UnityEvent();
+    //public UnityEvent OnArrowDelete = new UnityEvent();
     public void ButtonActivitySwitch()
     {
         if (GameManager.Instance.UseBtnActions)
@@ -20,6 +20,6 @@ public class ActiveArrowDelete : MonoBehaviour
         umlElem.GetComponent<CreateArrow>().DeleteArrow();
         umlElem.GetComponent<UMLHighlighter>().EndHighlightMode();
         gameObject.SetActive(false);
-        OnArrowDelete.RemoveListener(ButtonActivitySwitch);
+        //OnArrowDelete.RemoveListener(ButtonActivitySwitch);
     }
 }

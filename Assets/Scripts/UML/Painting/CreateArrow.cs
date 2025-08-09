@@ -232,7 +232,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
     public void DeleteArrow(ArrowPainter arrow = null) 
     {
-
         if (GameManager.Instance.UMLIsRunning) // disable deletion when UML is running
         {
             return;
@@ -268,11 +267,6 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         _arrows.Remove(arrow);
         arrow?.OnDelete.RemoveListener(RemoveArrow);
         GetComponent<AUMLElement>().ChangeNextElement(null, arrow.Condition);
-        if (GameManager.Instance.ActiveArrow == null) return;
-        if (arrow.gameObject.Equals(GameManager.Instance.ActiveArrow.transform.parent.gameObject))
-        {
-            GameManager.Instance.btn_Delete_Arrow.GetComponent<ActiveArrowDelete>()?.OnArrowDelete.Invoke();
-        }
     }
     public bool DrawArrowToElement(CreateArrow target, bool condition = true)
     {

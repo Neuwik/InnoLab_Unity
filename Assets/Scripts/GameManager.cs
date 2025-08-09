@@ -195,12 +195,12 @@ public class GameManager : MonoBehaviour
             _activeArrow = value;
             var AAD = btn_Delete_Arrow.GetComponent<ActiveArrowDelete>();
             AAD.ButtonActivitySwitch();
-            if (_activeArrow != null)
-            {
-                AAD.OnArrowDelete.AddListener(AAD.ButtonActivitySwitch);
-                return;
-            }
-            AAD.OnArrowDelete?.RemoveListener(AAD.ButtonActivitySwitch);
+            //if (_activeArrow != null)
+            //{
+            //    AAD.OnArrowDelete.AddListener(AAD.ButtonActivitySwitch);
+            //    return;
+            //}
+            //AAD.OnArrowDelete?.RemoveListener(AAD.ButtonActivitySwitch);
         }
     }
 

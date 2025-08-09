@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: -15, y: -15, z: -15, w: -20}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -251,6 +251,7 @@ MonoBehaviour:
   _isDeleteable: 0
   initialConnection: {fileID: 0}
   initialFalseConnection: {fileID: 0}
+  SwitchButton: {fileID: 0}
 --- !u!114 &5089680687075238619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _highlightBackground: {fileID: 1429598559814813027}
   _destroyButton: {fileID: 0}
+  _switchButton: {fileID: 0}
 --- !u!1 &8566270072993724453
 GameObject:
   m_ObjectHideFlags: 0
