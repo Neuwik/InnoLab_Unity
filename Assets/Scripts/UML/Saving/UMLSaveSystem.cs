@@ -8,7 +8,6 @@ using UnityEngine;
 public class UMLSaveSystem
 {
     private static string folderName = "UMLTrees";
-
     public static void SaveTreeBin(UMLTree tree)
     {
         string folderPath = Path.Combine(Application.persistentDataPath, folderName);
@@ -18,7 +17,7 @@ public class UMLSaveSystem
         string filePath = Path.Combine(folderPath, $"{data.TreeName}.{data.ID}.bin");
 
         FileStream stream = new FileStream(filePath, FileMode.Create);
-
+        
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, data);
         stream.Close();

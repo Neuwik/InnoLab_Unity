@@ -1,3 +1,4 @@
+using Assets.Scripts.Global;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,6 +100,7 @@ public class GameManager : MonoBehaviour
         {
             btn_Delete_Arrow.SetActive(false);
         }
+        UseBtnActions = ControlGroup.IS_CONTROLL_GROUP_B;
     }
 
     public ConsoleManager Console;
@@ -118,7 +120,7 @@ public class GameManager : MonoBehaviour
     public Button btn_UMLStart;
     public Button btn_UMLStop;
     public GameObject btn_Delete_Arrow;
-    public bool UseBtnActions = true;
+    public bool UseBtnActions;
     public TickManager TickManager;
     public bool UMLIsRunning = false;
     public UMLTree CurrentTree { get { return UMLManager.Instance.CurrentTree; } }

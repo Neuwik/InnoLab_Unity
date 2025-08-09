@@ -12,6 +12,7 @@ public class LevelSaveData
     public float    successQualityPercent;
     public float    percentHealth;
     public float    percentEnergy;
+    public float    amountOfTries;
 }
 
 [System.Serializable]

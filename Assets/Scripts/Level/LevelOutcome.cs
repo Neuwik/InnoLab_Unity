@@ -28,6 +28,7 @@ public class LevelOutcome : MonoBehaviour, IResetable
     private Vector2 _posResetLevelBtn;
 
     private int levelNumber;
+    private int _amountOfTries;
 
     // Start is called before the first frame update
     void Awake()
@@ -41,7 +42,7 @@ public class LevelOutcome : MonoBehaviour, IResetable
         }
 
         levelNumber = SceneManager.GetActiveScene().buildIndex;
-
+        _amountOfTries = 0;
         // TODO Build Index To level number
         LevelIndexText.text = "Level " + (levelNumber - 1);
 
@@ -70,6 +71,7 @@ public class LevelOutcome : MonoBehaviour, IResetable
 
     private void EndLevel(bool isSuccess)
     {
+        _amountOfTries++;
         // Level success
         if (isSuccess)
         {
@@ -94,11 +96,11 @@ public class LevelOutcome : MonoBehaviour, IResetable
 
         ShowStars();
     }
-
     private void ShowLevelFailedUI()
     {
+        
         OutcomeText.text = "Level failed";
-
+        
         // Hide "Next" Button
         NextBtn.gameObject.SetActive(false);
 
@@ -141,7 +143,7 @@ public class LevelOutcome : MonoBehaviour, IResetable
         levelSaveData.successQualityPercent = calculationValues.SuccessQualityPercent;
         levelSaveData.percentHealth = calculationValues.percentHealth;
         levelSaveData.percentEnergy = calculationValues.percentEnergy;
-
+        levelSaveData.amountOfTries = _amountOfTries;
         SaveManager.Instance.SaveLevel(levelSaveData);
     }
 
