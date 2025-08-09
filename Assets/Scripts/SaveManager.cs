@@ -13,6 +13,7 @@ public class LevelSaveData
     public float    percentHealth;
     public float    percentEnergy;
     public float    amountOfTries;
+    public string   controlGroup;
 }
 
 [System.Serializable]

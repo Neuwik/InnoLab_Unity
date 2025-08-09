@@ -1,4 +1,6 @@
+using Assets.Scripts.Global;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -144,6 +146,7 @@ public class LevelOutcome : MonoBehaviour, IResetable
         levelSaveData.percentHealth = calculationValues.percentHealth;
         levelSaveData.percentEnergy = calculationValues.percentEnergy;
         levelSaveData.amountOfTries = _amountOfTries;
+        levelSaveData.controlGroup = ControlGroup.IS_CONTROLL_GROUP_B? "B" : "C";
         SaveManager.Instance.SaveLevel(levelSaveData);
     }
 
