@@ -33,6 +33,7 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
 
     public CreateArrow initialConnection = null;
     public CreateArrow initialFalseConnection = null;
+    public RectTransform SwitchButton;
 
     private void Start()
     {
@@ -45,6 +46,11 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             DrawArrowToElement(initialFalseConnection, false);
         }
         _umlHighlighter = transform.GetComponent<UMLHighlighter>();
+        if (GetMaxArrowCount() == 2)
+        {
+            SwitchButton = transform.Find("SwitchArrowsButton").GetComponent<RectTransform>();
+            SwitchButton.gameObject.SetActive(false);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -81,29 +87,19 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         {
             if (GameManager.Instance.ActiveArrow.TrySetTargetElem(this))
             {
-                Debug.Log("gameObject.Equals(GameManager.Instance.ActiveArrow.transform.parent.gameObject)");
                 GameManager.Instance.ActiveArrow = null;
                 return;
             }
-            GameManager.Instance.ActiveArrow.transform.parent.GetComponent<CreateArrow>().DeleteArrow();
+            if(!GameManager.Instance.UseBtnActions)
+            {
+                GameManager.Instance.ActiveArrow.transform.parent.GetComponent<CreateArrow>().DeleteArrow();
+            }
             return;
         }
         // Change Condition of Arrows
-        else if (_arrows.Count == 2) 
+        else if (!GameManager.Instance.UseBtnActions && _arrows.Count != 2) 
         {
-            if (!_umlHighlighter.GetHighlightMode()) {
-                _umlHighlighter.StartHighlightMode();
-                return;
-            }
-            foreach (ArrowPainter arrow in _arrows)
-            {
-                arrow.ToggleCondition();
-            }
-
-            gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
-            //gameObject.GetComponent<DragDrop>()?.OnStartedMoving.Invoke();
-            //gameObject.GetComponent<DragDrop>()?.OnStoppedMoving.Invoke();
-            _umlHighlighter.EndHighlightMode();
+            SwitchArrows();
             return;
         }
         _umlHighlighter.HighlightSwitch();
@@ -206,6 +202,29 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 return;
         }
         */
+    }
+    private bool _ignoreSwitch = false;
+    public void SwitchArrows()
+    {
+        if (_ignoreSwitch)
+        {
+            _ignoreSwitch = true;
+            return;
+        }
+        _ignoreSwitch = false;
+
+        if (!_umlHighlighter.GetHighlightMode())
+        {
+            _umlHighlighter.StartHighlightMode();
+            return;
+        }
+        foreach (ArrowPainter arrow in _arrows)
+        {
+            arrow.ToggleCondition();
+        }
+
+        gameObject.GetComponent<AUMLElementTrueFalse>().SwitchNextActions();
+        _umlHighlighter.EndHighlightMode();
     }
 
     private void AddArrow(ArrowPainter arrow)

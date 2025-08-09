@@ -48,7 +48,11 @@ public class ArrowPainter : MonoBehaviour
     private string _conditionalTrueText = "";
     private string _conditionalFalseText = "";
     private string _conditionTypeTag = "Normal";
-    Vector2 _textsizeOffset = new Vector2(20, 15);
+    private Vector2 _textsizeOffset = new Vector2(20, 15);
+    private RectTransform _switchButton;
+    private Vector2 _switchButtonHorizontalOffset = new Vector2(84, 0);
+    private Vector2 _switchButtonVerticleOffset = new Vector2(0, 38);
+
 
 
     public bool TrySetTargetElem(CreateArrow value)
@@ -92,6 +96,7 @@ public class ArrowPainter : MonoBehaviour
 
     public void ToggleCondition()
     {
+        Debug.Log("REEEEEEEEEEEEEEEEEEEEEEEEEE ToggleCondition");
         enabled = true;
         if (_isConditional)
         {
@@ -110,9 +115,6 @@ public class ArrowPainter : MonoBehaviour
     {
         _condition = true;
 
-        //logRect(_visualRect);
-        //logRect(_trueRect);
-        //logRect(_falseRect);
         _visualRect = _trueRect;
         SetTrueArrowVisable();
         _textField.text = _conditionalTrueText;
@@ -123,9 +125,6 @@ public class ArrowPainter : MonoBehaviour
     {
         _condition = false;
 
-        //logRect(_visualRect);
-        //logRect(_trueRect);
-        //logRect(_falseRect);
         _visualRect = _falseRect;
         SetFalseArrowVisable();
         _textField.text = _conditionalFalseText;
@@ -184,7 +183,8 @@ public class ArrowPainter : MonoBehaviour
                 _conditionalTrueText = "true";
             }
             _textField.text = _condition ? _conditionalTrueText : _conditionalFalseText;
-            Debug.Log(gameObject.transform.parent.name + " : " + _textField.text);
+
+            _switchButton = _parentElem.SwitchButton;
         }
         _textField.gameObject.SetActive(true);
     }
@@ -251,6 +251,7 @@ public class ArrowPainter : MonoBehaviour
                     parentPos.x += conditionOffset;
                     targetPos.x += conditionOffset;
                 }
+                _switchButton.anchoredPosition = -_switchButtonVerticleOffset;
             }
 
             DrawArrow(
@@ -260,7 +261,7 @@ public class ArrowPainter : MonoBehaviour
                 180
             );
         }
-        else if (direction.y > 0 && direction.y > targetSize.y / 2 + parentSize.y / 2 + minHeight) // taget is above parent
+        else if (direction.y > 0 && direction.y > targetSize.y / 2 + parentSize.y / 2 + minHeight) // target is above parent
         {
             if (arrowGetsDragged)
             {
@@ -280,6 +281,7 @@ public class ArrowPainter : MonoBehaviour
                     parentPos.x += conditionOffset;
                     targetPos.x += conditionOffset;
                 }
+                _switchButton.anchoredPosition = _switchButtonVerticleOffset;
             }
 
             DrawArrow(
@@ -289,7 +291,7 @@ public class ArrowPainter : MonoBehaviour
                 0
             );
         }
-        else if (direction.x < 0 && direction.x * -1 > targetSize.x / 2 + parentSize.x / 2 + minHeight) // taget is left of parent
+        else if (direction.x < 0 && direction.x * -1 > targetSize.x / 2 + parentSize.x / 2 + minHeight) // target is left of parent
         {
             if (arrowGetsDragged)
             {
@@ -309,6 +311,7 @@ public class ArrowPainter : MonoBehaviour
                     parentPos.y -= conditionOffset;
                     targetPos.y -= conditionOffset;
                 }
+                _switchButton.anchoredPosition = -_switchButtonHorizontalOffset;
             }
 
             DrawArrow(
@@ -338,7 +341,9 @@ public class ArrowPainter : MonoBehaviour
                     parentPos.y -= conditionOffset;
                     targetPos.y -= conditionOffset;
                 }
+                _switchButton.anchoredPosition = _switchButtonHorizontalOffset;
             }
+
             DrawArrow(
                 parentPos + new Vector2(parentSize.x / 2, 0),
                 targetPos - new Vector2(targetSize.x / 2, 0),
@@ -350,6 +355,7 @@ public class ArrowPainter : MonoBehaviour
         {
             _visualRect.gameObject.SetActive(false);
             //Debug.LogWarning("Can't redraw arrow");
+            _switchButton.anchoredPosition = -_switchButtonVerticleOffset;
         }
     }
 
