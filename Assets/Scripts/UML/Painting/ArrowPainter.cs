@@ -96,7 +96,6 @@ public class ArrowPainter : MonoBehaviour
 
     public void ToggleCondition()
     {
-        Debug.Log("REEEEEEEEEEEEEEEEEEEEEEEEEE ToggleCondition");
         enabled = true;
         if (_isConditional)
         {
