@@ -808,6 +808,7 @@ MonoBehaviour:
   _isDeleteable: 1
   initialConnection: {fileID: 0}
   initialFalseConnection: {fileID: 0}
+  SwitchButton: {fileID: 0}
 --- !u!114 &8256643148071424692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,6 +841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _highlightBackground: {fileID: 1474659572583582152}
   _destroyButton: {fileID: 3030079517041730806}
+  _switchButton: {fileID: 0}
 --- !u!1 &4367250488028426081
 GameObject:
   m_ObjectHideFlags: 0

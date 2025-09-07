@@ -57,7 +57,7 @@ public class ArrowPainter : MonoBehaviour
 
     public bool TrySetTargetElem(CreateArrow value)
     {
-        
+        // TODO: FIX DOUBLECLICK DISABLE WITH BUTTONMODE
         if (_parentElem != null)
         {
             _parentElem.GetComponent<UMLHighlighter>().EndHighlightMode();
