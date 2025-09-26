@@ -182,9 +182,10 @@ public class GameManager : MonoBehaviour
             return _uml_panel;
         }
     }
+
     private ArrowPainter _activeArrow;
     //drawing arrows
-    [HideInInspector]
+    //[HideInInspector]
     public ArrowPainter ActiveArrow {
         get 
         { 

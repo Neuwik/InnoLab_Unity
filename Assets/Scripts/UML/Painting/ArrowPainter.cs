@@ -57,7 +57,10 @@ public class ArrowPainter : MonoBehaviour
 
     public bool TrySetTargetElem(CreateArrow value)
     {
-        
+        //if (value.hasActiveArrow())
+        //{
+        //    return false;
+        //}
         if (_parentElem != null)
         {
             _parentElem.GetComponent<UMLHighlighter>().EndHighlightMode();
@@ -69,9 +72,6 @@ public class ArrowPainter : MonoBehaviour
         _targetElem = value;
         _targetRect = _targetElem.GetComponent<RectTransform>();
         
-
-        _targetElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
-        _targetElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
         _targetElem.GetComponent<DragDrop>()?.OnDelete.AddListener(TargetDestroyed);
 
         _prev = transform.parent.GetComponent<AUMLElement>();
@@ -97,7 +97,7 @@ public class ArrowPainter : MonoBehaviour
 
     public void ToggleCondition()
     {
-        enabled = true;
+        enabled = false;
         if (_isConditional)
         {
             if (_condition)
@@ -109,7 +109,7 @@ public class ArrowPainter : MonoBehaviour
                 SetTrueArrow();
             }
         }
-        enabled = false;
+        enabled = true;
     }
     private void SetTrueArrow()
     {
@@ -164,9 +164,6 @@ public class ArrowPainter : MonoBehaviour
         _parentElem = gameObject.transform.parent.GetComponent<CreateArrow>();
         _parentRect = _parentElem.GetComponent<RectTransform>();
         
-        // ? because Start Point has no DragDrop
-        _parentElem.GetComponent<DragDrop>()?.OnStartedMoving.AddListener(EnableDrawing);
-        _parentElem.GetComponent<DragDrop>()?.OnStoppedMoving.AddListener(DisableDrawing);
         _visualRect = _isConditional ? _condition ? _trueRect : _falseRect : _neutralRect;
         FindAndSetDeleteButton();
 

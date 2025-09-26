@@ -82,6 +82,10 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
             }
             GameManager.Instance.ActiveArrow = newArrow;
         }
+        else if (GameManager.Instance.UseBtnActions && hasActiveArrow())
+        {
+            return;
+        }
         // Attach Target to diffrent CreateArrow than previously clicked
         else if (GameManager.Instance.ActiveArrow != null)
         {
@@ -90,18 +94,19 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
                 GameManager.Instance.ActiveArrow = null;
                 return;
             }
-            if(!GameManager.Instance.UseBtnActions)
+            if (!GameManager.Instance.UseBtnActions)
             {
                 GameManager.Instance.ActiveArrow.transform.parent.GetComponent<CreateArrow>().DeleteArrow();
             }
             return;
         }
         // Change Condition of Arrows
-        else if (!GameManager.Instance.UseBtnActions && _arrows.Count == 2) 
+        else if (!GameManager.Instance.UseBtnActions && _arrows.Count == 2)
         {
             SwitchArrows();
             return;
-        } 
+        }
+        
         _umlHighlighter.HighlightSwitch();
 
 
@@ -261,7 +266,14 @@ public class CreateArrow : MonoBehaviour, IPointerClickHandler
         }
         
     }
-    
+    public bool hasActiveArrow()
+    {
+        if (GameManager.Instance.ActiveArrow == null)
+        { 
+            return false;
+        }
+        return _arrows.Contains(GameManager.Instance.ActiveArrow);
+    }
     private void RemoveArrow(ArrowPainter arrow)
     {
         _arrows.Remove(arrow);
