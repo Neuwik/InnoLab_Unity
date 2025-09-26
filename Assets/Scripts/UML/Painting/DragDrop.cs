@@ -13,9 +13,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private UMLHighlighter _umlConf;
     private RectTransform _umlRectT;
 
-    public UnityEvent OnPossitionChanged; // not used
-    public UnityEvent OnStartedMoving;
-    public UnityEvent OnStoppedMoving;
+    public UnityEvent OnPossitionChanged;
     public UnityEvent OnDelete;
 
     private void Start()
@@ -62,7 +60,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         }
 
         // Invoke drag started event, if assigned
-        OnStartedMoving?.Invoke();
         _umlConf.StartHighlightMode();
     }
 
@@ -82,7 +79,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         //Vector3 posInUml = _umlRectT.InverseTransformPoint(transform.position);
         Vector3 posInUml = transform.localPosition;
-        OnStoppedMoving.Invoke();
         /*
         if (Mathf.Abs(gameObject.transform.localPosition.y) + (_rectT.rect.height / 2) >= _umlRectT.rect.height / 2 || // top, bottom bordercheck
             Mathf.Abs(gameObject.transform.localPosition.x) + (_rectT.rect.width / 2) >= _umlRectT.rect.width / 2 )  // right, left bordercheck
@@ -105,8 +101,15 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             return;
         }
 
-        _arrowCreator.CanDraw = true;
-        _umlConf.EndHighlightMode();
+        //_arrowCreator.CanDraw = true;
+        if(!_arrowCreator.hasActiveArrow())
+        {
+            _umlConf.EndHighlightMode();
+            return;
+        }
+
+
+
         //Debug.Log("OnEndDrag");
     }
     public void DestroyElement()
