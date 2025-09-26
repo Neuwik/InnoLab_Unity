@@ -8,47 +8,30 @@ public class MainMenuMusicManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            audioSource = GetComponent<AudioSource>();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (instance != null) { Destroy(gameObject); return; }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false; 
     }
 
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
+    void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name.Contains("Tutorial") || scene.name.Contains("Level"))
+        bool isGameScene =
+            scene.name.Contains("Tutorial") ||
+            (scene.name.Contains("Level") && scene.name != "LevelSelect");
+
+        if (isGameScene)
         {
-            if (audioSource.isPlaying && !scene.name.Equals("LevelSelect")) //Except LevelSelect
-            {
-                audioSource.Stop();
-            }
-            else if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
-            }
+            if (audioSource.isPlaying) audioSource.Stop();
         }
         else
         {
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
-            }
+            if (!audioSource.isPlaying) audioSource.Play();
         }
     }
 }

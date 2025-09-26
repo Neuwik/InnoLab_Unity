@@ -182,10 +182,9 @@ public class GameManager : MonoBehaviour
             return _uml_panel;
         }
     }
-
     private ArrowPainter _activeArrow;
     //drawing arrows
-    //[HideInInspector]
+    [HideInInspector]
     public ArrowPainter ActiveArrow {
         get 
         { 
@@ -306,10 +305,6 @@ public class GameManager : MonoBehaviour
             percentHealth = percentHealthSum / UMLActors.Count,
             percentEnergy = percentEnergySum / UMLActors.Count
         };
-
-        //Debug.Log(outcomeCalculationValues.percentHealth);
-        //Debug.Log(outcomeCalculationValues.percentEnergy);
-        //Debug.Log(outcomeCalculationValues.SuccessQualityPercent);
 
         LevelProgress.UpdateLevelProgress(outcomeCalculationValues);
     }
